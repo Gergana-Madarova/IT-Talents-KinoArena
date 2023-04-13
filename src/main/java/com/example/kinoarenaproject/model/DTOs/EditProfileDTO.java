@@ -10,18 +10,17 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterDTO {
+public class EditProfileDTO {
     private int id;
     private  String first_name;
     private String last_name;
     private String email;
     private String password;
-    private String confirmPassword;
+    private String newPassword;
+    private String confirmNewPassword;
     private Date birth_date;
     private int city_id;
     private String gender;
     private String phone_number;
-
     private String role_name;
-
 }

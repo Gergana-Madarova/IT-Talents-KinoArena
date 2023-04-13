@@ -1,0 +1,65 @@
+# register user
+POST http://localhost:8000/users
+Content-Type: application/json
+
+{
+  "first_name": "string",
+  "last_name": "string",
+  "email": "string",
+  "password": "string",
+  "birth_date": "date",
+  "city_id": "integer",
+  "gender": "string",
+  "phone_number": "string",
+  "sign_up_for_newsletter": "integer",
+  "role_name": "string"
+}
+###
+# login user
+POST http://localhost:8000/users/login
+Content-Type: application/json
+
+{
+  "email": "string",
+ "password": "string"
+
+}
+###
+# logout user
+POST http://localhost:8000/users/logout
+Content-Type: application/json
+###
+#  change password
+POST http://localhost:8000/users
+Content-Type: application/json
+
+{
+ "currentPassword": "ani@abv.bg",
+ "newPassword": "pass1234",
+ "confirmNewPassword": "pass1234"
+
+
+}
+###
+# edit profile
+PUT http://localhost:8000/users
+Content-Type: application/json
+
+{
+  "first_name": "string",
+  "last_name": "string",
+  "email": "string",
+  "password": "string",
+  "birth_date": "date",
+  "city_id": "integer",
+  "gender": "string",
+  "phone_number": "string",
+  "sign_up_for_newsletter": "integer",
+  "role_name": "string"
+}
+###
+# get user by id
+GET http://localhost:8000/users/{id}
+Content-Type: application/json
+
+
