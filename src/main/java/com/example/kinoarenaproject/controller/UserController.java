@@ -32,6 +32,7 @@ public class UserController {
     public UserWithoutPasswordDTO getById(@PathVariable int id){
     return userService.getById(id);
     }
+
     @PutMapping("/users")
     public UserWithoutPasswordDTO changePassword(@RequestBody ChangePassDTO changePassData, HttpSession s){
        boolean logged=(boolean) s.getAttribute(Constants.LOGGED);
@@ -39,9 +40,8 @@ public class UserController {
             return userService.changePassword(changePassData);
         }
         throw new UnauthorizedException("You have to login");
-
-
-    }@PostMapping("/users/logout")
+    }
+    @PostMapping("/users/logout")
     public ResponseEntity<String> logout(HttpSession session) {
         boolean logged = (boolean) session.getAttribute(Constants.LOGGED);
         if (!logged) {

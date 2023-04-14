@@ -19,7 +19,7 @@ public class EditProfileDTO {
     private String newPassword;
     private String confirmNewPassword;
     private Date birth_date;
-    private int city_id;
+//    private int city_id;
     private String gender;
     private String phone_number;
     private String role_name;
