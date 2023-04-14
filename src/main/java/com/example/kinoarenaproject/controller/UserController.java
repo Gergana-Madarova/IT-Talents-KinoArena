@@ -1,9 +1,6 @@
 package com.example.kinoarenaproject.controller;
 
-import com.example.kinoarenaproject.model.DTOs.ChangePassDTO;
-import com.example.kinoarenaproject.model.DTOs.LoginDTO;
-import com.example.kinoarenaproject.model.DTOs.RegisterDTO;
-import com.example.kinoarenaproject.model.DTOs.UserWithoutPasswordDTO;
+import com.example.kinoarenaproject.model.DTOs.*;
 import com.example.kinoarenaproject.model.entities.Constants;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
 import com.example.kinoarenaproject.serice.UserService;
@@ -42,14 +39,15 @@ public class UserController {
         throw new UnauthorizedException("You have to login");
     }
     @PostMapping("/users/logout")
-    public ResponseEntity<String> logout(HttpSession session) {
-        boolean logged = (boolean) session.getAttribute(Constants.LOGGED);
-        if (!logged) {
-            throw new UnauthorizedException("You have to login");
-        }
-        session.invalidate();
-        return ResponseEntity.ok("Logged out successfully");
-    }
+//    public ResponseEntity<String> logout(LogoutDTO logoutData , HttpSession session) {
+        //todo
+//        boolean logged = (boolean) session.getAttribute(Constants.LOGGED);
+//        if (!logged) {
+//            throw new UnauthorizedException("You have to login");
+//        }
+//        session.invalidate();
+//        return ResponseEntity.ok("Logged out successfully");
+//    }
 
 
 

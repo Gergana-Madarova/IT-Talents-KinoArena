@@ -35,8 +35,6 @@ public class UserService {
             if (!userRepository.existsByEmail(loginData.getEmail())) {
                 throw new UnauthorizedException("Wrong credentials");
             }
-
-
             User u = opt.get();
             if (passwordEncoder.matches(loginData.getPassword(), u.getPassword())) {
                 return mapper.map(u, UserWithoutPasswordDTO.class);
@@ -50,17 +48,20 @@ public class UserService {
         if(!registerData.getPassword().equals((registerData).getConfirmPassword())){
             throw new BadRequestException("Password mismached");
         }
-        if (ValidationUtils.isValidPassword(registerData.getPassword()) &&
+        if ( ValidationUtils.isValidPassword(registerData.getPassword()) &&
                 ValidationUtils.isValidEmail(registerData.getEmail() )){
             if(userRepository.existsByEmail(registerData.getEmail())){
                 throw new BadRequestException("Email already exist");
             }
         }
-
-            User u = mapper.map(registerData, User.class);
-            u.setPassword(passwordEncoder.encode(u.getPassword()));
-            userRepository.save(u);
-            return mapper.map(u, UserWithoutPasswordDTO.class);
+        else {
+            throw new BadRequestException(("Inadequate input for password  " +
+                    "At least one upper case, one lower case,one digit,one special character minimum eight characters , max 20"));
+        }
+        User u = mapper.map(registerData, User.class);
+        u.setPassword(passwordEncoder.encode(u.getPassword()));
+        userRepository.save(u);
+        return mapper.map(u, UserWithoutPasswordDTO.class);
 
     }
 
@@ -68,13 +69,23 @@ public class UserService {
         Optional opt=userRepository.findById(id);
         if(opt.isPresent()){
             return mapper.map(opt.get(),UserWithoutPasswordDTO.class);
+        }else {
+            throw new NotFoundException("User not found");
         }
-        throw new NotFoundException("User not found");
     }
 
     public UserWithoutPasswordDTO changePassword(ChangePassDTO changePassData) {
-
-return null;
+        Optional<User>opt= userRepository.findByEmail(changePassData.getEmail());
+        if (!opt.isPresent()) {
+            throw new UnauthorizedException("User not found");
+        }
+        User u=opt.get();
+        if (!passwordEncoder.matches(changePassData.getCurrentPassword(), u.getPassword())) {
+            throw new UnauthorizedException("Invalid current password");
+        }
+        u.setPassword(passwordEncoder.encode(changePassData.getNewPassword()));
+        userRepository.save(u);
+        return mapper.map(u, UserWithoutPasswordDTO.class) ;
     }
 
     public UserWithoutPasswordDTO editProfile(RegisterDTO editProfileData) {
@@ -83,8 +94,5 @@ return null;//todo
 
     }
 
-    public void logout(LoginDTO logoutData) {
-// to do
 
-    }
 }
