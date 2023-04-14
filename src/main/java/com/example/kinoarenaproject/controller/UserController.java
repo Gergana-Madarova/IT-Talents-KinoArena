@@ -5,7 +5,7 @@ import com.example.kinoarenaproject.model.DTOs.LoginDTO;
 import com.example.kinoarenaproject.model.DTOs.RegisterDTO;
 import com.example.kinoarenaproject.model.DTOs.UserWithoutPasswordDTO;
 import com.example.kinoarenaproject.model.entities.Constants;
-import com.example.kinoarenaproject.model.exceptions.UnautorizedException;
+import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
 import com.example.kinoarenaproject.serice.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,22 +38,31 @@ public class UserController {
         if(logged){
             return userService.changePassword(changePassData);
         }
-        throw new UnautorizedException("You have to login");
+        throw new UnauthorizedException("You have to login");
 
 
     }@PostMapping("/users/logout")
     public ResponseEntity<String> logout(HttpSession session) {
-        if (session != null) {
-            session.invalidate();
+        boolean logged = (boolean) session.getAttribute(Constants.LOGGED);
+        if (!logged) {
+            throw new UnauthorizedException("You have to login");
         }
+        session.invalidate();
         return ResponseEntity.ok("Logged out successfully");
     }
 
 
 
     @PutMapping("/users/edit")
-    public UserWithoutPasswordDTO editProfile(@RequestBody RegisterDTO editProfileData){
-        return userService.editProfile(editProfileData);
+    public UserWithoutPasswordDTO editProfile(@RequestBody RegisterDTO editProfileData,HttpSession session){
+        boolean logged = (boolean) session.getAttribute(Constants.LOGGED);
+        if (!logged) {
+            throw new UnauthorizedException("You have to login");
+        }
+        UserWithoutPasswordDTO u=userService.editProfile(editProfileData);
+        return u;
     }
+
+
 
 }

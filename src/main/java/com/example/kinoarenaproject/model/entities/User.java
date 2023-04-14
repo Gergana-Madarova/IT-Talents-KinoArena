@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -19,7 +20,7 @@ public class User {
     private String last_name;
     private String email;
     private String password;
-    private Date birth_date;
+    private LocalDate birth_date;
     private int city_id;
     private String gender;
     private String phone_number;
