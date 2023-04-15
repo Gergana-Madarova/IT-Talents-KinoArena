@@ -65,12 +65,6 @@ public class UserController extends AbstractController {
         return u;
     }
 
-    protected  int loggedId(HttpSession session){
-        if(session.getAttribute(Constants.LOGGED_ID)==null){
-            throw new UnauthorizedException("You have to login first");
-        }
-        System.out.println(Constants.LOGGED_ID);
-        return (int) session.getAttribute(Constants.LOGGED_ID);
-    }
+
 
 }

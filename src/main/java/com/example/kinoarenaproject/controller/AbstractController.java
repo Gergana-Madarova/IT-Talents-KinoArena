@@ -4,6 +4,7 @@ import com.example.kinoarenaproject.model.DTOs.ErrorDTO;
 import com.example.kinoarenaproject.model.exceptions.BadRequestException;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.time.LocalDateTime;
 
 public abstract class AbstractController {
+
+
+
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDTO handleBadRequest(Exception e){
@@ -41,5 +45,12 @@ public abstract class AbstractController {
                 .time(LocalDateTime.now())
                 .status(s.value())
                 .build();
+    }
+    protected  int loggedId(HttpSession session){
+        if(session.getAttribute(Constants.LOGGED_ID)==null){
+            throw new UnauthorizedException("You have to login first");
+        }
+        System.out.println(Constants.LOGGED_ID);
+        return (int) session.getAttribute(Constants.LOGGED_ID);
     }
 }

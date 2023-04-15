@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegisterDTO {
-//    private int id;
+
     private  String first_name;
     private String last_name;
     private String email;

@@ -16,4 +16,7 @@ public class City {
     private String postcode;
 //    @OneToMany(mappedBy = "city")
 //    private List<User>users;
+
+    @OneToMany(mappedBy = "city")
+    private  List<Cinema>cinemas;
 }

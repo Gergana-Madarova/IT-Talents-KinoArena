@@ -3,16 +3,16 @@ POST http://localhost:8000/users
 Content-Type: application/json
 
 {
-  "first_name": "Kris",
-  "last_name": "Darov",
-  "email": "kris@abv.bg",
+  "first_name": "Admin",
+  "last_name": "Parov",
+  "email": "admin@abv.bg",
   "password": "123456Sb#",
   "confirmPassword":"123456Sb#",
   "birth_date": "2000-12-01",
   "city_id": 1,
   "gender": "m",
-  "phone_number": "0888888888",
-  "role_name": "user"
+  "phone_number": "0888888855",
+  "role_name": "ADMIN"
 }
 ###
 # login user
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 {
 
-  "email": "kris@abv.bg",
+  "email": "admin@abv.bg",
   "password": "123456Sb#"
 
 }
@@ -48,21 +48,21 @@ PUT http://localhost:8000/users/edit
 Content-Type: application/json
 
 {
-  "first_name": "Kris",
-  "last_name": "Darov",
-  "email": "kris@abv.bg",
+  "first_name": "Pesho",
+  "last_name": "Pavlov",
+  "email": "pesho@abv.bg",
   "password": "123456Sb#",
   "birth_date": "2000-12-01",
   "city_id": 1,
   "gender": "m",
-  "phone_number": "0888888899",
+  "phone_number": "0888888855",
   "role_name": "user"
 }
 
 
 ###
 # get user by id
-GET http://localhost:8000/users/3
+GET http://localhost:8000/users/12
 Content-Type: application/json
 
 
