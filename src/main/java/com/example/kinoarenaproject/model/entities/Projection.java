@@ -2,8 +2,8 @@ package com.example.kinoarenaproject.model.entities;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity(name = "projections")
 public class Projection {
@@ -11,9 +11,13 @@ public class Projection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "start_time")
-    private Time startTime;
+    private LocalTime startTime;
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
+  /*  @Column(name = "date")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private Date date; */
     //TODO HAll
  /*   @ManyToOne
     @JoinColumn(name = "hall_id")

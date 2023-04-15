@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 
 @Entity(name = "movies")
 public class Movie {
@@ -17,7 +18,7 @@ public class Movie {
     @Column(name = "duration")
     private int duration;
     @Column(name = "premiere")
-    private Date premiere;
+    private LocalDate premiere;
     @Column(name = "director")
     private String director;
     @Column(name = "cast")

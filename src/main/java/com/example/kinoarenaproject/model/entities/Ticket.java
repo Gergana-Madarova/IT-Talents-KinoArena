@@ -17,7 +17,7 @@ public class Ticket {
     private Projection projection;
     @Column(name = "row_number")
     private int rowNumber;
-    @Column(name = "rcol_number")
+    @Column(name = "rool_number")
     private int colNumber;
     @Column(name = "price")
     private double price;
