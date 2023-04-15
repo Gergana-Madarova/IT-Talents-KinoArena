@@ -3,6 +3,8 @@ package com.example.kinoarenaproject.controller;
 
     import com.example.kinoarenaproject.model.DTOs.LoginDTO;
     import com.example.kinoarenaproject.model.DTOs.RegisterDTO;
+    import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
+    import jakarta.servlet.http.HttpSession;
 
     import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,5 +41,7 @@ import java.util.regex.Pattern;
         public static boolean validPhoneNumber(RegisterDTO registerData){
             return isValidPhoneNumber(registerData.getPhone_number());
         }
+
+
 
 }
