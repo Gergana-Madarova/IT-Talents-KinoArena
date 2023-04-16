@@ -32,6 +32,6 @@ public class AllCinemasDTO {
         return Objects.hash(id);
     }
 
-    private String adress;
+
 
 }

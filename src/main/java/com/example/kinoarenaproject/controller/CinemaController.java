@@ -14,39 +14,46 @@ public class CinemaController extends AbstractController{
 
     @Autowired
     private CinemaService cinemaService;
+
     @PostMapping("/cinemas")
-    public CinemaWithoutCity add(@RequestBody AddCinemaDTO addData, HttpSession session){
+    public CinemaDTO add(@RequestBody AddCinemaDTO addData, HttpSession session){
         int id=loggedId(session);
-       CinemaWithoutCity cinema=cinemaService.add(addData,id);
+       CinemaDTO cinema=cinemaService.add(addData,id);
 //        session.setAttribute(Constants.LOGGED,true);
 //        session.setAttribute(Constants.LOGGED_ID,u.getId());
         return cinema;
     }
+
    @PostMapping("cinemas/filter")
-    public CinemaWithoutCity filter(@RequestBody int cityId,int projectionId){
+    public Cinema filter(@RequestBody int cityId, int projectionId){
         return null;// todo
    }
+
+
    @PutMapping("/cinemas/{id}")
-   public CinemaWithoutCity edit(@RequestBody EditCinemaDTO editData,HttpSession session){
-        int id=loggedId(session);
-       CinemaWithoutCity cinema=cinemaService.edit(editData,id);
-       return cinema;
+   public CinemaDTO edit(@RequestBody CinemaDTO editData,@PathVariable int id, HttpSession session){
+        int userId=loggedId(session);
+       CinemaDTO c=cinemaService.edit(editData,id,userId);
+       return c;
    }
+
    @GetMapping("/cinemas/{id}")
-    public CinemaWithoutCity getById(@PathVariable int id){
+    public CinemaDTO getById(@PathVariable int id){
         return cinemaService.getById(id);
    }
-   @GetMapping("/cinema/all")
-    public HashSet<Cinema> getAll(){
-        HashSet<Cinema>cinemas=cinemaService.getAll();
+
+
+
+   @GetMapping("/cinemas/all")
+    public HashSet<CinemaDTO> getAll(){
+        HashSet<CinemaDTO>cinemas=cinemaService.getAll();
         return cinemas;
    }
-   @DeleteMapping("/cinemas/{id}")
 
-    public Cinema remove(@PathVariable int id, HttpSession session){
-       int userId=loggedId(session);
-       Cinema cinema=cinemaService.remove(id,userId);
-        return cinema;
+   @DeleteMapping("/cinemas/{id}")
+   public CinemaDTO remove(@PathVariable int id, HttpSession session){
+        int userId=loggedId(session);
+       return  cinemaService.remove(id,userId);
    }
 
 

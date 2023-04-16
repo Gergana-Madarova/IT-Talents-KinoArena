@@ -1,5 +1,6 @@
 package com.example.kinoarenaproject.model.DTOs;
 
+import com.example.kinoarenaproject.model.entities.City;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,5 +25,5 @@ public class RegisterDTO {
     private String phone_number;
     private String role_name;
     private String errorMassage;
-
+//    private CityInfo city;
 }

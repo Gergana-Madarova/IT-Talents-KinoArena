@@ -3,9 +3,9 @@ POST http://localhost:8000/users
 Content-Type: application/json
 
 {
-  "first_name": "Admin",
+  "first_name": "Admin2",
   "last_name": "Parov",
-  "email": "admin@abv.bg",
+  "email": "admin2@abv.bg",
   "password": "123456Sb#",
   "confirmPassword":"123456Sb#",
   "birth_date": "2000-12-01",
@@ -20,9 +20,9 @@ POST http://localhost:8000/users/login
 Content-Type: application/json
 
 {
-
-  "email": "admin@abv.bg",
+  "email": "admin2@abv.bg",
   "password": "123456Sb#"
+
 
 }
 ###
@@ -48,15 +48,16 @@ PUT http://localhost:8000/users/edit
 Content-Type: application/json
 
 {
-  "first_name": "Pesho",
-  "last_name": "Pavlov",
-  "email": "pesho@abv.bg",
+  "first_name": "Boris",
+  "last_name": "Parov",
+  "email": "boris@abv.bg",
   "password": "123456Sb#",
+
   "birth_date": "2000-12-01",
   "city_id": 1,
   "gender": "m",
-  "phone_number": "0888888855",
-  "role_name": "user"
+  "phone_number": "0888888811",
+  "role_name": "ADMIN"
 }
 
 

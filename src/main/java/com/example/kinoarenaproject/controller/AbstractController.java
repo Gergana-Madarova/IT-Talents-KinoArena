@@ -1,6 +1,7 @@
 package com.example.kinoarenaproject.controller;
 
 import com.example.kinoarenaproject.model.DTOs.ErrorDTO;
+import com.example.kinoarenaproject.model.entities.User;
 import com.example.kinoarenaproject.model.exceptions.BadRequestException;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public abstract class AbstractController {
 
@@ -53,4 +55,6 @@ public abstract class AbstractController {
         System.out.println(Constants.LOGGED_ID);
         return (int) session.getAttribute(Constants.LOGGED_ID);
     }
+
+
 }

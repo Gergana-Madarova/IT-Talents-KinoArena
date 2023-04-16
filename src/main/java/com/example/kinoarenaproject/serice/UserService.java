@@ -2,6 +2,7 @@ package com.example.kinoarenaproject.serice;
 
 import com.example.kinoarenaproject.controller.ValidationUtils;
 import com.example.kinoarenaproject.model.DTOs.*;
+import com.example.kinoarenaproject.model.entities.City;
 import com.example.kinoarenaproject.model.entities.User;
 import com.example.kinoarenaproject.model.exceptions.BadRequestException;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
@@ -57,6 +58,7 @@ public class UserService {
         }
         User u = mapper.map(registerData, User.class);
         u.setPassword(passwordEncoder.encode(u.getPassword()));
+
         userRepository.save(u);
         return mapper.map(u, UserWithoutPasswordDTO.class);
 
@@ -97,7 +99,6 @@ public class UserService {
         u.setGender(editProfileData.getGender());
         u.setCity_id(editProfileData.getCity_id());
 
-//        u.setPassword(passwordEncoder.encode(u.getPassword()));
         userRepository.save(u);
         return mapper.map(u, UserWithoutPasswordDTO.class);
     }

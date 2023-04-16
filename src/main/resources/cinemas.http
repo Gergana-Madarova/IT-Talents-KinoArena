@@ -3,10 +3,10 @@ POST http://localhost:8000/cinemas
 Content-Type: application/json
 
 {
-  "name": "ArenaSofia",
+  "name": "ArenaSofia10",
   "address": "Sofia",
-  "city_id": "1",
-  "phone_number": "0888222223"
+  "city_id": 1,
+  "phone_number": "0888222288"
 }
 ###
 #filter
@@ -19,24 +19,25 @@ Content-Type: application/json
 }
 ###
 #edit
-PUT http://localhost:8000/cinemas/{id}
+PUT http://localhost:8000/cinemas/3
 Content-Type: application/json
 
 {
-"name": "string",
-"address": "string",
-"city_id": "integer",
-"phone_number": "string"
+
+  "name": "ArenaSofia13",
+  "address": "Sofia",
+  "city_id": 1,
+  "phone_number": "0888222244"
 }
 ###
 #gitById
-GET http://localhost:8000/cinemas/{id}
-Accept:  application/json
+GET http://localhost:8000/cinemas/3
+Content-Type: application/json
 ###
 #getAll
 GET http://localhost:8000/cinemas/all
 Accept:  application/json
 ###
 #remove
-DELETE http://localhost:8000/cinemas/{id}
+DELETE http://localhost:8000/cinemas/5
 Accept:  application/json

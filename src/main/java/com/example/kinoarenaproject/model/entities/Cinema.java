@@ -15,10 +15,17 @@ public class Cinema {
     @Column
     private String name;
     @Column
-    private String adress;
+    private String address;
+    @Column
+    private String phone_number;
+//    @Column
+//    private int city_id;
+
+
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
 
+//    @OneToMany(mappedBy = "cinema")
 
 }
