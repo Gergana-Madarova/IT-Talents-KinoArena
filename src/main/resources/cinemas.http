@@ -14,8 +14,8 @@ POST http://localhost:8000/cinemas/filter
 Content-Type: application/json
 
 {
-  "city_id": 1,
-  "projection_id": 5
+  "city_id": 1
+
 }
 ###
 #edit

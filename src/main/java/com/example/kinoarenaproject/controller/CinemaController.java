@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
 
 @RestController
 public class CinemaController extends AbstractController{
@@ -25,8 +26,9 @@ public class CinemaController extends AbstractController{
     }
 
    @PostMapping("cinemas/filter")
-    public Cinema filter(@RequestBody int cityId, int projectionId){
-        return null;// todo
+    public List<CinemaDTO> filter(@RequestBody int cityId){
+        List<CinemaDTO>cinemaList=cinemaService.filterByCity(cityId);
+        return cinemaList;
    }
 
 

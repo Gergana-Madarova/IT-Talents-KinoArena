@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService extends com.example.kinoarenaproject.serice.Service {
     @Autowired
     private UserRepository userRepository;
     @Autowired

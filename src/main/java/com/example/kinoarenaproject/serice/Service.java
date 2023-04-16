@@ -16,7 +16,7 @@ public abstract class Service {
     private ModelMapper mapper;
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
-    public User findById(int id){
+    public User userById(int id){
         Optional<User>opt=userRepository.findById(id);
         User u=opt.get();
         return u;
