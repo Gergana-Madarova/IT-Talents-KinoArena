@@ -115,17 +115,6 @@ public class CinemaService extends com.example.kinoarenaproject.serice.Service {
     }
 
 
-
-//    public User userById(int id){
-//        Optional<User> opt = userRepository.findById(id);
-//        if (!opt.isPresent()) {
-//            throw new UnauthorizedException("Wrong credentials");
-//        }
-//        User u = opt.get();
-//        return  u;
-//    }
-
-
     public List<CinemaDTO>filterByCity(int cityId) {
         List<Cinema>cinemas=new ArrayList<>();
 

@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 @Entity(name = "cinemas")
 @Table
 @Setter
@@ -26,6 +30,7 @@ public class Cinema {
     @JoinColumn(name = "city_id")
     private City city;
 
-//    @OneToMany(mappedBy = "cinema")
+    @OneToMany(mappedBy = "cinema")
+    private List<Hall>halls=new ArrayList<>();
 
 }

@@ -7,6 +7,8 @@ import com.example.kinoarenaproject.model.DTOs.HallDTO;
 import com.example.kinoarenaproject.serice.HallService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -18,13 +20,10 @@ public class HallController extends AbstractController{
     HallService hallService;
 
 
-
-
-
     @PostMapping("/halls")
-    public AddHallDTO add(@RequestBody AddHallDTO addData, HttpSession session){
+    public HallDTO add(@RequestBody AddHallDTO addData, HttpSession session){
         int id=loggedId(session);
-        AddHallDTO hall=hallService.add(addData,id);
+        HallDTO hall=hallService.add(addData,id);
 
         return hall;
     }
@@ -48,10 +47,10 @@ public class HallController extends AbstractController{
         return hallService.getById(id);
     }
 
-    @GetMapping("/halls/seets")
-    public List<HallDTO> getAvailableSeets(){
-        return hallService.getSeets();
-    }
+//    @GetMapping("/halls/seats")
+//    public List<HallDTO> getAvailableSeets(){
+//        return hallService.getSeets();
+//    }
 
     @DeleteMapping("/halls/{id}")
     public HallDTO remove(@PathVariable int id, HttpSession session){
