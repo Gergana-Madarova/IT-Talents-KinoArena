@@ -20,7 +20,7 @@ public class Hall {
     private int rows;
     @Column
     private int columns;
-   @ManyToOne
-    @JoinColumn(name = "cinema_id")
+   @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cinemaId")
     private Cinema cinema;
 }

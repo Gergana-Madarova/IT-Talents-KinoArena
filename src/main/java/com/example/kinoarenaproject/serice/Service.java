@@ -1,5 +1,6 @@
 package com.example.kinoarenaproject.serice;
 
+import com.example.kinoarenaproject.controller.Constants;
 import com.example.kinoarenaproject.model.entities.User;
 import com.example.kinoarenaproject.model.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -20,5 +21,9 @@ public abstract class Service {
         Optional<User>opt=userRepository.findById(id);
         User u=opt.get();
         return u;
+    }
+    public boolean admin(int userId){
+       User u=userById(userId);
+      return u.getRole_name().equals(Constants.ADMIN) ;
     }
 }

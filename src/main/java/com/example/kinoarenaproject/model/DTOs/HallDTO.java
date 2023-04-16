@@ -21,5 +21,5 @@ public class HallDTO {
 
     private int columns;
 
-    private Cinema cinema;
+    private CinemaWithoutListDTO cinema;
 }
