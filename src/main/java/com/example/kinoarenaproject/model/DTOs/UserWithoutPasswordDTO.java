@@ -20,6 +20,6 @@ public class UserWithoutPasswordDTO {
     private int city_id;
     private String gender;
     private String phone_number;
-
     private String role_name;
+//    private CityInfo city;
 }

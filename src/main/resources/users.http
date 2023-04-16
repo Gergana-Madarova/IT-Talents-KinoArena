@@ -3,16 +3,16 @@ POST http://localhost:8000/users
 Content-Type: application/json
 
 {
-  "first_name": "Masho",
-  "last_name": "Marov",
-  "email": "mashko@abv.bg",
-  "password": "123456Sa#",
-  "confirmPassword":"123456Sa#",
+  "first_name": "Admin2",
+  "last_name": "Parov",
+  "email": "admin2@abv.bg",
+  "password": "123456Sb#",
+  "confirmPassword":"123456Sb#",
   "birth_date": "2000-12-01",
   "city_id": 1,
   "gender": "m",
-  "phone_number": "0888888888",
-  "role_name": "user"
+  "phone_number": "0888888855",
+  "role_name": "ADMIN"
 }
 ###
 # login user
@@ -20,22 +20,23 @@ POST http://localhost:8000/users/login
 Content-Type: application/json
 
 {
+  "email": "admin2@abv.bg",
+  "password": "123456Sb#"
 
-  "email": "mashko@abv.bg",
- "password": "123456Sa#"
 
 }
 ###
 # logout user
 POST http://localhost:8000/users/logout
 Content-Type: application/json
+
 ###
 #  change password
-POST http://localhost:8000/users
+PUT http://localhost:8000/users
 Content-Type: application/json
 
 {
- "currentPassword": "123456Sa#",
+ "currentPassword": "123456Sb#",
  "newPassword": "12345RRrr*",
  "confirmNewPassword": "12345RRrr*",
   "email": "mashko@abv.bg"
@@ -43,25 +44,26 @@ Content-Type: application/json
 }
 ###
 # edit profile
-PUT http://localhost:8000/users
+PUT http://localhost:8000/users/edit
 Content-Type: application/json
 
 {
-  "first_name": "string",
-  "last_name": "string",
-  "email": "string",
-  "password": "string",
-  "birth_date": "date",
-  "city_id": "integer",
-  "gender": "string",
-  "phone_number": "string",
-  "role_name": "string"
+  "first_name": "Boris",
+  "last_name": "Parov",
+  "email": "boris@abv.bg",
+  "password": "123456Sb#",
+
+  "birth_date": "2000-12-01",
+  "city_id": 1,
+  "gender": "m",
+  "phone_number": "0888888811",
+  "role_name": "ADMIN"
 }
 
 
 ###
 # get user by id
-GET http://localhost:8000/users/3
+GET http://localhost:8000/users/12
 Content-Type: application/json
 
 

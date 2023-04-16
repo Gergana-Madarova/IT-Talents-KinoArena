@@ -36,6 +36,7 @@ public class User {
     private String phone_number;
     @Column
     private String role_name;
+
 //   @ManyToOne
 //   @JoinColumn(name = "city_id")
 //    private City city;

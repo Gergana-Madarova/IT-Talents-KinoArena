@@ -1,11 +1,15 @@
 package com.example.kinoarenaproject.model.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity(name = "cities")
 @Table
+@Getter
+@Setter
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,4 +20,7 @@ public class City {
     private String postcode;
 //    @OneToMany(mappedBy = "city")
 //    private List<User>users;
+
+    @OneToMany(mappedBy = "city")
+    private  List<Cinema>cinemas;
 }
