@@ -1,4 +1,4 @@
-package com.example.kinoarenaproject.serice;
+package com.example.kinoarenaproject.service;
 
 import com.example.kinoarenaproject.controller.Constants;
 import com.example.kinoarenaproject.model.DTOs.AddHallDTO;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class HallService extends com.example.kinoarenaproject.serice.Service {
+public class HallService extends com.example.kinoarenaproject.service.Service {
     @Autowired
     HallRepository hallRepository;
     @Autowired

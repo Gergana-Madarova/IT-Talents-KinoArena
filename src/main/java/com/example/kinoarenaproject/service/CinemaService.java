@@ -1,10 +1,8 @@
-package com.example.kinoarenaproject.serice;
+package com.example.kinoarenaproject.service;
 
 import com.example.kinoarenaproject.controller.Constants;
 import com.example.kinoarenaproject.model.DTOs.AddCinemaDTO;
 import com.example.kinoarenaproject.model.DTOs.CinemaDTO;
-import com.example.kinoarenaproject.model.DTOs.EditProfileDTO;
-import com.example.kinoarenaproject.model.DTOs.UserWithoutPasswordDTO;
 import com.example.kinoarenaproject.model.entities.Cinema;
 import com.example.kinoarenaproject.model.entities.City;
 import com.example.kinoarenaproject.model.entities.User;
@@ -23,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CinemaService extends com.example.kinoarenaproject.serice.Service {
+public class CinemaService extends com.example.kinoarenaproject.service.Service {
     @Autowired
     CinemaRepository cinemaRepository;
     @Autowired

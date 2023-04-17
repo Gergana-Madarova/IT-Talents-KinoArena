@@ -1,4 +1,4 @@
-package com.example.kinoarenaproject.serice;
+package com.example.kinoarenaproject.service;
 
 import com.example.kinoarenaproject.controller.Constants;
 import com.example.kinoarenaproject.model.entities.User;
@@ -22,6 +22,7 @@ public abstract class Service {
         User u=opt.get();
         return u;
     }
+
     public boolean admin(int userId){
        User u=userById(userId);
       return u.getRole_name().equals(Constants.ADMIN) ;

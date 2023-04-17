@@ -1,0 +1,18 @@
+# book tickets - не попълва id на новия ticket и не взима id-то на прожекцията
+POST http://localhost:8000/tickets
+Content-Type: application/json
+
+{
+  "isRegular": false,
+  "projection": 4,
+  "rowNumber": 2,
+  "colNumber": 2,
+  "price": 17.5,
+  "discount": 2.5
+}
+
+###
+# get ticket by id - Ако всички колони са попълнени е коректно.
+# Но ако имам null => Трябва да оправя при id 7 например
+GET http://localhost:8000/tickets/4
+Content-Type: application/json

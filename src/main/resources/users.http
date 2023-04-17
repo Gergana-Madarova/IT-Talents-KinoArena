@@ -26,6 +26,15 @@ Content-Type: application/json
 
 }
 ###
+# login user
+POST http://localhost:8000/users/login
+Content-Type: application/json
+
+{
+"email": "example123@example.com",
+"password": "Passw0rd!"
+}
+###
 # logout user
 POST http://localhost:8000/users/logout
 Content-Type: application/json
@@ -65,5 +74,33 @@ Content-Type: application/json
 # get user by id
 GET http://localhost:8000/users/12
 Content-Type: application/json
+
+
+###
+# login user
+POST http://localhost:8000/users/login
+Content-Type: application/json
+
+{
+  "email": "chloesmith@abv.bg",
+  "password": "123456Sb#"
+}
+
+###
+# edit profile
+PUT http://localhost:8000/users/edit
+Content-Type: application/json
+
+{
+  "id": 12,
+  "first_name": "Chloe",
+  "last_name": "Smith",
+  "email": "chloesmith@abv.bg",
+  "birth_date": "1989-12-12",
+  "city_id": 2,
+  "gender": "F",
+  "phone_number": "9876543210",
+  "role_name": "USER"
+}
 
 

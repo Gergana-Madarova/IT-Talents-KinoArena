@@ -12,9 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TicketBookDTO {
-    private User user;
+  //  private int id;
     private boolean isRegular;
-    private Projection projection;
+    private int projectionId;
     private int rowNumber;
     private int colNumber;
     private double price;
