@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,14 +40,14 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
             }
             movie = mapper.map(addData, Movie.class);
 
-            Optional<Category> optCategory = categoryRepository.findById(addData.getCategory());
+            Optional<Category> optCategory = categoryRepository.findById(addData.getCategoryId());
             if (!optCategory.isPresent()) {
                 throw new NotFoundException("Category not found");
             }
             Category category = optCategory.get();
             movie.setCategory(category);
 
-            Optional<Genre> optGenre = genreRepository.findById(addData.getGenre());
+            Optional<Genre> optGenre = genreRepository.findById(addData.getGenreId());
             if (!optGenre.isPresent()) {
                 throw new NotFoundException("Movie not found");
             }
@@ -59,7 +60,6 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
             System.out.println(r.getMessage());
         }
         return mapper.map(movie, MovieInfoDTO.class);
-
     }
 
     public MovieInfoDTO edit(EditMovieDTO movieDTO, int id, int userId) {
@@ -103,11 +103,27 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
         Movie movie = opt.get();
         movieRepository.delete(movie);
 
-        MovieInfoDTO movieInfoDTO=mapper.map(movie,MovieInfoDTO.class);
+        MovieInfoDTO movieInfoDTO=mapper.map(movie, MovieInfoDTO.class);
         return  movieInfoDTO;
     }
 
-    public MovieInfoDTO getById(int id) {
+    public MovieDTO getById(int id) {
+        Optional<Movie> opt = movieRepository.findById(id);
+        if (opt.isPresent()) {
+            return mapper.map(opt.get(), MovieDTO.class);
+        } else {
+            throw new NotFoundException("Movie with this id is not found");
+        }
+    }
+
+    public List<MovieDTO> getAll() {
+        return movieRepository.findAll()
+                .stream()
+                .map(m -> mapper.map(m, MovieDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public MovieInfoDTO getInfo(int id) {
         Optional<Movie> opt = movieRepository.findById(id);
         if (opt.isPresent()) {
             return mapper.map(opt.get(), MovieInfoDTO.class);
@@ -116,17 +132,23 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
         }
     }
 
-    public List<MovieInfoDTO> getAll() {
-        return movieRepository.findAll()
-                .stream()
+    /*
+            List<Movie>movies=new ArrayList<>();
+        movies.addAll(movieRepository.findAll());
+        movies.stream()
                 .map(m -> mapper.map(m, MovieInfoDTO.class))
-                .collect(Collectors.toList());
-    }
 
-    // TODO как да взема на кой movie инфото се иска => get заявка => трябва да променя url-а и да подавам и id?
-    public MovieInfoDTO getInfo() {
-        return null;
+        public HashSet<CinemaDTO> getAll() {
+        HashSet<Cinema>cinemas=new HashSet<>();
+        cinemas.addAll(cinemaRepository.findAll());
+        HashSet<CinemaDTO>cinemaDTOS=new HashSet<>();
+        for (Cinema c:cinemas){
+
+            cinemaDTOS.add( mapper.map(c,CinemaDTO.class));
+        }
+        return cinemaDTOS;
     }
+     */
 
     // TODO за add edit delete  трябва да проверя първо дали е логнат като админ - в контролера?
 

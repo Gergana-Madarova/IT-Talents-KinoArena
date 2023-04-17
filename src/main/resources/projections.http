@@ -4,19 +4,19 @@ Content-Type: application/json
 
 {
   "startTime": "19:30:00",
-  "date": "2023-05-01",
-  "hallId": 1,
-  "movieId": 5
+  "date": "2022-10-01",
+  "hallId": 6,
+  "movieId": 10
 }
 
 ###
 #getById - ОК
-GET http://localhost:8000/projections/1
+GET http://localhost:8000/projections/3
 Content-Type: application/json
 
 ###
 #edit - OK
-PUT http://localhost:8000/projections/12
+PUT http://localhost:8000/projections/14
 Content-Type: application/json
 
 {
@@ -27,5 +27,14 @@ Content-Type: application/json
 }
 ###
 #remove - OK
-DELETE http://localhost:8000/projections/12
+DELETE http://localhost:8000/projections/14
 Accept:  application/json
+
+###
+#filter by Movie
+POST http://localhost:8000/projections/filter
+Content-Type: application/json
+
+{
+  "movieId": 1
+}

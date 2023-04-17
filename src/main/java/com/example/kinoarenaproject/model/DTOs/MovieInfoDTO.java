@@ -1,10 +1,5 @@
 package com.example.kinoarenaproject.model.DTOs;
 
-import com.example.kinoarenaproject.model.entities.Category;
-import com.example.kinoarenaproject.model.entities.Genre;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
