@@ -26,15 +26,6 @@ Content-Type: application/json
 
 }
 ###
-# login user
-POST http://localhost:8000/users/login
-Content-Type: application/json
-
-{
-"email": "example123@example.com",
-"password": "Passw0rd!"
-}
-###
 # logout user
 POST http://localhost:8000/users/logout
 Content-Type: application/json
@@ -48,7 +39,8 @@ Content-Type: application/json
  "currentPassword": "123456Sb#",
  "newPassword": "12345RRrr*",
  "confirmNewPassword": "12345RRrr*",
-  "email": "mashko@abv.bg"
+  "email": "user3@abv.bg"
+
 
 }
 ###
@@ -61,7 +53,6 @@ Content-Type: application/json
   "last_name": "Parov",
   "email": "boris@abv.bg",
   "password": "123456Sb#",
-
   "birth_date": "2000-12-01",
   "city_id": 1,
   "gender": "m",
@@ -75,6 +66,23 @@ Content-Type: application/json
 GET http://localhost:8000/users/12
 Content-Type: application/json
 
+###
+#delete user by id
+DELETE http://localhost:8000/users/20
+Accept:  application/json
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ###
 # login user
@@ -82,28 +90,9 @@ POST http://localhost:8000/users/login
 Content-Type: application/json
 
 {
-  "email": "boris@abv.bg",
-  "password": "123456Sb#"
+  "email": "example123@example.com",
+  "password": "Passw0rd!"
 }
-
-###
-# register user
-POST http://localhost:8000/users
-Content-Type: application/json
-
-{
-  "first_name": "Boris",
-  "last_name": "Parov",
-  "email": "boris@abv.bg",
-  "password": "123456Sb#",
-  "confirmPassword": "123456Sb#",
-  "birth_date": "2000-12-01",
-  "city_id": 1,
-  "gender": "m",
-  "phone_number": "0888888811",
-  "role_name": "USER"
-}
-
 ###
 # edit profile
 PUT http://localhost:8000/users/edit
@@ -118,6 +107,42 @@ Content-Type: application/json
   "city_id": 2,
   "gender": "F",
   "phone_number": "9876543210",
+  "role_name": "USER"
+}
+###
+# login user
+POST http://localhost:8000/users/login
+Content-Type: application/json
+
+{
+  "email": "chloesmith@abv.bg",
+  "password": "123456Sb#"
+}
+###
+
+POST http://localhost:8000/users/login
+Content-Type: application/json
+
+{
+  "email": "user3@abv.bg",
+  "password": "123456Sb#"
+
+
+}
+###
+POST http://localhost:8000/users
+Content-Type: application/json
+
+{
+  "first_name": "User3",
+  "last_name": "Parov",
+  "email": "user3@abv.bg",
+  "password": "123456Sb#",
+  "confirmPassword":"123456Sb#",
+  "birth_date": "2000-12-01",
+  "city_id": 1,
+  "gender": "m",
+  "phone_number": "0888888855",
   "role_name": "USER"
 }
 

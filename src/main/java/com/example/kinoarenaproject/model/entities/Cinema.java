@@ -30,7 +30,7 @@ public class Cinema {
     @JoinColumn(name = "city_id")
     private City city;
 
-    @OneToMany(mappedBy = "cinema")
+    @OneToMany(mappedBy = "cinema",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Hall>halls=new ArrayList<>();
 
 }

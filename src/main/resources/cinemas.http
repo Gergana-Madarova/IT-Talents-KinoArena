@@ -24,13 +24,13 @@ Content-Type: application/json
 
 {
 
-  "name": "ArenaSofia13",
+  "name": "ArenaSofia10",
   "address": "Sofia",
   "city_id": 1,
-  "phone_number": "0888222244"
+  "phone_number": "0888222299"
 }
 ###
-#gitById
+#getById
 GET http://localhost:8000/cinemas/3
 Content-Type: application/json
 ###
@@ -39,5 +39,5 @@ GET http://localhost:8000/cinemas/all
 Accept:  application/json
 ###
 #remove
-DELETE http://localhost:8000/cinemas/5
+DELETE http://localhost:8000/cinemas/7
 Accept:  application/json

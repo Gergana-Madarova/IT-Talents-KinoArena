@@ -1,7 +1,9 @@
 package com.example.kinoarenaproject.service;
 
+import com.example.kinoarenaproject.controller.Constants;
 import com.example.kinoarenaproject.controller.ValidationUtils;
 import com.example.kinoarenaproject.model.DTOs.*;
+import com.example.kinoarenaproject.model.entities.Cinema;
 import com.example.kinoarenaproject.model.entities.User;
 import com.example.kinoarenaproject.model.exceptions.BadRequestException;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
@@ -100,6 +102,24 @@ public class UserService extends com.example.kinoarenaproject.service.Service {
         userRepository.save(u);
         return mapper.map(u, UserWithoutPasswordDTO.class);
     }
+
+    public UserWithoutPasswordDTO delete(int adminId, int userId) {
+//        public CinemaDTO remove(int id, int userId) {
+            User u = userById(adminId);
+            if (!u.getRole_name().equals(Constants.ADMIN)) {
+                throw new UnauthorizedException("Unauthorized role");
+            }
+            Optional <User>opt=userRepository.findById(userId);
+            if(!opt.isPresent()){
+                throw new NotFoundException("User not found");
+            }
+            User userToDelete=opt.get();
+            userRepository.delete(userToDelete);
+            return   mapper.map(userToDelete,UserWithoutPasswordDTO.class);
+
+        }
+
+
 }
 
 

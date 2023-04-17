@@ -6,11 +6,13 @@ import com.example.kinoarenaproject.model.DTOs.AddCinemaDTO;
 import com.example.kinoarenaproject.model.DTOs.CinemaDTO;
 import com.example.kinoarenaproject.model.entities.Cinema;
 import com.example.kinoarenaproject.model.entities.City;
+import com.example.kinoarenaproject.model.entities.Hall;
 import com.example.kinoarenaproject.model.entities.User;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
 import com.example.kinoarenaproject.model.repositories.CinemaRepository;
 import com.example.kinoarenaproject.model.repositories.CityRepository;
+import com.example.kinoarenaproject.model.repositories.HallRepository;
 import com.example.kinoarenaproject.model.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ public class CinemaService extends com.example.kinoarenaproject.service.Service 
     private ModelMapper mapper;
     @Autowired
     CityRepository cityRepository;
+
 
     public CinemaDTO add(AddCinemaDTO addCinema, int id) {
         Cinema cin=null;
@@ -77,17 +80,18 @@ public class CinemaService extends com.example.kinoarenaproject.service.Service 
         return   mapper.map(c,CinemaDTO.class);
 
     }
-    public CinemaDTO remove(int id, int userId) {
+    public CinemaDTO remove(int cinemaId, int userId) {
         User u = userById(userId);
-        if (!u.getRole_name().equals(Constants.ADMIN)) {
+        if (!admin(userId)) {
             throw new UnauthorizedException("Unauthorized role");
         }
-        Optional <Cinema>opt=cinemaRepository.findById(id);
+        Optional <Cinema>opt=cinemaRepository.findById(cinemaId);
         if(!opt.isPresent()){
             throw new NotFoundException("Cinema not found");
         }
         Cinema c=opt.get();
         cinemaRepository.delete(c);
+
         CinemaDTO cDto=mapper.map(c,CinemaDTO.class);
         return  cDto;
     }
@@ -97,7 +101,6 @@ public class CinemaService extends com.example.kinoarenaproject.service.Service 
         cinemas.addAll(cinemaRepository.findAll());
         HashSet<CinemaDTO>cinemaDTOS=new HashSet<>();
         for (Cinema c:cinemas){
-
             cinemaDTOS.add( mapper.map(c,CinemaDTO.class));
         }
         return cinemaDTOS;
@@ -119,11 +122,7 @@ public class CinemaService extends com.example.kinoarenaproject.service.Service 
         List<Cinema>cinemas=new ArrayList<>();
         City city=cityRepository.findById(cityId).get();
         cinemas.addAll(cinemaRepository.findByCity(city));
-//        List<AddCinemaDTO>cinemaDTOS=new ArrayList<>();
-//        for (Cinema c:cinemas){
-//            cinemaDTOS.add( mapper.map(c,AddCinemaDTO.class));
-//        }
-//        return cinemaDTOS;
+
         return cinemas.stream()
                 .map(cinema -> mapper.map(cinema, AddCinemaDTO.class))
                 .peek(addCinemaDTO -> addCinemaDTO.setCity_id(cityId))
