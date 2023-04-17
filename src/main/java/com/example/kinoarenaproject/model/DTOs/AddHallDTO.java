@@ -11,11 +11,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddHallDTO {
-    private int typeId;
+    private int id;
+    private int type_id;
 
     private int rows;
 
     private int columns;
 
-    private int cinemaId;
+    private int cinema_id;
 }

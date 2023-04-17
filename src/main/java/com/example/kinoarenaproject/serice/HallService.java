@@ -1,6 +1,7 @@
 package com.example.kinoarenaproject.serice;
 
 import com.example.kinoarenaproject.controller.Constants;
+import com.example.kinoarenaproject.model.DTOs.AddCinemaDTO;
 import com.example.kinoarenaproject.model.DTOs.AddHallDTO;
 import com.example.kinoarenaproject.model.DTOs.CinemaDTO;
 import com.example.kinoarenaproject.model.DTOs.HallDTO;
@@ -11,6 +12,7 @@ import com.example.kinoarenaproject.model.entities.User;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
 import com.example.kinoarenaproject.model.repositories.CinemaRepository;
+import com.example.kinoarenaproject.model.repositories.CityRepository;
 import com.example.kinoarenaproject.model.repositories.HallRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class HallService extends com.example.kinoarenaproject.serice.Service {
@@ -28,38 +31,38 @@ public class HallService extends com.example.kinoarenaproject.serice.Service {
     ModelMapper mapper;
     @Autowired
     CinemaRepository cinemaRepository;
+    @Autowired
+    CityRepository cityRepository;
 
     public HallDTO add(AddHallDTO addData, int id) {
 
-        Hall hall=null;
-            try {
-                User u = userById(id);
+
+
+//        User u = userById(id);
                 if(! admin(id)){
                     throw new UnauthorizedException("Unauthorized role");
                 }
-
-//          Optional<City> opt=cityRepository.findById(addCinema.getCity_id());
-                Optional<Cinema>opt=cinemaRepository.findById(addData.getCinemaId());
+                Optional<Cinema>opt=cinemaRepository.findById(addData.getCinema_id());
                 if(!opt.isPresent()){
                     throw new NotFoundException("Cinema not found");
                 }
-//                City city= opt.get();
-//                cin.setCity(city);
                 Cinema cinema= opt.get();
-                hall = mapper.map(addData,Hall.class);
+               Hall hall = mapper.map(addData,Hall.class);
                 hall.setCinema(cinema);
                 hallRepository.save(hall);
 
-//                cinemaRepository.save(cin);
-            }catch (RuntimeException r){
-                r.printStackTrace();
-                System.out.println(r.getMessage());
-            }
             return mapper.map(hall,HallDTO.class);
         }
 
-    public List<HallDTO> filterByCinema(int cinemaId) {
-        return null;
+    public List<AddHallDTO> filterByCinema(int cinemaId) {
+         List<Hall>halls=new ArrayList<>();
+         Cinema cinema=cinemaRepository.findById(cinemaId).get();
+         halls.addAll(hallRepository.findByCinema(cinema));
+         return halls.stream()
+                 .map(hall -> mapper.map(hall,AddHallDTO.class))
+                .peek(addHallDTO -> addHallDTO.setCinema_id(cinemaId))
+                .collect(Collectors.toList());
+
     }
 
     public HallDTO edit(HallDTO editData, int id, int userId) {
@@ -74,7 +77,7 @@ public class HallService extends com.example.kinoarenaproject.serice.Service {
             throw new UnauthorizedException("Wrong credentials");
         }
         Hall h = opt.get();
-        h.setTypeId(editData.getTypeId());
+        h.setType_id(editData.getType_id());
         h.setRows(editData.getRows());
         h.setColumns(editData.getColumns());
 
@@ -95,21 +98,6 @@ public class HallService extends com.example.kinoarenaproject.serice.Service {
         }
     }
 
-
-//    public List<HallDTO> getSeets() {
-//            public List<CinemaDTO>filterByCity(int cityId) {
-//                List<Cinema>cinemas=new ArrayList<>();
-//
-//                cinemas.addAll(cinemaRepository.findByCity(cityId));
-//                List<CinemaDTO>cinemaDTOS=new ArrayList<>();
-//                for (Cinema c:cinemas){
-//                    cinemaDTOS.add( mapper.map(c,CinemaDTO.class));
-//                }
-//                return cinemaDTOS;
-//        }
-//    return null;
-//
-//    }
 
     public HallDTO remove(int id, int userId) {
 

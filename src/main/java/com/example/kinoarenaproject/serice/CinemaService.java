@@ -1,10 +1,7 @@
 package com.example.kinoarenaproject.serice;
 
 import com.example.kinoarenaproject.controller.Constants;
-import com.example.kinoarenaproject.model.DTOs.AddCinemaDTO;
-import com.example.kinoarenaproject.model.DTOs.CinemaDTO;
-import com.example.kinoarenaproject.model.DTOs.EditProfileDTO;
-import com.example.kinoarenaproject.model.DTOs.UserWithoutPasswordDTO;
+import com.example.kinoarenaproject.model.DTOs.*;
 import com.example.kinoarenaproject.model.entities.Cinema;
 import com.example.kinoarenaproject.model.entities.City;
 import com.example.kinoarenaproject.model.entities.User;
@@ -21,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CinemaService extends com.example.kinoarenaproject.serice.Service {
@@ -115,15 +113,19 @@ public class CinemaService extends com.example.kinoarenaproject.serice.Service {
     }
 
 
-    public List<CinemaDTO>filterByCity(int cityId) {
+    public List<AddCinemaDTO>filterByCity(int cityId) {
         List<Cinema>cinemas=new ArrayList<>();
-
-        cinemas.addAll(cinemaRepository.findByCity(cityId));
-        List<CinemaDTO>cinemaDTOS=new ArrayList<>();
-        for (Cinema c:cinemas){
-            cinemaDTOS.add( mapper.map(c,CinemaDTO.class));
-        }
-        return cinemaDTOS;
+        City city=cityRepository.findById(cityId).get();
+        cinemas.addAll(cinemaRepository.findByCity(city));
+//        List<AddCinemaDTO>cinemaDTOS=new ArrayList<>();
+//        for (Cinema c:cinemas){
+//            cinemaDTOS.add( mapper.map(c,AddCinemaDTO.class));
+//        }
+//        return cinemaDTOS;
+        return cinemas.stream()
+                .map(cinema -> mapper.map(cinema, AddCinemaDTO.class))
+                .peek(addCinemaDTO -> addCinemaDTO.setCity_id(cityId))
+                .collect(Collectors.toList());
 
 
 

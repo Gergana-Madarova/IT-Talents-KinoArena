@@ -29,8 +29,8 @@ public class HallController extends AbstractController{
     }
 
     @PostMapping("halls/by_cinema")
-    public List<HallDTO> filter(@RequestBody int cinemaId){
-        List<HallDTO>hallList=hallService.filterByCinema(cinemaId);
+    public List<AddHallDTO> filter(@RequestBody int cinemaId){
+        List<AddHallDTO>hallList=hallService.filterByCinema(cinemaId);
         return hallList;
     }
 

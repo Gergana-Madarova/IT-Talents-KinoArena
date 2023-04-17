@@ -26,8 +26,8 @@ public class CinemaController extends AbstractController{
     }
 
    @PostMapping("cinemas/filter")
-    public List<CinemaDTO> filter(@RequestBody int cityId){
-        List<CinemaDTO>cinemaList=cinemaService.filterByCity(cityId);
+    public List<AddCinemaDTO> filter(@RequestBody int cityId){
+        List<AddCinemaDTO>cinemaList=cinemaService.filterByCity(cityId);
         return cinemaList;
    }
 
