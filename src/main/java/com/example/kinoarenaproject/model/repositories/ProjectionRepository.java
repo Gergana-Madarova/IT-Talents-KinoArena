@@ -13,5 +13,5 @@ import java.util.Optional;
 public interface ProjectionRepository extends JpaRepository<Projection, Integer> {
     Optional<Projection> findById(int id);
     List<Movie> findByMovieId(int movieId);
-    List<Projection> findByHallIdCinemaId(Cinema cinema);
+    List<Projection> findByHallIdCinemaId(int cinema);
 }

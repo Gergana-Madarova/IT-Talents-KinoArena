@@ -1,5 +1,6 @@
 package com.example.kinoarenaproject.model.entities;
 
+import com.example.kinoarenaproject.model.DTOs.HallDTO;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -25,10 +26,6 @@ public class Projection {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate date;
-  /*  @Column(name = "date")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
-    private Date date; */
     //TODO въпрос: една прожекция също може да я има в много зали?
     @ManyToOne
     @JoinColumn(name = "hall_id")

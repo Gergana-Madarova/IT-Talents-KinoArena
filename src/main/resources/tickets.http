@@ -12,7 +12,13 @@ Content-Type: application/json
 }
 
 ###
-# get ticket by id - Ако всички колони са попълнени е коректно.
-# Но ако имам null => Трябва да оправя при id 7 например
+# get ticket by id - OK
+#Ако всички колони са попълнени
 GET http://localhost:8000/tickets/4
+Content-Type: application/json
+
+###
+# get ticket by id - OK
+#Ако имам null колони
+GET http://localhost:8000/tickets/7
 Content-Type: application/json
