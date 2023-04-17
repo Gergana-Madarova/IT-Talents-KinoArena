@@ -3,6 +3,7 @@ package com.example.kinoarenaproject.service;
 import com.example.kinoarenaproject.controller.Constants;
 import com.example.kinoarenaproject.model.DTOs.AddCinemaDTO;
 import com.example.kinoarenaproject.model.DTOs.AddProjectionDTO;
+//import com.example.kinoarenaproject.model.DTOs.EditProjectionDTO;
 import com.example.kinoarenaproject.model.DTOs.EditProjectionDTO;
 import com.example.kinoarenaproject.model.DTOs.ProjectionDTO;
 import com.example.kinoarenaproject.model.entities.*;
@@ -76,11 +77,11 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
         Projection projection = opt.get();
         projection.setStartTime(projectionDTO.getStartTime());
         projection.setDate(projectionDTO.getDate());
-        Optional<Movie>optMovie=movieRepository.findById(projectionDTO.getMovieId());
-        Movie movie= optMovie.get();
+        Optional<Movie> optMovie = movieRepository.findById(projectionDTO.getMovieId());
+        Movie movie = optMovie.get();
         projection.setMovieId(movie);
-        Optional<Hall>optHall=hallRepository.findById(projectionDTO.getHallId());
-        Hall hall= optHall.get();
+        Optional<Hall> optHall = hallRepository.findById(projectionDTO.getHallId());
+        Hall hall = optHall.get();
         projection.setHallId(hall);
 
         projectionRepository.save(projection);
@@ -92,16 +93,16 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
         if (!u.getRole_name().equals(Constants.ADMIN)) {
             throw new UnauthorizedException("Unauthorized role");
         }
-        Optional <Projection>opt=projectionRepository.findById(id);
-        if(!opt.isPresent()){
+        Optional<Projection> opt = projectionRepository.findById(id);
+        if (!opt.isPresent()) {
             throw new NotFoundException("Projection not found");
         }
 
         Projection projection = opt.get();
         projectionRepository.delete(projection);
 
-        ProjectionDTO projectionDTO=mapper.map(projection,ProjectionDTO.class);
-        return  projectionDTO;
+        ProjectionDTO projectionDTO = mapper.map(projection, ProjectionDTO.class);
+        return projectionDTO;
     }
 
     public ProjectionDTO getById(int id) {
@@ -114,5 +115,17 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
     }
 
 
+
+
+
+    public List<AddProjectionDTO> filterByMovie(int movieId) {
+        List<Movie> movies = new ArrayList<>();
+        Movie movie = movieRepository.findById(movieId).get();
+        movies.addAll(projectionRepository.findByMovieId(movieId));
+        return movies.stream()
+                .map(projection -> mapper.map(projection, AddProjectionDTO.class))
+                .peek(addProjectionDTO -> addProjectionDTO.setMovieId(movieId))
+                .collect(Collectors.toList());
+    }
 
 }

@@ -5,8 +5,8 @@ Content-Type: application/json
 {
   "isRegular": false,
   "projection": 4,
-  "rowNumber": 2,
-  "colNumber": 2,
+  "rowNumber": 1,
+  "colNumber": 4,
   "price": 17.5,
   "discount": 2.5
 }

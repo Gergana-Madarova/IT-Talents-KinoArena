@@ -14,11 +14,5 @@ import java.time.LocalDate;
 public class MovieDTO {
     private int id;
     private String title;
-    private String description;
-    private int duration;
-    private LocalDate premiere;
-    private String director;
-    private String cast;
     private CategoryInfo category;
-    private GenreInfo genre;
 }
