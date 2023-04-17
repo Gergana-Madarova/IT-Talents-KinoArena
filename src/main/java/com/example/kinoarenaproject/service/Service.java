@@ -12,9 +12,9 @@ import java.util.Optional;
 @org.springframework.stereotype.Service
 public abstract class Service {
     @Autowired
-    private UserRepository userRepository;
+    public UserRepository userRepository;
     @Autowired
-    private ModelMapper mapper;
+    public ModelMapper mapper;
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
     public User userById(int id){

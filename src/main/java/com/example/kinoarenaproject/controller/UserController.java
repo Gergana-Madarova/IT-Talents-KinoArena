@@ -5,6 +5,7 @@ import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
 import com.example.kinoarenaproject.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -39,7 +40,7 @@ public class UserController extends AbstractController {
         return userService.changePassword(changePassData,id);
     }
 
- /*   @PostMapping("/users/logout")
+    @PostMapping("/users/logout")
     public ResponseEntity<String> logout(LogoutDTO logoutData , HttpSession session) {
 
         boolean logged = (boolean) session.getAttribute(Constants.LOGGED);
@@ -50,21 +51,25 @@ public class UserController extends AbstractController {
         return ResponseEntity.ok("Logged out successfully");
     }
 
-  */
+
 
 
 
     @PutMapping("/users/edit")
     public UserWithoutPasswordDTO editProfile(@RequestBody EditProfileDTO editProfileData,HttpSession session){
-//        boolean logged = (boolean) session.getAttribute(Constants.LOGGED);
-//        if (!logged) {
-//            throw new UnauthorizedException("You have to login");
-//        }
+        boolean logged = (boolean) session.getAttribute(Constants.LOGGED);
+        if (!logged) {
+            throw new UnauthorizedException("You have to login");
+        }
         int id=loggedId(session);
         UserWithoutPasswordDTO u=userService.editProfile(editProfileData,id);
         return u;
     }
-
+    @DeleteMapping("/users/{id}")
+    public UserWithoutPasswordDTO delete(@PathVariable int id, HttpSession session){
+        int adminId=loggedId(session);
+        return  userService.delete(adminId,id);
+    }
 
 
 }

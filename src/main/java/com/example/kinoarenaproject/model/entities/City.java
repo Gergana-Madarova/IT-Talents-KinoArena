@@ -21,6 +21,6 @@ public class City {
 //    @OneToMany(mappedBy = "city")
 //    private List<User>users;
 
-    @OneToMany(mappedBy = "city")
+    @OneToMany(mappedBy = "city",cascade = CascadeType.ALL,orphanRemoval = true)
     private  List<Cinema>cinemas;
 }
