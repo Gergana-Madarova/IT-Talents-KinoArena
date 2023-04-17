@@ -126,30 +126,6 @@ public class CinemaService extends com.example.kinoarenaproject.serice.Service {
                 .map(cinema -> mapper.map(cinema, AddCinemaDTO.class))
                 .peek(addCinemaDTO -> addCinemaDTO.setCity_id(cityId))
                 .collect(Collectors.toList());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        public List<ResponseCinemaDTO> getAllCinemasByCity(String city) throws NotFoundException {
-//            List<Cinema> cinemas = cinemaRepository.findAllByCity(city);
-//            if (cinemas.isEmpty()) {
-//                throw new NotFoundException("No found cinemas in this city");
-//            }
-//            List<ResponseCinemaDTO> responseCinemaDTOS = new ArrayList<>();
-//            for (Cinema c : cinemas) {
-//                responseCinemaDTOS.add(new ResponseCinemaDTO(c));
-//            }
-//            return responseCinemaDTOS;
-        }
     }
+}
 
