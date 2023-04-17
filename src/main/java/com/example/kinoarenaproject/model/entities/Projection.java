@@ -36,4 +36,5 @@ public class Projection {
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private Movie movieId;
+
 }

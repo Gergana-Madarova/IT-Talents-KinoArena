@@ -29,3 +29,6 @@ Content-Type: application/json
 #remove - OK
 DELETE http://localhost:8000/projections/12
 Accept:  application/json
+###
+POST http:// localhost:8000/projections/filter
+Content-Type: application/json
