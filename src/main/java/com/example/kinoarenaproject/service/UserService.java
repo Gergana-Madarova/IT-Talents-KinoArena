@@ -1,8 +1,7 @@
-package com.example.kinoarenaproject.serice;
+package com.example.kinoarenaproject.service;
 
 import com.example.kinoarenaproject.controller.ValidationUtils;
 import com.example.kinoarenaproject.model.DTOs.*;
-import com.example.kinoarenaproject.model.entities.City;
 import com.example.kinoarenaproject.model.entities.User;
 import com.example.kinoarenaproject.model.exceptions.BadRequestException;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
@@ -13,11 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
-public class UserService extends com.example.kinoarenaproject.serice.Service {
+public class UserService extends com.example.kinoarenaproject.service.Service {
     @Autowired
     private UserRepository userRepository;
     @Autowired

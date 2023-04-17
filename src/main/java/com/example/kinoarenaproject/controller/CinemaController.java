@@ -1,8 +1,7 @@
 package com.example.kinoarenaproject.controller;
 
 import com.example.kinoarenaproject.model.DTOs.*;
-import com.example.kinoarenaproject.model.entities.Cinema;
-import com.example.kinoarenaproject.serice.CinemaService;
+import com.example.kinoarenaproject.service.CinemaService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,17 +1,14 @@
 package com.example.kinoarenaproject.controller;
 
-import com.example.kinoarenaproject.model.DTOs.AddCinemaDTO;
 import com.example.kinoarenaproject.model.DTOs.AddHallDTO;
-import com.example.kinoarenaproject.model.DTOs.CinemaDTO;
 import com.example.kinoarenaproject.model.DTOs.HallDTO;
-import com.example.kinoarenaproject.serice.HallService;
+import com.example.kinoarenaproject.service.HallService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -57,4 +54,6 @@ public class HallController extends AbstractController{
         int userId=loggedId(session);
         return  hallService.remove(id,userId);
     }
+
+
 }

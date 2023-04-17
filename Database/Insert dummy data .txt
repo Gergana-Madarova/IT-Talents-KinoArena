@@ -1,7 +1,6 @@
 -- -----------------------------------------------------
 -- Table `kino_arena`.`cities`
 -- -----------------------------------------------------
-
 INSERT INTO cities (id, name, postcode) VALUES (1, 'София', '1000');
 INSERT INTO cities (id, name, postcode) VALUES (2, 'Пловдив', '4000');
 INSERT INTO cities (id, name, postcode) VALUES (3, 'Варна', '9000');
@@ -26,7 +25,6 @@ INSERT INTO cities (id, name, postcode) VALUES (20, 'Габрово', '5300');
 -- -----------------------------------------------------
 -- Table `kino_arena`.`genres`
 -- -----------------------------------------------------
-
 INSERT INTO `kino_arena`.`genres` (`id`, `genre`) VALUES (1, 'Драма');
 INSERT INTO `kino_arena`.`genres` (`id`, `genre`) VALUES (2, 'Екшън');
 INSERT INTO `kino_arena`.`genres` (`id`, `genre`) VALUES (3, 'Комедия');
@@ -40,7 +38,6 @@ INSERT INTO `kino_arena`.`genres` (`id`, `genre`) VALUES (8, 'Ужаси');
 -- -----------------------------------------------------
 -- Table `kino_arena`.`categories`
 -- -----------------------------------------------------
-
 INSERT INTO `kino_arena`.`categories` (`id`, `category`, `min_age`) VALUES (1, 'A', 0);
 INSERT INTO `kino_arena`.`categories` (`id`, `category`, `min_age`) VALUES (3, 'B', 12);
 INSERT INTO `kino_arena`.`categories` (`id`, `category`, `min_age`) VALUES (4, 'C', 14);
@@ -125,7 +122,6 @@ VALUES (24, 'Животът на другите', 'Драма за изневя�
 -- -----------------------------------------------------
 -- Table `kino_arena`.`cinemas`
 -- -----------------------------------------------------
-
 INSERT INTO cinemas (id, name, address, city_id, phone_number) VALUES (1, 'Кино Арена София', 'ул. Булгария 69', 1, '0888 123 456');
 INSERT INTO cinemas (id, name, address, city_id, phone_number) VALUES (2, 'Кино Арена Пловдив', 'бул. Шести септември 64', 2, '0899 987 654');
 INSERT INTO cinemas (id, name, address, city_id, phone_number) VALUES (3, 'Кино Арена Варна', 'бул. Владислав Варненчик 185', 3, '0877 111 222');
@@ -154,7 +150,6 @@ INSERT INTO halls (id, cinema_id, type_id, `rows`, `columns`) VALUES (8, 8, 2, 1
 INSERT INTO halls (id, cinema_id, type_id, `rows`, `columns`) VALUES (9, 9, 1, 10, 12);
 INSERT INTO halls (id, cinema_id, type_id, `rows`, `columns`) VALUES (10, 10, 2, 8, 10);
 
-
 -- -----------------------------------------------------
 -- Table `kino_arena`.`projections`
 -- -----------------------------------------------------
@@ -169,74 +164,66 @@ INSERT INTO projections (id, start_time, date, hall_id, movie_id) VALUES (8, '21
 INSERT INTO projections (id, start_time, date, hall_id, movie_id) VALUES (9, '19:30:00', '2023-04-22', 9, 9);
 INSERT INTO projections (id, start_time, date, hall_id, movie_id) VALUES (10, '20:45:00', '2023-04-23', 10, 10);
 
-
 -- -----------------------------------------------------
 -- Table `kino_arena`.`users`
 -- -----------------------------------------------------
--- -----------------------------------------------------
--- Table `kino_arena`.`users`
--- -----------------------------------------------------
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (1, 'John', 'Doe', 'johndoe@example.com', 'mypassword1', '1990-01-01', 1, 'M', '1234567890', 1, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (2, 'Jane', 'Doe', 'janedoe@example.com', 'mypassword2', '1995-02-02', 2, 'F', '9876543210', 0, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (3, 'Mark', 'Smith', 'marksmith@example.com', 'mypassword3', '1985-03-03', 3, 'M', '4567890123', 1, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (4, 'Emily', 'Johnson', 'emilyjohnson@example.com', 'mypassword4', '1992-04-04', 4, 'F', '8901234567', 0, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (5, 'Michael', 'Brown', 'michaelbrown@example.com', 'mypassword5', '1988-05-05', 5, 'M', '5678901234', 1, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (6, 'Sarah', 'Wilson', 'sarahwilson@example.com', 'mypassword6', '1991-06-06', 1, 'F', '1234567890', 1, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (7, 'David', 'Taylor', 'davidtaylor@example.com', 'mypassword7', '1994-07-07', 2, 'M', '9876543210', 0, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (8, 'Olivia', 'Miller', 'oliviamiller@example.com', 'mypassword8', '1986-08-08', 3, 'F', '4567890123', 1, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (9, 'Daniel', 'Anderson', 'danielanderson@example.com', 'mypassword9', '1993-09-09', 4, 'M', '8901234567', 0, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (10, 'Sophia', 'Brown', 'sophiabrown@example.com', 'mypassword10', '1987-10-10', 5, 'F', '5678901234', 1, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (11, 'Benjamin', 'Johnson', 'benjaminjohnson@example.com', 'mypassword11', '1996-11-11', 1, 'M', '1234567890', 0, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (12, 'Chloe', 'Smith', 'chloesmith@example.com', 'mypassword12', '1989-12-12', 2, 'F', '9876543210', 1, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (13, 'Samuel', 'Wilson', 'samuelwilson@example.com', 'mypassword13', '1997-01-13', 3, 'M', '4567890123', 0, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name)
-VALUES (14, 'Luke', 'Jones', 'lukejones@example.com', 'mypassword14', '1990-02-14', 4, 'M', '8901234567', 1, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (15, 'Grace', 'Lee', 'gracelee@example.com', 'mypassword15', '1998-03-15', 5, 'F', '5678901234', 0, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (16, 'Jacob', 'Nguyen', 'jacobnguyen@example.com', 'mypassword16', '1991-04-16', 1, 'M', '1234567890', 1, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (17, 'Zoe', 'Wang', 'zoewang@example.com', 'mypassword17', '1994-05-17', 2, 'F', '9876543210', 0, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (18, 'Ethan', 'Garcia', 'ethangarcia@example.com', 'mypassword18', '1986-06-18', 3, 'M', '4567890123', 1, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (19, 'Nora', 'Martin', 'noramartin@example.com', 'mypassword19', '1993-07-19', 4, 'F', '8901234567', 0, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (20, 'Jackson', 'Taylor', 'jacksontaylor@example.com', 'mypassword20', '1987-08-20', 5, 'M', '5678901234', 1, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (21, 'Olivia', 'Smith', 'oliviasmith@example.com', 'mypassword21', '1992-09-21', 1, 'F', '1234567890', 0, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (22, 'Henry', 'Anderson', 'henryanderson@example.com', 'mypassword22', '1985-10-22', 2, 'M', '9876543210', 1, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (23, 'Emma', 'Johnson', 'emmajohnson@example.com', 'mypassword23', '1997-11-23', 3, 'F', '4567890123', 0, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (24, 'William', 'Brown', 'williambrown@example.com', 'mypassword24', '1990-12-24', 4, 'M', '8901234567', 1, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (25, 'Sophia', 'Taylor', 'sophiataylor@example.com', 'mypassword25', '1998-01-25', 5, 'F', '5678901234', 0, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (26, 'Daniel', 'Miller', 'danielmiller@example.com', 'mypassword26', '1991-02-26', 1, 'M', '1234567890', 1, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (27, 'Madeline', 'Anderson', 'madelineanderson@example.com', 'mypassword27', '1994-03-27', 2, 'F', '9876543210', 0, 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, sign_up_for_newsletter, role_name) 
-VALUES (28, 'Oliver', 'Johnson', 'oliverjohnson@example.com', 'mypassword28', '1986-04-28', 3, 'M', '4567890123', 1, 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (1, 'John', 'Doe', 'johndoe@example.com', 'mypassword1', '1990-01-01', 1, 'M', '1234567890', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (2, 'Jane', 'Doe', 'janedoe@example.com', 'mypassword2', '1995-02-02', 2, 'F', '9876543210', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (3, 'Mark', 'Smith', 'marksmith@example.com', 'mypassword3', '1985-03-03', 3, 'M', '4567890123', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (4, 'Emily', 'Johnson', 'emilyjohnson@example.com', 'mypassword4', '1992-04-04', 4, 'F', '8901234567', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (5, 'Michael', 'Brown', 'michaelbrown@example.com', 'mypassword5', '1988-05-05', 5, 'M', '5678901234', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (6, 'Sarah', 'Wilson', 'sarahwilson@example.com', 'mypassword6', '1991-06-06', 1, 'F', '1234567890', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (7, 'David', 'Taylor', 'davidtaylor@example.com', 'mypassword7', '1994-07-07', 2, 'M', '9876543210', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (8, 'Olivia', 'Miller', 'oliviamiller@example.com', 'mypassword8', '1986-08-08', 3, 'F', '4567890123', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (9, 'Daniel', 'Anderson', 'danielanderson@example.com', 'mypassword9', '1993-09-09', 4, 'M', '8901234567', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (10, 'Sophia', 'Brown', 'sophiabrown@example.com', 'mypassword10', '1987-10-10', 5, 'F', '5678901234', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (11, 'Benjamin', 'Johnson', 'benjaminjohnson@example.com', 'mypassword11', '1996-11-11', 1, 'M', '1234567890', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (12, 'Chloe', 'Smith', 'chloesmith@example.com', 'mypassword12', '1989-12-12', 2, 'F', '9876543210', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (13, 'Samuel', 'Wilson', 'samuelwilson@example.com', 'mypassword13', '1997-01-13', 3, 'M', '4567890123', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name)
+VALUES (14, 'Luke', 'Jones', 'lukejones@example.com', 'mypassword14', '1990-02-14', 4, 'M', '8901234567', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (15, 'Grace', 'Lee', 'gracelee@example.com', 'mypassword15', '1998-03-15', 5, 'F', '5678901234', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (16, 'Jacob', 'Nguyen', 'jacobnguyen@example.com', 'mypassword16', '1991-04-16', 1, 'M', '1234567890', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (17, 'Zoe', 'Wang', 'zoewang@example.com', 'mypassword17', '1994-05-17', 2, 'F', '9876543210', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (18, 'Ethan', 'Garcia', 'ethangarcia@example.com', 'mypassword18', '1986-06-18', 3, 'M', '4567890123', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (19, 'Nora', 'Martin', 'noramartin@example.com', 'mypassword19', '1993-07-19', 4, 'F', '8901234567', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (20, 'Jackson', 'Taylor', 'jacksontaylor@example.com', 'mypassword20', '1987-08-20', 5, 'M', '5678901234', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (21, 'Olivia', 'Smith', 'oliviasmith@example.com', 'mypassword21', '1992-09-21', 1, 'F', '1234567890', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (22, 'Henry', 'Anderson', 'henryanderson@example.com', 'mypassword22', '1985-10-22', 2, 'M', '9876543210', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (23, 'Emma', 'Johnson', 'emmajohnson@example.com', 'mypassword23', '1997-11-23', 3, 'F', '4567890123', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (24, 'William', 'Brown', 'williambrown@example.com', 'mypassword24', '1990-12-24', 4, 'M', '8901234567', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (25, 'Sophia', 'Taylor', 'sophiataylor@example.com', 'mypassword25', '1998-01-25', 5, 'F', '5678901234', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (26, 'Daniel', 'Miller', 'danielmiller@example.com', 'mypassword26', '1991-02-26', 1, 'M', '1234567890', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (27, 'Madeline', 'Anderson', 'madelineanderson@example.com', 'mypassword27', '1994-03-27', 2, 'F', '9876543210', 'customer');
+INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
+VALUES (28, 'Oliver', 'Johnson', 'oliverjohnson@example.com', 'mypassword28', '1986-04-28', 3, 'M', '4567890123', 'customer');
 
-
--- -----------------------------------------------------
--- Table `kino_arena`.`tickets`
--- -----------------------------------------------------
 -- -----------------------------------------------------
 -- Table `kino_arena`.`tickets`
 -- -----------------------------------------------------

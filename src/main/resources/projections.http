@@ -1,0 +1,31 @@
+#add - OK
+POST http://localhost:8000/projections
+Content-Type: application/json
+
+{
+  "startTime": "19:30:00",
+  "date": "2023-05-01",
+  "hallId": 1,
+  "movieId": 5
+}
+
+###
+#getById - ОК
+GET http://localhost:8000/projections/1
+Content-Type: application/json
+
+###
+#edit - OK
+PUT http://localhost:8000/projections/12
+Content-Type: application/json
+
+{
+  "startTime": "10:30:00",
+  "date": "2023-05-01",
+  "hallId": 1,
+  "movieId": 5
+}
+###
+#remove - OK
+DELETE http://localhost:8000/projections/12
+Accept:  application/json

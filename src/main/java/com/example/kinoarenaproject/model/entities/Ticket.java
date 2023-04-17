@@ -1,8 +1,13 @@
 package com.example.kinoarenaproject.model.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity(name = "tickets")
+@Table
+@Setter
+@Getter
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,10 +19,10 @@ public class Ticket {
     private boolean isRegular;
     @ManyToOne
     @JoinColumn(name = "projection_id")
-    private Projection projection;
+    private Projection projectionId;
     @Column(name = "row_number")
     private int rowNumber;
-    @Column(name = "rcol_number")
+    @Column(name = "col_number")
     private int colNumber;
     @Column(name = "price")
     private double price;

@@ -2,11 +2,9 @@ package com.example.kinoarenaproject.controller;
 
 import com.example.kinoarenaproject.model.DTOs.*;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
-import com.example.kinoarenaproject.serice.UserService;
+import com.example.kinoarenaproject.service.UserService;
 import jakarta.servlet.http.HttpSession;
-import org.apache.el.util.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,7 +39,7 @@ public class UserController extends AbstractController {
         return userService.changePassword(changePassData,id);
     }
 
-    @PostMapping("/users/logout")
+ /*   @PostMapping("/users/logout")
     public ResponseEntity<String> logout(LogoutDTO logoutData , HttpSession session) {
 
         boolean logged = (boolean) session.getAttribute(Constants.LOGGED);
@@ -51,6 +49,8 @@ public class UserController extends AbstractController {
         session.invalidate();
         return ResponseEntity.ok("Logged out successfully");
     }
+
+  */
 
 
 
