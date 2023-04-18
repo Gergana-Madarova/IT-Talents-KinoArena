@@ -1,10 +1,16 @@
 package com.example.kinoarenaproject.model.repositories;
 
 import com.example.kinoarenaproject.model.entities.Cinema;
+
+import com.example.kinoarenaproject.model.entities.City;
+import com.example.kinoarenaproject.model.entities.Hall;
+
 import com.example.kinoarenaproject.model.entities.Movie;
+
 import com.example.kinoarenaproject.model.entities.Projection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +18,11 @@ import java.util.Optional;
 @Repository
 public interface ProjectionRepository extends JpaRepository<Projection, Integer> {
     Optional<Projection> findById(int id);
+
+
+
+
     List<Movie> findByMovieId(int movieId);
-    List<Projection> findByHallIdCinemaId(int cinema);
+    List<Projection> findByHallIdCinemaId(Cinema cinema);
+
 }

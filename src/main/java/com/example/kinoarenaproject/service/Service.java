@@ -2,6 +2,7 @@ package com.example.kinoarenaproject.service;
 
 import com.example.kinoarenaproject.controller.Constants;
 import com.example.kinoarenaproject.model.entities.User;
+import com.example.kinoarenaproject.model.repositories.CityRepository;
 import com.example.kinoarenaproject.model.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import java.util.Optional;
 public abstract class Service {
     @Autowired
     public UserRepository userRepository;
+    @Autowired
+    CityRepository cityRepository;
     @Autowired
     public ModelMapper mapper;
     @Autowired

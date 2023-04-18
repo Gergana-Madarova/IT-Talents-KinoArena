@@ -1,6 +1,7 @@
 package com.example.kinoarenaproject.service;
 
 import com.example.kinoarenaproject.controller.Constants;
+import com.example.kinoarenaproject.model.DTOs.AddCinemaDTO;
 import com.example.kinoarenaproject.model.DTOs.AddProjectionDTO;
 //import com.example.kinoarenaproject.model.DTOs.EditProjectionDTO;
 import com.example.kinoarenaproject.model.DTOs.EditProjectionDTO;
@@ -8,10 +9,7 @@ import com.example.kinoarenaproject.model.DTOs.ProjectionDTO;
 import com.example.kinoarenaproject.model.entities.*;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
-import com.example.kinoarenaproject.model.repositories.HallRepository;
-import com.example.kinoarenaproject.model.repositories.MovieRepository;
-import com.example.kinoarenaproject.model.repositories.ProjectionRepository;
-import com.example.kinoarenaproject.model.repositories.UserRepository;
+import com.example.kinoarenaproject.model.repositories.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +31,8 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
     HallRepository hallRepository;
     @Autowired
     private ModelMapper mapper;
+    @Autowired
+    CinemaRepository cinemaRepository;
 
     public ProjectionDTO add(AddProjectionDTO addProjection, int id) {
         Projection projection = null;
@@ -114,6 +114,10 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
         }
     }
 
+
+
+
+
     public List<AddProjectionDTO> filterByMovie(int movieId) {
         List<Movie> movies = new ArrayList<>();
        // Movie movie = movieRepository.findById(movieId).get();
@@ -123,4 +127,5 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
                 .peek(addProjectionDTO -> addProjectionDTO.setMovieId(movieId))
                 .collect(Collectors.toList());
     }
+
 }

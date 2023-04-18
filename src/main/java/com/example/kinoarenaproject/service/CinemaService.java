@@ -40,7 +40,7 @@ public class CinemaService extends com.example.kinoarenaproject.service.Service 
         Cinema cin=null;
         try {
             User u = userById(id);
-            if (!u.getRole_name().equals(Constants.ADMIN)) {
+            if (! admin(id)) {
                 throw new UnauthorizedException("Unauthorized role");
             }
              cin = mapper.map(addCinema, Cinema.class);

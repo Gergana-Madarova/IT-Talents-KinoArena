@@ -18,4 +18,5 @@ public class AddProjectionDTO {
     private LocalDate date;
     private int hallId;
     private int movieId;
+
 }
