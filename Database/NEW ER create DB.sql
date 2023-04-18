@@ -214,3 +214,6 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 ALTER TABLE `kino_arena`.`halls` 
 CHANGE COLUMN `rows` `hall_rows` INT NOT NULL ,
 CHANGE COLUMN `columns` `hall_columns` INT NOT NULL ;
+
+ALTER TABLE `kino_arena`.`users` 
+ADD COLUMN `profile_image_url` VARCHAR(300) NULL AFTER `role_name`;

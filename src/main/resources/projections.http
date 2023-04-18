@@ -16,7 +16,7 @@ Content-Type: application/json
 
 ###
 #edit - OK
-PUT http://localhost:8000/projections/14
+PUT http://localhost:8000/projections/3
 Content-Type: application/json
 
 {
@@ -27,22 +27,14 @@ Content-Type: application/json
 }
 ###
 #remove - OK
-<<<<<<< HEAD
-DELETE http://localhost:8000/projections/12
-Accept:  application/json
-###
-POST http:// localhost:8000/projections/filter
-Content-Type: application/json
-=======
-DELETE http://localhost:8000/projections/14
+DELETE http://localhost:8000/projections/15
 Accept:  application/json
 
 ###
-#filter by Movie
+#filter by Movie - NO!!!
 POST http://localhost:8000/projections/filter
 Content-Type: application/json
 
 {
   "movieId": 1
 }
-

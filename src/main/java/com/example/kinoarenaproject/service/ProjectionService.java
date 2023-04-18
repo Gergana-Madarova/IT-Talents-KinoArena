@@ -120,7 +120,7 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
 
     public List<AddProjectionDTO> filterByMovie(int movieId) {
         List<Movie> movies = new ArrayList<>();
-        Movie movie = movieRepository.findById(movieId).get();
+       // Movie movie = movieRepository.findById(movieId).get();
         movies.addAll(projectionRepository.findByMovieId(movieId));
         return movies.stream()
                 .map(projection -> mapper.map(projection, AddProjectionDTO.class))

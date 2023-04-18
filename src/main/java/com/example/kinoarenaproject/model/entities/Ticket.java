@@ -27,5 +27,5 @@ public class Ticket {
     @Column(name = "price")
     private double price;
     @Column(name = "discount")
-    private double discount;
+    private Double discount;
 }

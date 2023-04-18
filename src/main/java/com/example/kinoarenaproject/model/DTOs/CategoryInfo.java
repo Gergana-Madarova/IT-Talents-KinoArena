@@ -11,5 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CategoryInfo {
     private String category;
-    private int minАge;
+    private int minAge;
 }

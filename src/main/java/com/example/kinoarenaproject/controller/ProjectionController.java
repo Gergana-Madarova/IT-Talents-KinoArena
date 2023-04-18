@@ -35,9 +35,16 @@ public class ProjectionController extends AbstractController {
         return projection;
     }
 
+<<<<<<< HEAD
    @PostMapping("/projections/filter")
     public List<AddProjectionDTO> filter(@RequestBody int cityId){
         List<AddProjectionDTO>projectionList=projectionService.filterByMovie(cityId);
+=======
+    //filter by cinema and by movie
+    @PostMapping("/projections/filter")
+    public List<AddProjectionDTO> filter(@RequestBody int movieId) {
+        List<AddProjectionDTO> projectionList = projectionService.filterByMovie(movieId);
+>>>>>>> c3310c248e609936442361099cc96460d32b107e
         return projectionList;
    }
 

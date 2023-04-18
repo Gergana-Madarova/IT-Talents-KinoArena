@@ -62,25 +62,10 @@ public class TicketService extends com.example.kinoarenaproject.service.Service 
         return mapper.map(ticket, TicketInfoDTO.class);
     }
 
-    //TODO да го махна от тук и да използвам на Таня, когато го направи
- /*   public User userById(int id) {
-        Optional<User> opt = userRepository.findById(id);
-        if (!opt.isPresent()) {
-            throw new UnauthorizedException("Wrong credentials");
-        }
-        User u = opt.get();
-        return u;
-    }
-
-  */
-
     public TicketInfoDTO getTicketById(int id) {
         Optional<Ticket> opt = ticketRepository.findById(id);
         if (opt.isPresent()) {
             Ticket ticket = opt.get();
-            if (Objects.isNull(ticket.getDiscount())){
-                ticket.setDiscount(0);
-            }
             return mapper.map(ticket, TicketInfoDTO.class);
         } else {
             throw new NotFoundException("Ticket with this id is not found");

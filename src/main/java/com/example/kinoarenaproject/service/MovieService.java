@@ -5,10 +5,7 @@ import com.example.kinoarenaproject.model.DTOs.*;
 import com.example.kinoarenaproject.model.entities.*;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
-import com.example.kinoarenaproject.model.repositories.CategoryRepository;
-import com.example.kinoarenaproject.model.repositories.GenreRepository;
-import com.example.kinoarenaproject.model.repositories.MovieRepository;
-import com.example.kinoarenaproject.model.repositories.UserRepository;
+import com.example.kinoarenaproject.model.repositories.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +25,10 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
     CategoryRepository categoryRepository;
     @Autowired
     GenreRepository genreRepository;
+    @Autowired
+    HallRepository hallRepository;
+    @Autowired
+    ProjectionRepository projectionRepository;
     @Autowired
     private ModelMapper mapper;
 
@@ -110,7 +111,9 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
     public MovieDTO getById(int id) {
         Optional<Movie> opt = movieRepository.findById(id);
         if (opt.isPresent()) {
-            return mapper.map(opt.get(), MovieDTO.class);
+            Movie movie = opt.get();
+            MovieDTO movieDTO = mapper.map(movie, MovieDTO.class);
+            return movieDTO;
         } else {
             throw new NotFoundException("Movie with this id is not found");
         }
@@ -132,36 +135,15 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
         }
     }
 
-    /*
-            List<Movie>movies=new ArrayList<>();
-        movies.addAll(movieRepository.findAll());
-        movies.stream()
-                .map(m -> mapper.map(m, MovieInfoDTO.class))
-
-        public HashSet<CinemaDTO> getAll() {
-        HashSet<Cinema>cinemas=new HashSet<>();
-        cinemas.addAll(cinemaRepository.findAll());
-        HashSet<CinemaDTO>cinemaDTOS=new HashSet<>();
-        for (Cinema c:cinemas){
-
-            cinemaDTOS.add( mapper.map(c,CinemaDTO.class));
-        }
-        return cinemaDTOS;
-    }
-     */
-
-    // TODO за add edit delete  трябва да проверя първо дали е логнат като админ - в контролера?
-
  /*   public List<MovieDTO>filterByCinema(int cinemaId) {
-        List<Movie> movies = new ArrayList<>();
-        movies.addAll(movieRepository.findByCinema(cinemaId));
-        List<MovieDTO> movieDTOS = new ArrayList<>();
-        for (Movie m : movies) {
-            movieDTOS.add(mapper.map(m, MovieDTO.class));
-        }
-        return movieDTOS;
+    //    List<Movie> movies = new ArrayList<>();
+        List<Projection> projections = new ArrayList<>();
+        projections.addAll(projectionRepository.findByHallIdCinemaId(cinemaId));
+        return projections.stream()
+                .map(m -> mapper.map(m, MovieDTO.class))
+                .collect(Collectors.toList());
+
     }
 
   */
-
 }
