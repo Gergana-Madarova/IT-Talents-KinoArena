@@ -128,4 +128,5 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
                 .collect(Collectors.toList());
     }
 
+
 }

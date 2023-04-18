@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,7 @@ public interface ProjectionRepository extends JpaRepository<Projection, Integer>
 
 
     List<Movie> findByMovieId(int movieId);
-    List<Projection> findByHallIdCinemaId(Cinema cinema);
+    List<Projection> findByMovieId(Cinema cinema);
+
 
 }
