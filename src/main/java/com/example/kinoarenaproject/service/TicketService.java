@@ -33,32 +33,30 @@ public class TicketService extends com.example.kinoarenaproject.service.Service 
     private ModelMapper mapper;
 
     public TicketInfoDTO book(TicketBookDTO bookTicket, int loggedId) {
-        Ticket ticket = null;
-        try {
-            User u = userById(loggedId);
-            //TODO да променя ролята на USER
-            if (!u.getRole_name().equals(Constants.ADMIN)) {
-                throw new UnauthorizedException("Unauthorized role");
-            }
-            boolean isReserved = ticketRepository.existsByRowNumberAndColNumber(bookTicket.getRowNumber(), bookTicket.getColNumber());
-            if (isReserved) {
-                throw new NotFoundException("Choose a free seat!\nThis seat is reserved.");
-            }
-            ticket = mapper.map(bookTicket, Ticket.class);
-            ticket.setUser(u);
-
-            Optional<Projection> opt = projectionRepository.findById(bookTicket.getProjectionId());
-            if (!opt.isPresent()) {
-                throw new NotFoundException("Projection not found");
-            }
-            Projection projection = opt.get();
-            ticket.setProjectionId(projection);
-
-            ticketRepository.save(ticket);
-        } catch (RuntimeException r) {
-            r.printStackTrace();
-            System.out.println(r.getMessage());
+        User u = userById(loggedId);
+        //TODO да променя ролята на USER
+        if (!u.getRole_name().equals(Constants.ADMIN)) {
+            throw new UnauthorizedException("Unauthorized role");
         }
+        boolean isReserved = ticketRepository.existsByRowNumberAndColNumber(bookTicket.getRowNumber(), bookTicket.getColNumber());
+        if (isReserved) {
+            throw new NotFoundException("Choose a free seat!\nThis seat is reserved.");
+        }
+        Ticket ticket = new Ticket();
+        ticket.setUser(u);
+        Optional<Projection> opt = projectionRepository.findById(bookTicket.getProjectionId());
+        if (!opt.isPresent()) {
+            throw new NotFoundException("Projection not found");
+        }
+        Projection projection = opt.get();
+        ticket.setProjection(projection);
+        ticket.setRegular(bookTicket.isRegular());
+        ticket.setRowNumber(bookTicket.getRowNumber());
+        ticket.setColNumber(bookTicket.getColNumber());
+        ticket.setPrice(bookTicket.getPrice());
+        ticket.setDiscount(bookTicket.getDiscount());
+
+        ticketRepository.save(ticket);
         return mapper.map(ticket, TicketInfoDTO.class);
     }
 

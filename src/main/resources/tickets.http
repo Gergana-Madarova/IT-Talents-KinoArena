@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "isRegular": false,
-  "projection": 4,
+  "projectionId": 4,
   "rowNumber": 1,
   "colNumber": 4,
   "price": 17.5,

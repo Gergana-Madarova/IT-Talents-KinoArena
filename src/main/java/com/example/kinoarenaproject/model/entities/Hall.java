@@ -12,15 +12,13 @@ public class Hall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-//    @Column(name = "cinema_id")
-//    private  int cinemaId;
     @Column(name = "type_id")
     private int type_id;
     @Column(name = "hall_rows")
     private int rows;
     @Column(name = "hall_columns")
     private int columns;
-   @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
 }

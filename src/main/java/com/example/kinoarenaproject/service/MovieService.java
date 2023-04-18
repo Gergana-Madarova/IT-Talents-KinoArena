@@ -135,15 +135,33 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
         }
     }
 
- /*   public List<MovieDTO>filterByCinema(int cinemaId) {
-    //    List<Movie> movies = new ArrayList<>();
-        List<Projection> projections = new ArrayList<>();
-        projections.addAll(projectionRepository.findByHallIdCinemaId(cinemaId));
-        return projections.stream()
-                .map(m -> mapper.map(m, MovieDTO.class))
-                .collect(Collectors.toList());
-
+    //filter by genre
+    public List<AddMovieDTO>filterByGenre(int genreId) {
+        Optional<Genre> genre = genreRepository.findById(genreId);
+        if (genre.isPresent()) {
+            mapper.map(genre.get(), Genre.class);
+            List<Movie> movies = new ArrayList<>();
+            movies.addAll(movieRepository.findByGenre(genre));
+            return movies.stream()
+                    .map(m -> mapper.map(m, AddMovieDTO.class))
+                    .peek(addMovieDTO -> addMovieDTO.setGenreId(genreId))
+                    .collect(Collectors.toList());
+        } else {
+            throw new NotFoundException("Movie with this id is not found");
+        }
     }
 
-  */
+    public List<AddMovieDTO> filter(int genreId) {
+        Optional<Genre> genre = genreRepository.findById(genreId);
+        if (genre.isPresent()) {
+            List<Movie> movies = new ArrayList<>();
+            movies.addAll(movieRepository.findByGenre(genre));
+            return movies.stream()
+                    .map(m -> mapper.map(m, AddMovieDTO.class))
+                    .peek(addMovieDTO -> addMovieDTO.setGenreId(genreId))
+                    .collect(Collectors.toList());
+        } else {
+            throw new NotFoundException("Movie with this id is not found");
+        }
+    }
 }

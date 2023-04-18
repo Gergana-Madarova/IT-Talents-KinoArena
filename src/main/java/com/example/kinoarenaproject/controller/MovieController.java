@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-//import jakarta.servlet.http.HttpSession;
 
 
 @RestController
@@ -51,11 +50,18 @@ public class MovieController extends AbstractController {
         return movieService.getInfo(id);
     }
 
- /*   @PostMapping("movies/filter")
-    public List<MovieDTO> filter(@RequestBody int cinemaId) {
-        List<MovieDTO> movieList = movieService.filterByCinema(cinemaId);
+    @GetMapping("/movies/filterByGenre/{id}")
+    public List<AddMovieDTO> filterByGenre(@PathVariable int id) {
+        List<AddMovieDTO> movieList = movieService.filterByGenre(id);
         return movieList;
     }
 
-  */
+    @PostMapping("/movies/filter")
+    public List<AddMovieDTO> filter(@RequestBody int genreId) {
+        List<AddMovieDTO> movieList = movieService.filter(genreId);
+        return movieList;
+    }
+
+
+
 }

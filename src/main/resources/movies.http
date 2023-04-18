@@ -50,22 +50,14 @@ DELETE http://localhost:8000/movies/24
 Accept:  application/json
 
 ###
-# filter by Cinema
+# filter by Genre с POST - В Postman като подам за body int стойност работи, ка
 POST http://localhost:8000/movies/filter
 Content-Type: application/json
 
-{
-  "genreId": 0,
-  "cinemaId": 5
-}
+2
 
 ###
-# filter by Genre
-POST http://localhost:8000/movies/filter
+# filter by Genre - OK
+GET http://localhost:8000/movies/filterByGenre/2
 Content-Type: application/json
-
-{
-"genreId": 1,
-"cinemaId": 0
-}
 

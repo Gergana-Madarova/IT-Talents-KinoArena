@@ -19,7 +19,7 @@ public class Ticket {
     private boolean isRegular;
     @ManyToOne
     @JoinColumn(name = "projection_id")
-    private Projection projectionId;
+    private Projection projection;
     @Column(name = "row_number")
     private int rowNumber;
     @Column(name = "col_number")

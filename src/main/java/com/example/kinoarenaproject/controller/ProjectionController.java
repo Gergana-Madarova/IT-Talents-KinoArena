@@ -1,10 +1,7 @@
 package com.example.kinoarenaproject.controller;
 
-import com.example.kinoarenaproject.model.DTOs.AddHallDTO;
-import com.example.kinoarenaproject.model.DTOs.AddProjectionDTO;
+import com.example.kinoarenaproject.model.DTOs.*;
 //import com.example.kinoarenaproject.model.DTOs.EditProjectionDTO;
-import com.example.kinoarenaproject.model.DTOs.EditProjectionDTO;
-import com.example.kinoarenaproject.model.DTOs.ProjectionDTO;
 import com.example.kinoarenaproject.service.ProjectionService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +34,16 @@ public class ProjectionController extends AbstractController {
         return projection;
     }
 
-    //filter by cinema and by movie
-    @PostMapping("/projections/filter")
-    public List<AddProjectionDTO> filter(@RequestBody int movieId) {
-        List<AddProjectionDTO> projectionList = projectionService.filterByMovie(movieId);
+    //filter by hall
+/*    @PostMapping("/projections/filter")
+    public List<AddProjectionDTO> filter(@RequestBody int hallId) {
+        List<AddProjectionDTO> projectionList = projectionService.filterByHall(hallId);
         return projectionList;
     }
+
+ */
+
+    //filter by cinema ???
 
     @GetMapping("/projections/{id}")
     public ProjectionDTO getById(@PathVariable int id) {

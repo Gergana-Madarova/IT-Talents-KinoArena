@@ -1,7 +1,7 @@
 package com.example.kinoarenaproject.service;
 
 import com.example.kinoarenaproject.controller.Constants;
-import com.example.kinoarenaproject.model.DTOs.AddCinemaDTO;
+import com.example.kinoarenaproject.model.DTOs.AddMovieDTO;
 import com.example.kinoarenaproject.model.DTOs.AddProjectionDTO;
 //import com.example.kinoarenaproject.model.DTOs.EditProjectionDTO;
 import com.example.kinoarenaproject.model.DTOs.EditProjectionDTO;
@@ -14,10 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProjectionService extends com.example.kinoarenaproject.service.Service {
@@ -48,14 +45,14 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
                 throw new NotFoundException("Movie not found");
             }
             Movie movie = optMovie.get();
-            projection.setMovieId(movie);
+            projection.setMovie(movie);
 
             Optional<Hall> optHall = hallRepository.findById(addProjection.getHallId());
             if (!optHall.isPresent()) {
                 throw new NotFoundException("Movie not found");
             }
             Hall hall = optHall.get();
-            projection.setHallId(hall);
+            projection.setHall(hall);
 
             projectionRepository.save(projection);
         } catch (RuntimeException r) {
@@ -79,10 +76,10 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
         projection.setDate(projectionDTO.getDate());
         Optional<Movie> optMovie = movieRepository.findById(projectionDTO.getMovieId());
         Movie movie = optMovie.get();
-        projection.setMovieId(movie);
+        projection.setMovie(movie);
         Optional<Hall> optHall = hallRepository.findById(projectionDTO.getHallId());
         Hall hall = optHall.get();
-        projection.setHallId(hall);
+        projection.setHall(hall);
 
         projectionRepository.save(projection);
         return mapper.map(projection, ProjectionDTO.class);
@@ -114,18 +111,19 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
         }
     }
 
-
-
-
-
-    public List<AddProjectionDTO> filterByMovie(int movieId) {
-        List<Movie> movies = new ArrayList<>();
-       // Movie movie = movieRepository.findById(movieId).get();
-        movies.addAll(projectionRepository.findByMovieId(movieId));
-        return movies.stream()
-                .map(projection -> mapper.map(projection, AddProjectionDTO.class))
-                .peek(addProjectionDTO -> addProjectionDTO.setMovieId(movieId))
-                .collect(Collectors.toList());
+/*    public List<AddProjectionDTO> filterHall(int hallId) {
+        Optional<Hall> hall = hallRepository.findById(hallId);
+        if (hall.isPresent()) {
+            List<Projection> projections = new ArrayList<>();
+            projections.addAll(movieRepository.findByGenre(hall));
+            return projections.stream()
+                    .map(m -> mapper.map(m, AddProjectionDTO.class))
+                    .peek(addProjectionDTO -> addProjectionDTO.setHallId(hallId))
+                    .collect(Collectors.toList());
+        } else {
+            throw new NotFoundException("Movie with this id is not found");
+        }
     }
 
+ */
 }
