@@ -51,9 +51,11 @@ public class MovieController extends AbstractController {
         return movieService.getInfo(id);
     }
 
-    @PostMapping("movies/filter")
+ /*   @PostMapping("movies/filter")
     public List<MovieDTO> filter(@RequestBody int cinemaId) {
         List<MovieDTO> movieList = movieService.filterByCinema(cinemaId);
         return movieList;
     }
+
+  */
 }

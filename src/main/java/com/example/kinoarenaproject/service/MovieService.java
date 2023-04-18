@@ -135,7 +135,7 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
         }
     }
 
-    public List<MovieDTO>filterByCinema(int cinemaId) {
+ /*   public List<MovieDTO>filterByCinema(int cinemaId) {
     //    List<Movie> movies = new ArrayList<>();
         List<Projection> projections = new ArrayList<>();
         projections.addAll(projectionRepository.findByHallIdCinemaId(cinemaId));
@@ -143,12 +143,7 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
                 .map(m -> mapper.map(m, MovieDTO.class))
                 .collect(Collectors.toList());
 
-    /*    List<MovieDTO> movieDTOS = new ArrayList<>();
-        for (Movie m : movies) {
-            movieDTOS.add(mapper.map(m, MovieDTO.class));
-        }
-        return movieDTOS;
-
-     */
     }
+
+  */
 }
