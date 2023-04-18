@@ -22,8 +22,7 @@ public class Cinema {
     private String address;
     @Column
     private String phone_number;
-//    @Column
-//    private int city_id;
+
 
 
     @ManyToOne

@@ -12,8 +12,7 @@ public class Hall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-//    @Column(name = "cinema_id")
-//    private  int cinemaId;
+
     @Column(name = "type_id")
     private int type_id;
     @Column(name = "hall_rows")
