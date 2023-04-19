@@ -19,12 +19,12 @@ Content-Type: application/json
 }
 ###
 #edit
-PUT http://localhost:8000/cinemas/3
+PUT http://localhost:8000/cinemas/10
 Content-Type: application/json
 
 {
 
-  "name": "ArenaSofia10",
+  "name": "ArenaSofia13",
   "address": "Sofia",
   "city_id": 1,
   "phone_number": "0888222299"

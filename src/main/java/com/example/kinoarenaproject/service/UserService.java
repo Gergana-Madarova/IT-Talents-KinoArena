@@ -9,12 +9,19 @@ import com.example.kinoarenaproject.model.exceptions.BadRequestException;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
 import com.example.kinoarenaproject.model.repositories.UserRepository;
+import org.apache.naming.factory.SendMailFactory;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService extends com.example.kinoarenaproject.service.Service {
@@ -24,6 +31,8 @@ public class UserService extends com.example.kinoarenaproject.service.Service {
     private ModelMapper mapper;
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    JavaMailSender mailSender;
 
     public UserWithoutPasswordDTO login(LoginDTO loginData) {
 
@@ -35,13 +44,16 @@ public class UserService extends com.example.kinoarenaproject.service.Service {
             throw new UnauthorizedException("Wrong credentials");
         }
         User u = opt.get();
-        if (passwordEncoder.matches(loginData.getPassword(), u.getPassword())) {
-            return mapper.map(u, UserWithoutPasswordDTO.class);
+        if (u.isEnable()) {
+            if (passwordEncoder.matches(loginData.getPassword(), u.getPassword())) {
+                return mapper.map(u, UserWithoutPasswordDTO.class);
+            }
         } else {
             throw new UnauthorizedException("Wrong credentials");
         }
-
+        return null;
     }
+
 
     public UserWithoutPasswordDTO register(RegisterDTO registerData) {
         if (!registerData.getPassword().equals((registerData).getConfirmPassword())) {
@@ -57,11 +69,34 @@ public class UserService extends com.example.kinoarenaproject.service.Service {
                     "At least one upper case, one lower case,one digit,one special character minimum eight characters , max 20"));
         }
         User u = mapper.map(registerData, User.class);
+        u.setDateTimeRegistration(LocalDateTime.now());
         u.setPassword(passwordEncoder.encode(u.getPassword()));
+u.setConfirmatronToken(generateConfirmationToken());
 
         userRepository.save(u);
+sendConfirmationEmail(u);
         return mapper.map(u, UserWithoutPasswordDTO.class);
 
+    }
+
+    private String generateConfirmationToken(){
+        return UUID.randomUUID().toString();
+    }
+    private void sendConfirmationEmail(User user){
+        SimpleMailMessage message =new SimpleMailMessage();
+        message.setTo(user.getEmail());
+        message.setSubject("Confirm your email");
+        message.setText("To confirm your email, please click the link below:\n\n" +
+                "http://localhost:8000/confirm?token=" + user.getConfirmatronToken());
+        new Thread(()->  mailSender.send(message)).start();
+
+    }
+    public boolean confirmEmail(String token){
+        User user=userRepository.findAllByConfirmatronToken(token).orElseThrow(()->new NotFoundException("Token not found"));
+        user.setConfirmatronToken(null);
+        user.setEnable(true);
+        userRepository.save(user);
+        return true;
     }
 
     public UserWithoutPasswordDTO getById(int id) {
@@ -90,7 +125,7 @@ public class UserService extends com.example.kinoarenaproject.service.Service {
             throw new UnauthorizedException("Wrong credentials");
         }
         User u = opt.get();
-//               u= mapper.map(editProfileData,User.class);
+
         u.setPhone_number(editProfileData.getPhone_number());
         u.setEmail(editProfileData.getEmail());
         u.setBirth_date(editProfileData.getBirth_date());
@@ -118,6 +153,24 @@ public class UserService extends com.example.kinoarenaproject.service.Service {
             return   mapper.map(userToDelete,UserWithoutPasswordDTO.class);
 
         }
+
+
+
+
+//        @Scheduled(fixedRate = 1000*60*2)
+//        public void deleteUnverifiedUsers() {
+//           LocalDateTime now = LocalDateTime.now();
+//            LocalDateTime cutoffTime = now.minusMinutes(2);
+//            List<User> unverifiedUsers = userRepository.findAllByEnableFalse();
+//            for (User user : unverifiedUsers) {
+//                userRepository.delete(user);
+//            }
+//        }
+//    @PostMapping("/resetPassword")
+//    public void requestPasswordReset(@RequestBody EmailDTO emailTest) {
+//        MimeMessage mimeMessage=userService.sendNewTemporaryPassword(emailTest);
+//        new Thread(()->javaMailSender.send(mimeMessage));
+//    }
 
 
 }
