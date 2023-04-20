@@ -20,9 +20,9 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "projection_id")
     private Projection projection;
-    @Column(name = "row_number")
+    @Column(name = "r_number")
     private int rowNumber;
-    @Column(name = "col_number")
+    @Column(name = "c_number")
     private int colNumber;
     @Column(name = "price")
     private double price;

@@ -57,11 +57,8 @@ public class MovieController extends AbstractController {
     }
 
     @PostMapping("/movies/filter")
-    public List<AddMovieDTO> filter(@RequestBody int genreId) {
-        List<AddMovieDTO> movieList = movieService.filter(genreId);
+    public List<AddMovieDTO> filter(@RequestBody int id) {
+        List<AddMovieDTO> movieList = movieService.filterByGenre(id);
         return movieList;
     }
-
-
-
 }

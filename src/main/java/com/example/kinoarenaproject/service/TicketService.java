@@ -1,11 +1,8 @@
 package com.example.kinoarenaproject.service;
 
 import com.example.kinoarenaproject.controller.Constants;
-import com.example.kinoarenaproject.model.DTOs.CinemaDTO;
-import com.example.kinoarenaproject.model.DTOs.ProjectionDTO;
 import com.example.kinoarenaproject.model.DTOs.TicketBookDTO;
 import com.example.kinoarenaproject.model.DTOs.TicketInfoDTO;
-import com.example.kinoarenaproject.model.entities.Cinema;
 import com.example.kinoarenaproject.model.entities.Projection;
 import com.example.kinoarenaproject.model.entities.Ticket;
 import com.example.kinoarenaproject.model.entities.User;
@@ -38,17 +35,18 @@ public class TicketService extends com.example.kinoarenaproject.service.Service 
         if (!u.getRole_name().equals(Constants.ADMIN)) {
             throw new UnauthorizedException("Unauthorized role");
         }
-        boolean isReserved = ticketRepository.existsByRowNumberAndColNumber(bookTicket.getRowNumber(), bookTicket.getColNumber());
-        if (isReserved) {
-            throw new NotFoundException("Choose a free seat!\nThis seat is reserved.");
-        }
-        Ticket ticket = new Ticket();
-        ticket.setUser(u);
         Optional<Projection> opt = projectionRepository.findById(bookTicket.getProjectionId());
         if (!opt.isPresent()) {
             throw new NotFoundException("Projection not found");
         }
         Projection projection = opt.get();
+        int countExistTicket = ticketRepository.countByProjectionIdAndRowNumberAndColNumber(projection.getId(), bookTicket.getRowNumber(), bookTicket.getColNumber());
+        if (countExistTicket != 0) {
+            throw new NotFoundException("Choose a free seat! This seat is reserved.");
+        }
+
+        Ticket ticket = new Ticket();
+        ticket.setUser(u);
         ticket.setProjection(projection);
         ticket.setRegular(bookTicket.isRegular());
         ticket.setRowNumber(bookTicket.getRowNumber());

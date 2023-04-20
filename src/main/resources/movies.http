@@ -20,17 +20,17 @@ Accept:  application/json
 
 ###
 #getById - OK
-GET http://localhost:8000/movies/1
+GET http://localhost:8000/movies/30
 Content-Type: application/json
 
 ###
 #getInfo - OK
-GET http://localhost:8000/movies/4/info
+GET http://localhost:8000/movies/30/info
 Content-Type: application/json
 
 ###
 #edit - OK
-PUT http://localhost:8000/movies/1
+PUT http://localhost:8000/movies/30
 Content-Type: application/json
 
 {
@@ -46,11 +46,11 @@ Content-Type: application/json
 }
 ###
 #remove - OK
-DELETE http://localhost:8000/movies/24
+DELETE http://localhost:8000/movies/30
 Accept:  application/json
 
 ###
-# filter by Genre с POST - В Postman като подам за body int стойност работи, ка
+# filter by Genre с POST - OK
 POST http://localhost:8000/movies/filter
 Content-Type: application/json
 

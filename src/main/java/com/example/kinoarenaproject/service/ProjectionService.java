@@ -1,11 +1,7 @@
 package com.example.kinoarenaproject.service;
 
 import com.example.kinoarenaproject.controller.Constants;
-import com.example.kinoarenaproject.model.DTOs.AddMovieDTO;
-import com.example.kinoarenaproject.model.DTOs.AddProjectionDTO;
-//import com.example.kinoarenaproject.model.DTOs.EditProjectionDTO;
-import com.example.kinoarenaproject.model.DTOs.EditProjectionDTO;
-import com.example.kinoarenaproject.model.DTOs.ProjectionDTO;
+import com.example.kinoarenaproject.model.DTOs.*;
 import com.example.kinoarenaproject.model.entities.*;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
@@ -14,7 +10,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectionService extends com.example.kinoarenaproject.service.Service {
@@ -26,6 +25,8 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
     MovieRepository movieRepository;
     @Autowired
     HallRepository hallRepository;
+    @Autowired
+    TicketRepository ticketRepository;
     @Autowired
     private ModelMapper mapper;
     @Autowired
@@ -111,19 +112,50 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
         }
     }
 
-/*    public List<AddProjectionDTO> filterHall(int hallId) {
-        Optional<Hall> hall = hallRepository.findById(hallId);
-        if (hall.isPresent()) {
+    public List<AddProjectionDTO> filterByMovie(int movieId) {
+        Optional<Movie> movie = movieRepository.findById(movieId);
+        if (movie.isPresent()) {
+            mapper.map(movie.get(), Movie.class);
             List<Projection> projections = new ArrayList<>();
-            projections.addAll(movieRepository.findByGenre(hall));
+            projections.addAll(projectionRepository.findByMovie(movie));
             return projections.stream()
                     .map(m -> mapper.map(m, AddProjectionDTO.class))
-                    .peek(addProjectionDTO -> addProjectionDTO.setHallId(hallId))
+                    .peek(addProjectionDTO -> addProjectionDTO.setMovieId(movieId))
                     .collect(Collectors.toList());
         } else {
             throw new NotFoundException("Movie with this id is not found");
         }
     }
 
- */
+    public List<ProjectionByCinemaDTO> filterByCinema(int cinemaId) {
+        return projectionRepository.getProjectionsByCinema(cinemaId).stream()
+                .map(p -> new ProjectionByCinemaDTO(p.getId(), p.getMovie().getTitle(),
+                        p.getHall().getCinema().getName(), p.getDate(), p.getStartTime()))
+                .collect(Collectors.toList());
+    }
+
+    public ProjectionAvailableSeatsDTO getAvailableSeats(int projectionId) {
+        ProjectionDTO projectionDTO = getById(projectionId);
+        ProjectionAvailableSeatsDTO projectionAvailableSeatsDTO = new ProjectionAvailableSeatsDTO();
+        int r = projectionDTO.getHall().getRows();
+        int c = projectionDTO.getHall().getColumns();
+        projectionAvailableSeatsDTO.setRows(r);
+        projectionAvailableSeatsDTO.setCols(c);
+        //   projectionAvailableSeatsDTO.setIsTaken(new boolean[r][c]);
+
+        List<Ticket> tickets = ticketRepository.findAll().stream().filter(t -> t.getProjection().getId() == projectionId).collect(Collectors.toList());
+
+        int countTickets = 0;
+        boolean[][] isTaken = new boolean[r][c];
+        for (int i = 0; i < tickets.size(); i++) {
+            Ticket ticket = tickets.get(i);
+            int row = ticket.getRowNumber();
+            int col = ticket.getColNumber();
+            isTaken[row][col] = true;           // Сетваме стойността на true
+            countTickets += 1;
+        }
+        projectionAvailableSeatsDTO.setIsTaken(isTaken);
+        projectionAvailableSeatsDTO.setCountTakenTickets(countTickets);
+        return projectionAvailableSeatsDTO;
+    }
 }
