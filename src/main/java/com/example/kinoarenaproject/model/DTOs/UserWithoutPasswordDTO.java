@@ -23,5 +23,5 @@ public class UserWithoutPasswordDTO {
     private String role_name;
 
     private String profileImageUrl;
-    private String confirmatronToken;
+
     }

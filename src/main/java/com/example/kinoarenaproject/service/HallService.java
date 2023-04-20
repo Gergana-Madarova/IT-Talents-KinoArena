@@ -17,6 +17,7 @@ import com.example.kinoarenaproject.model.repositories.HallRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,23 +37,20 @@ public class HallService extends com.example.kinoarenaproject.service.Service {
 
     public HallDTO add(AddHallDTO addData, int id) {
 
-
-
-//        User u = userById(id);
-                if(! admin(id)){
-                    throw new UnauthorizedException("Unauthorized role");
-                }
-                Optional<Cinema>opt=cinemaRepository.findById(addData.getCinema_id());
-                if(!opt.isPresent()){
-                    throw new NotFoundException("Cinema not found");
-                }
-                Cinema cinema= opt.get();
-               Hall hall = mapper.map(addData,Hall.class);
-                hall.setCinema(cinema);
-                hallRepository.save(hall);
-
-            return mapper.map(hall,HallDTO.class);
+        if(! admin(id)){
+            throw new UnauthorizedException("Unauthorized role");
         }
+        Optional<Cinema>opt=cinemaRepository.findById(addData.getCinema_id());
+        if(!opt.isPresent()){
+            throw new NotFoundException("Cinema not found");
+        }
+        Cinema cinema= opt.get();
+        Hall hall = mapper.map(addData,Hall.class);
+        hall.setCinema(cinema);
+        hallRepository.save(hall);
+
+        return mapper.map(hall,HallDTO.class);
+    }
 
     public List<AddHallDTO> filterByCinema(int cinemaId) {
          List<Hall>halls=new ArrayList<>();
@@ -64,7 +62,7 @@ public class HallService extends com.example.kinoarenaproject.service.Service {
                 .collect(Collectors.toList());
 
     }
-
+    @Transactional
     public HallDTO edit(HallDTO editData, int id, int userId) {
 
         User u = userById(userId);
@@ -73,15 +71,12 @@ public class HallService extends com.example.kinoarenaproject.service.Service {
         }
         Optional<Hall> opt = hallRepository.findById(id);
         if (!opt.isPresent()) {
-            System.out.println("_____________________________");
             throw new UnauthorizedException("Wrong credentials");
         }
         Hall h = opt.get();
         h.setType_id(editData.getType_id());
         h.setRows(editData.getRows());
         h.setColumns(editData.getColumns());
-
-//        c=mapper.map(cinemaDto,Cinema.class);
         hallRepository.save(h);
         return   mapper.map(h,HallDTO.class);
 
@@ -98,7 +93,7 @@ public class HallService extends com.example.kinoarenaproject.service.Service {
         }
     }
 
-
+    @Transactional
     public HallDTO remove(int id, int userId) {
 
         User u = userById(userId);

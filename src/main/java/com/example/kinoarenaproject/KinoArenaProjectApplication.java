@@ -10,7 +10,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-//@EnableScheduling
+@EnableScheduling
 @SpringBootApplication
 public class KinoArenaProjectApplication {
     @Autowired

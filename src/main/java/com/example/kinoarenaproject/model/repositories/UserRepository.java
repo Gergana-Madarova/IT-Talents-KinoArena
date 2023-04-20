@@ -15,5 +15,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
      Optional<User>findAllByConfirmatronToken(String token);
 
 
-//     List<User> findAllByEnableFalse();
+     List<User> findAllByEnableFalse();
+
+
 }

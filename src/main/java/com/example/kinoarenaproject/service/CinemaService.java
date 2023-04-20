@@ -17,6 +17,7 @@ import com.example.kinoarenaproject.model.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -59,10 +60,10 @@ public class CinemaService extends com.example.kinoarenaproject.service.Service 
         }
         return mapper.map(cin, CinemaDTO.class);
     }
-
+    @Transactional
     public CinemaDTO edit(CinemaDTO cinemaDto, int id,int userId) {
         User u = userById(userId);
-        if (!u.getRole_name().equals(Constants.ADMIN)) {
+        if (!admin(userId)) {
             throw new UnauthorizedException("Unauthorized role");
         }
         Optional<Cinema> opt = cinemaRepository.findById(id);
@@ -80,6 +81,7 @@ public class CinemaService extends com.example.kinoarenaproject.service.Service 
         return   mapper.map(c,CinemaDTO.class);
 
     }
+    @Transactional
     public CinemaDTO remove(int cinemaId, int userId) {
         User u = userById(userId);
         if (!admin(userId)) {

@@ -71,10 +71,10 @@ public class UserService extends com.example.kinoarenaproject.service.Service {
         User u = mapper.map(registerData, User.class);
         u.setDateTimeRegistration(LocalDateTime.now());
         u.setPassword(passwordEncoder.encode(u.getPassword()));
-u.setConfirmatronToken(generateConfirmationToken());
+        u.setConfirmatronToken(generateConfirmationToken());
 
         userRepository.save(u);
-sendConfirmationEmail(u);
+        sendConfirmationEmail(u);
         return mapper.map(u, UserWithoutPasswordDTO.class);
 
     }
@@ -125,7 +125,6 @@ sendConfirmationEmail(u);
             throw new UnauthorizedException("Wrong credentials");
         }
         User u = opt.get();
-
         u.setPhone_number(editProfileData.getPhone_number());
         u.setEmail(editProfileData.getEmail());
         u.setBirth_date(editProfileData.getBirth_date());
@@ -139,9 +138,9 @@ sendConfirmationEmail(u);
     }
 
     public UserWithoutPasswordDTO delete(int adminId, int userId) {
-//        public CinemaDTO remove(int id, int userId) {
+
             User u = userById(adminId);
-            if (!u.getRole_name().equals(Constants.ADMIN)) {
+            if (!admin(adminId)) {
                 throw new UnauthorizedException("Unauthorized role");
             }
             Optional <User>opt=userRepository.findById(userId);
@@ -162,15 +161,10 @@ sendConfirmationEmail(u);
 //           LocalDateTime now = LocalDateTime.now();
 //            LocalDateTime cutoffTime = now.minusMinutes(2);
 //            List<User> unverifiedUsers = userRepository.findAllByEnableFalse();
-//            for (User user : unverifiedUsers) {
-//                userRepository.delete(user);
-//            }
+//            userRepository.deleteAll(unverifiedUsers);
 //        }
-//    @PostMapping("/resetPassword")
-//    public void requestPasswordReset(@RequestBody EmailDTO emailTest) {
-//        MimeMessage mimeMessage=userService.sendNewTemporaryPassword(emailTest);
-//        new Thread(()->javaMailSender.send(mimeMessage));
-//    }
+
+
 
 
 }
