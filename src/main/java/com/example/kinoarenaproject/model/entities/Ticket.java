@@ -15,8 +15,6 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @Column(name = "is_regular")
-    private boolean isRegular;
     @ManyToOne
     @JoinColumn(name = "projection_id")
     private Projection projection;
@@ -24,8 +22,4 @@ public class Ticket {
     private int rowNumber;
     @Column(name = "c_number")
     private int colNumber;
-    @Column(name = "price")
-    private double price;
-    @Column(name = "discount")
-    private Double discount;
 }

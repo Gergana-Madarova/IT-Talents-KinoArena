@@ -25,6 +25,8 @@ public class Projection {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate date;
+    @Column(name = "price")
+    private double price;
     @ManyToOne
     @JoinColumn(name = "hall_id")
     private Hall hall;

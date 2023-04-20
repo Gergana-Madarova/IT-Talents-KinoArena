@@ -15,10 +15,8 @@ import lombok.Setter;
 public class TicketInfoDTO {
     private int id;
     private UserWithoutPasswordDTO user;
-    private boolean isRegular;
     private ProjectionDTO projection;
     private int rowNumber;
     private int colNumber;
-    private double price;
-    private double discount;
+
 }

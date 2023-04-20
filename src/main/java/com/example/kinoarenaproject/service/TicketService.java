@@ -48,12 +48,9 @@ public class TicketService extends com.example.kinoarenaproject.service.Service 
         Ticket ticket = new Ticket();
         ticket.setUser(u);
         ticket.setProjection(projection);
-        ticket.setRegular(bookTicket.isRegular());
+
         ticket.setRowNumber(bookTicket.getRowNumber());
         ticket.setColNumber(bookTicket.getColNumber());
-        ticket.setPrice(bookTicket.getPrice());
-        ticket.setDiscount(bookTicket.getDiscount());
-
         ticketRepository.save(ticket);
         return mapper.map(ticket, TicketInfoDTO.class);
     }
