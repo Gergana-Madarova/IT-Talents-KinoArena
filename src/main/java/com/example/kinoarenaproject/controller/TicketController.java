@@ -19,7 +19,7 @@ public class TicketController extends AbstractController {
         } else {
             //TODO да се виждат ли само билетите на този user?
            // int idUser = loggedId(session); */
-            return ticketService.getTicketById(id);
+        return ticketService.getTicketById(id);
 
     }
 

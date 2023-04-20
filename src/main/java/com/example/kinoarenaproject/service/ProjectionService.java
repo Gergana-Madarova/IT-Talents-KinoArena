@@ -1,11 +1,7 @@
 package com.example.kinoarenaproject.service;
 
 import com.example.kinoarenaproject.controller.Constants;
-import com.example.kinoarenaproject.model.DTOs.AddCinemaDTO;
-import com.example.kinoarenaproject.model.DTOs.AddProjectionDTO;
-//import com.example.kinoarenaproject.model.DTOs.EditProjectionDTO;
-import com.example.kinoarenaproject.model.DTOs.EditProjectionDTO;
-import com.example.kinoarenaproject.model.DTOs.ProjectionDTO;
+import com.example.kinoarenaproject.model.DTOs.*;
 import com.example.kinoarenaproject.model.entities.*;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
@@ -30,6 +26,8 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
     @Autowired
     HallRepository hallRepository;
     @Autowired
+    TicketRepository ticketRepository;
+    @Autowired
     private ModelMapper mapper;
     @Autowired
     CinemaRepository cinemaRepository;
@@ -48,14 +46,14 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
                 throw new NotFoundException("Movie not found");
             }
             Movie movie = optMovie.get();
-            projection.setMovieId(movie);
+            projection.setMovie(movie);
 
             Optional<Hall> optHall = hallRepository.findById(addProjection.getHallId());
             if (!optHall.isPresent()) {
                 throw new NotFoundException("Movie not found");
             }
             Hall hall = optHall.get();
-            projection.setHallId(hall);
+            projection.setHall(hall);
 
             projectionRepository.save(projection);
         } catch (RuntimeException r) {
@@ -79,10 +77,10 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
         projection.setDate(projectionDTO.getDate());
         Optional<Movie> optMovie = movieRepository.findById(projectionDTO.getMovieId());
         Movie movie = optMovie.get();
-        projection.setMovieId(movie);
+        projection.setMovie(movie);
         Optional<Hall> optHall = hallRepository.findById(projectionDTO.getHallId());
         Hall hall = optHall.get();
-        projection.setHallId(hall);
+        projection.setHall(hall);
 
         projectionRepository.save(projection);
         return mapper.map(projection, ProjectionDTO.class);
@@ -114,19 +112,50 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
         }
     }
 
-
-
-
-
     public List<AddProjectionDTO> filterByMovie(int movieId) {
-        List<Movie> movies = new ArrayList<>();
-       // Movie movie = movieRepository.findById(movieId).get();
-        movies.addAll(projectionRepository.findByMovieId(movieId));
-        return movies.stream()
-                .map(projection -> mapper.map(projection, AddProjectionDTO.class))
-                .peek(addProjectionDTO -> addProjectionDTO.setMovieId(movieId))
+        Optional<Movie> movie = movieRepository.findById(movieId);
+        if (movie.isPresent()) {
+            mapper.map(movie.get(), Movie.class);
+            List<Projection> projections = new ArrayList<>();
+            projections.addAll(projectionRepository.findByMovie(movie));
+            return projections.stream()
+                    .map(m -> mapper.map(m, AddProjectionDTO.class))
+                    .peek(addProjectionDTO -> addProjectionDTO.setMovieId(movieId))
+                    .collect(Collectors.toList());
+        } else {
+            throw new NotFoundException("Movie with this id is not found");
+        }
+    }
+
+    public List<ProjectionByCinemaDTO> filterByCinema(int cinemaId) {
+        return projectionRepository.getProjectionsByCinema(cinemaId).stream()
+                .map(p -> new ProjectionByCinemaDTO(p.getId(), p.getMovie().getTitle(),
+                        p.getHall().getCinema().getName(), p.getDate(), p.getStartTime()))
                 .collect(Collectors.toList());
     }
 
+    public ProjectionAvailableSeatsDTO getAvailableSeats(int projectionId) {
+        ProjectionDTO projectionDTO = getById(projectionId);
+        ProjectionAvailableSeatsDTO projectionAvailableSeatsDTO = new ProjectionAvailableSeatsDTO();
+        int r = projectionDTO.getHall().getRows();
+        int c = projectionDTO.getHall().getColumns();
+        projectionAvailableSeatsDTO.setRows(r);
+        projectionAvailableSeatsDTO.setCols(c);
+        //   projectionAvailableSeatsDTO.setIsTaken(new boolean[r][c]);
 
+        List<Ticket> tickets = ticketRepository.findAll().stream().filter(t -> t.getProjection().getId() == projectionId).collect(Collectors.toList());
+
+        int countTickets = 0;
+        boolean[][] isTaken = new boolean[r][c];
+        for (int i = 0; i < tickets.size(); i++) {
+            Ticket ticket = tickets.get(i);
+            int row = ticket.getRowNumber();
+            int col = ticket.getColNumber();
+            isTaken[row][col] = true;           // Сетваме стойността на true
+            countTickets += 1;
+        }
+        projectionAvailableSeatsDTO.setIsTaken(isTaken);
+        projectionAvailableSeatsDTO.setCountTakenTickets(countTickets);
+        return projectionAvailableSeatsDTO;
+    }
 }

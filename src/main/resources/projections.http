@@ -11,12 +11,12 @@ Content-Type: application/json
 
 ###
 #getById - ОК
-GET http://localhost:8000/projections/3
+GET http://localhost:8000/projections/12
 Content-Type: application/json
 
 ###
 #edit - OK
-PUT http://localhost:8000/projections/3
+PUT http://localhost:8000/projections/12
 Content-Type: application/json
 
 {
@@ -31,10 +31,22 @@ DELETE http://localhost:8000/projections/15
 Accept:  application/json
 
 ###
-#filter by Movie - NO!!!
+#filter by Movie - OK
 POST http://localhost:8000/projections/filter
 Content-Type: application/json
 
-{
-  "movieId": 1
-}
+4
+
+###
+#filter by Cinema
+GET http://localhost:8000/projections/cinema/1
+Content-Type: application/json
+
+###
+#get available seats
+GET http://localhost:8000/projections/4/seats
+Content-Type: application/json
+
+
+###
+

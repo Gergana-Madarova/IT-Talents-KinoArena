@@ -79,6 +79,7 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
         movie.setPremiere(movieDTO.getPremiere());
         movie.setDirector(movieDTO.getDirector());
         movie.setCast(movieDTO.getCast());
+
         Optional<Category> optionalCategory = categoryRepository.findById(movieDTO.getCategory());
         Category category = optionalCategory.get();
         movie.setCategory(category);
@@ -96,16 +97,14 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
         if (!u.getRole_name().equals(Constants.ADMIN)) {
             throw new UnauthorizedException("Unauthorized role");
         }
-        Optional <Movie>opt=movieRepository.findById(id);
-        if(!opt.isPresent()){
+        Optional<Movie> opt = movieRepository.findById(id);
+        if (!opt.isPresent()) {
             throw new NotFoundException("Movie not found");
         }
-
         Movie movie = opt.get();
         movieRepository.delete(movie);
-
-        MovieInfoDTO movieInfoDTO=mapper.map(movie, MovieInfoDTO.class);
-        return  movieInfoDTO;
+        MovieInfoDTO movieInfoDTO = mapper.map(movie, MovieInfoDTO.class);
+        return movieInfoDTO;
     }
 
     public MovieDTO getById(int id) {
@@ -135,15 +134,18 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
         }
     }
 
- /*   public List<MovieDTO>filterByCinema(int cinemaId) {
-    //    List<Movie> movies = new ArrayList<>();
-        List<Projection> projections = new ArrayList<>();
-        projections.addAll(projectionRepository.findByHallIdCinemaId(cinemaId));
-        return projections.stream()
-                .map(m -> mapper.map(m, MovieDTO.class))
-                .collect(Collectors.toList());
-
+    public List<AddMovieDTO> filterByGenre(int genreId) {
+        Optional<Genre> genre = genreRepository.findById(genreId);
+        if (genre.isPresent()) {
+            mapper.map(genre.get(), Genre.class);
+            List<Movie> movies = new ArrayList<>();
+            movies.addAll(movieRepository.findByGenre(genre));
+            return movies.stream()
+                    .map(m -> mapper.map(m, AddMovieDTO.class))
+                    .peek(addMovieDTO -> addMovieDTO.setGenreId(genreId))
+                    .collect(Collectors.toList());
+        } else {
+            throw new NotFoundException("Not found genre");
+        }
     }
-
-  */
 }

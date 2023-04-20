@@ -16,7 +16,7 @@ public class TicketInfoDTO {
     private int id;
     private UserWithoutPasswordDTO user;
     private boolean isRegular;
-    private ProjectionDTO projectionId;
+    private ProjectionDTO projection;
     private int rowNumber;
     private int colNumber;
     private double price;
