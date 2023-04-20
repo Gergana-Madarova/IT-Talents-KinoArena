@@ -1,5 +1,5 @@
 package com.example.kinoarenaproject;
-//import com.example.kinoarenaproject.service.EmailSenderCervice;
+import com.example.kinoarenaproject.service.EmailSenderCervice;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -9,10 +9,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+//@EnableScheduling
 @SpringBootApplication
 public class KinoArenaProjectApplication {
- /*   @Autowired
-    private EmailSenderCervice senderCervice; */
+    @Autowired
+    private EmailSenderCervice senderCervice;
 
     public static void main(String[] args) {
         SpringApplication.run(KinoArenaProjectApplication.class, args);
@@ -30,15 +31,13 @@ public class KinoArenaProjectApplication {
     }
 
 
- /*   @EventListener(ApplicationReadyEvent.class)
+    @EventListener(ApplicationReadyEvent.class)
     public void sendEmail(){
         senderCervice.sendEmail(
-        "margot11margot11@gmail.com",
+                "margot11margot11@gmail.com",
                 "This is subject",
                 "Hi! I'm Tanya.");
     }
-
-  */
 
 
 }

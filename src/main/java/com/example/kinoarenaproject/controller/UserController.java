@@ -52,9 +52,6 @@ public class UserController extends AbstractController {
     }
 
 
-
-
-
     @PutMapping("/users/edit")
     public UserWithoutPasswordDTO editProfile(@RequestBody EditProfileDTO editProfileData,HttpSession session){
         boolean logged = (boolean) session.getAttribute(Constants.LOGGED);
@@ -69,6 +66,14 @@ public class UserController extends AbstractController {
     public UserWithoutPasswordDTO delete(@PathVariable int id, HttpSession session){
         int adminId=loggedId(session);
         return  userService.delete(adminId,id);
+    }
+    @GetMapping("/confirm")
+    public String confirmEmail(@RequestParam("token") String token){
+        if(userService.confirmEmail(token)){
+            return "Email confirmed";
+        }else {
+            return "Invalid confirmation";
+        }
     }
 
 

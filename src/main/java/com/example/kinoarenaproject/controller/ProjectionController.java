@@ -37,7 +37,8 @@ public class ProjectionController extends AbstractController {
     public List<AddProjectionDTO> filter(@RequestBody int movieId) {
         List<AddProjectionDTO> projectionList = projectionService.filterByMovie(movieId);
         return projectionList;
-    }
+   }
+
 
     @GetMapping("/projections/cinema/{cinemaId}")
     public List<ProjectionByCinemaDTO> getProjectionsByCinema(@PathVariable int cinemaId) {
@@ -50,7 +51,7 @@ public class ProjectionController extends AbstractController {
     }
 
     @GetMapping("/projections/{id}")
-    public ProjectionDTO getById(@PathVariable int id) {
+    public ProjectionDTO getById(@PathVariable int id){
         return projectionService.getById(id);
     }
 }

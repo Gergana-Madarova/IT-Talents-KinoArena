@@ -18,5 +18,5 @@ public class CityInfo {
 
     private String name;
     private String postcode;
-//    private Set<Cinema> cinema;
+
 }

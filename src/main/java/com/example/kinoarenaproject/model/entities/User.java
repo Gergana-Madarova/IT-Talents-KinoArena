@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity(name = "users")
@@ -36,7 +37,15 @@ public class User {
     private String phone_number;
     @Column
     private String role_name;
+    @Column
     private String profileImageUrl;
+    @Column(name = "confirmatron_token")
+    private String confirmatronToken;
+    @Column(name = "enable")
+    private boolean enable;
+    @Column(name = "date_time_registration")
+    private LocalDateTime dateTimeRegistration;
+
 
 //   @ManyToOne
 //   @JoinColumn(name = "city_id")

@@ -21,6 +21,7 @@ public class UserWithoutPasswordDTO {
     private String gender;
     private String phone_number;
     private String role_name;
-//    private CityInfo city;
-private String profileImageUrl;
-}
+
+    private String profileImageUrl;
+    private String confirmatronToken;
+    }
