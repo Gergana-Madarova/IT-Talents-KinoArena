@@ -113,7 +113,6 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
         }
     }
 
-    //TODO need to check again!
     public List<ProjectionByCinemaDTO> filterByCinema(int cinemaId) {
         return projectionRepository.getProjectionsByCinema(cinemaId).stream()
                 .map(p -> new ProjectionByCinemaDTO(p.getId(), p.getMovie().getTitle(),

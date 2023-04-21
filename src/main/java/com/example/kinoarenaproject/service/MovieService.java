@@ -37,8 +37,8 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
         if (!admin(userId)) {
             throw new UnauthorizedException("Unauthorized role");
         }
-        Category category = checkOptionalIsPresent(categoryRepository.findById(movieDTO.getCategory()), "non-existent category");
-        Genre genre = checkOptionalIsPresent(genreRepository.findById(movieDTO.getGenre()), "non-existent genre");
+        Category category = checkOptionalIsPresent(categoryRepository.findById(movieDTO.getCategoryId()), "non-existent category");
+        Genre genre = checkOptionalIsPresent(genreRepository.findById(movieDTO.getGenreId()), "non-existent genre");
 
         if (movieDTO.getTitle() == null ||
                 movieDTO.getDescription() == null ||
@@ -125,10 +125,10 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
         Optional<Genre> genre = genreRepository.findById(id);
         if (genre.isPresent()) {
             List<Movie> movies = new ArrayList<>();
-            movies.addAll(movieRepository.findByGenre(id));
+            movies.addAll(movieRepository.findByGenre(genre));
             return movies.stream()
                     .map(m -> mapper.map(m, AddMovieDTO.class))
-                    .peek(addMovieDTO -> addMovieDTO.setGenre(id))
+                    .peek(addMovieDTO -> addMovieDTO.setGenreId(id))
                     .collect(Collectors.toList());
         } else {
             throw new NotFoundException("Not found genre!");

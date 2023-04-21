@@ -15,9 +15,5 @@ import java.util.Optional;
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
     Optional<Movie> findById(int id);
 
-  //  List<Movie> findByGenre(Optional<Genre> genre);
-   // List<Movie> findByGenre(int id);
-
-    @Query(value = "SELECT * FROM movies WHERE genre_id = :genre_id", nativeQuery = true)
-    List<Movie> findByGenre(@Param("genre_id") int genre_id);
+    List<Movie> findByGenre(Optional<Genre> genre);
 }
