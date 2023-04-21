@@ -60,8 +60,8 @@ public class HallService extends com.example.kinoarenaproject.service.Service {
                  .map(hall -> mapper.map(hall,AddHallDTO.class))
                 .peek(addHallDTO -> addHallDTO.setCinema_id(cinemaId))
                 .collect(Collectors.toList());
-
     }
+
     @Transactional
     public HallDTO edit(HallDTO editData, int id, int userId) {
 

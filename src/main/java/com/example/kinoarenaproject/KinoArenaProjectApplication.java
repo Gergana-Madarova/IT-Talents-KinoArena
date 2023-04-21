@@ -7,9 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-//@EnableScheduling
+@EnableScheduling
 @SpringBootApplication
 public class KinoArenaProjectApplication {
     @Autowired
@@ -31,13 +32,13 @@ public class KinoArenaProjectApplication {
     }
 
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void sendEmail(){
-        senderCervice.sendEmail(
-                "margot11margot11@gmail.com",
-                "This is subject",
-                "Hi! I'm Tanya.");
-    }
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void sendEmail(){
+//        senderCervice.sendEmail(
+//                "margot11margot11@gmail.com",
+//                "This is subject",
+//                "Hi! I'm Tanya.");
+//    }
 
 
 }

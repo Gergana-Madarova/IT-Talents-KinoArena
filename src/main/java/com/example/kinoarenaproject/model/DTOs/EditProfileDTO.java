@@ -25,5 +25,5 @@ public class EditProfileDTO {
     private String gender;
     private String phone_number;
     private String role_name;
-//    private CityInfo city;
+
 }

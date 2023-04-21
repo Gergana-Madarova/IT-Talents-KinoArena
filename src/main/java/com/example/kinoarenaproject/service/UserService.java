@@ -4,10 +4,12 @@ import com.example.kinoarenaproject.controller.Constants;
 import com.example.kinoarenaproject.controller.ValidationUtils;
 import com.example.kinoarenaproject.model.DTOs.*;
 import com.example.kinoarenaproject.model.entities.Cinema;
+import com.example.kinoarenaproject.model.entities.City;
 import com.example.kinoarenaproject.model.entities.User;
 import com.example.kinoarenaproject.model.exceptions.BadRequestException;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
+import com.example.kinoarenaproject.model.repositories.CityRepository;
 import com.example.kinoarenaproject.model.repositories.UserRepository;
 import org.apache.naming.factory.SendMailFactory;
 import org.modelmapper.ModelMapper;
@@ -33,6 +35,8 @@ public class UserService extends com.example.kinoarenaproject.service.Service {
     BCryptPasswordEncoder passwordEncoder;
     @Autowired
     JavaMailSender mailSender;
+    @Autowired
+    CityRepository cityRepository;
 
     public UserWithoutPasswordDTO login(LoginDTO loginData) {
 
@@ -131,6 +135,13 @@ public class UserService extends com.example.kinoarenaproject.service.Service {
         u.setFirst_name(editProfileData.getFirst_name());
         u.setLast_name(editProfileData.getLast_name());
         u.setGender(editProfileData.getGender());
+//
+//        Optional<City>city=cityRepository.findById(editProfileData.getCity_id());
+//        if(!city.isPresent()){
+//            throw new NotFoundException("City not found");
+//        }
+//        City c =city.get();
+//        u.setCity(c);
         u.setCity_id(editProfileData.getCity_id());
 
         userRepository.save(u);
@@ -153,17 +164,13 @@ public class UserService extends com.example.kinoarenaproject.service.Service {
 
         }
 
+    @Scheduled(fixedRate = 1000*60*5)
+    public void deleteUnverifiedUsers() {
 
-
-
-//        @Scheduled(fixedRate = 1000*60*2)
-//        public void deleteUnverifiedUsers() {
-//           LocalDateTime now = LocalDateTime.now();
-//            LocalDateTime cutoffTime = now.minusMinutes(2);
-//            List<User> unverifiedUsers = userRepository.findAllByEnableFalse();
-//            userRepository.deleteAll(unverifiedUsers);
-//        }
-
+        LocalDateTime cutoffTime = LocalDateTime.now().minusMinutes(5);
+        List<User> unverifiedUsers = userRepository.findAllByEnableFalseAAndDateTimeRegistration(cutoffTime);
+        userRepository.deleteAll(unverifiedUsers);
+    }
 
 
 

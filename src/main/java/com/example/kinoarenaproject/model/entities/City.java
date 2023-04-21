@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "cities")
@@ -18,9 +19,8 @@ public class City {
     private String name;
     @Column(name = "postcode")
     private String postcode;
-//    @OneToMany(mappedBy = "city")
-//    private List<User>users;
 
     @OneToMany(mappedBy = "city",cascade = CascadeType.ALL,orphanRemoval = true)
     private  List<Cinema>cinemas;
+
 }

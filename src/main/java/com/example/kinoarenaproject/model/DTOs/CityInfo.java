@@ -15,7 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 
 public class CityInfo {
-
+    private int id;
     private String name;
     private String postcode;
 

@@ -1,5 +1,9 @@
 package com.example.kinoarenaproject.model.entities;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,17 +41,16 @@ public class User {
     private String phone_number;
     @Column
     private String role_name;
-    @Column
+    @Column(name = "profile_image_url")
     private String profileImageUrl;
     @Column(name = "confirmatron_token")
     private String confirmatronToken;
     @Column(name = "enable")
     private boolean enable;
     @Column(name = "date_time_registration")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime dateTimeRegistration;
 
 
-//   @ManyToOne
-//   @JoinColumn(name = "city_id")
-//    private City city;
 }
