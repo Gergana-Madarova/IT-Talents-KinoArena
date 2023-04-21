@@ -19,6 +19,6 @@ public class MovieInfoDTO {
     private LocalDate premiere;
     private String director;
     private String cast;
-    private CategoryInfo category;
+    private CategoryInfoDTO category;
     private GenreInfo genre;
 }

@@ -19,5 +19,4 @@ public class AddProjectionDTO {
     private double price;
     private int hallId;
     private int movieId;
-
 }

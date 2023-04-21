@@ -1,13 +1,10 @@
 package com.example.kinoarenaproject.model.DTOs;
 
-import com.example.kinoarenaproject.model.entities.Projection;
-import com.example.kinoarenaproject.model.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-// TODO трябва ли да го имам, като има всички полета на Ticket?
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,5 +15,4 @@ public class TicketInfoDTO {
     private ProjectionDTO projection;
     private int rowNumber;
     private int colNumber;
-
 }

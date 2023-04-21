@@ -32,13 +32,16 @@ public class KinoArenaProjectApplication {
     }
 
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void sendEmail(){
-//        senderCervice.sendEmail(
-//                "margot11margot11@gmail.com",
-//                "This is subject",
-//                "Hi! I'm Tanya.");
-//    }
+/*    @EventListener(ApplicationReadyEvent.class)
+    public void sendEmail(){
+        senderCervice.sendEmail(
+                "margot11margot11@gmail.com",
+                "This is subject",
+                "Hi! I'm Tanya.");
+    }
+
+
+ */
 
 
 }

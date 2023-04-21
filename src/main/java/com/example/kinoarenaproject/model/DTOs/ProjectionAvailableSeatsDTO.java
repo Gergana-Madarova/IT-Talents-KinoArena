@@ -14,5 +14,4 @@ public class ProjectionAvailableSeatsDTO {
     private int cols;
     private int countTakenTickets;
     private boolean[][] isTaken = new boolean[rows][cols];
-
 }

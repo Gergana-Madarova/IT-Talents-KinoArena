@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryInfo {
+public class CategoryInfoDTO {
     private String category;
     private int minAge;
 }
