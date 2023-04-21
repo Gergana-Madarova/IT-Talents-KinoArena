@@ -4,10 +4,11 @@ import com.example.kinoarenaproject.model.DTOs.*;
 import com.example.kinoarenaproject.service.MovieService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
-
 
 @RestController
 public class MovieController extends AbstractController {
@@ -40,9 +41,10 @@ public class MovieController extends AbstractController {
     }
 
     @GetMapping("/movies/all")
-    public List<MovieDTO> getAll() {
-        List<MovieDTO> movies = movieService.getAll();
-        return movies;
+    public Page<MovieDTO> getAll(@RequestParam(defaultValue = "0") int page,
+                                 @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("title").ascending());
+        return movieService.getAll(pageable);
     }
 
     @GetMapping("/movies/{id}/info")

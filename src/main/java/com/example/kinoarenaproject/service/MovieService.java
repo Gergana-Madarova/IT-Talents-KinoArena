@@ -8,6 +8,9 @@ import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
 import com.example.kinoarenaproject.model.repositories.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -104,11 +107,13 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
         }
     }
 
-    public List<MovieDTO> getAll() {
-        return movieRepository.findAll()
+    public Page<MovieDTO> getAll(Pageable pageable) {
+        Page<Movie> moviesPage = movieRepository.findAll(pageable);
+        List<MovieDTO> movies = moviesPage.getContent()
                 .stream()
                 .map(m -> mapper.map(m, MovieDTO.class))
                 .collect(Collectors.toList());
+        return new PageImpl<>(movies, pageable, moviesPage.getTotalElements());
     }
 
     public MovieInfoDTO getInfo(int id) {
@@ -120,7 +125,6 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
         }
     }
 
-    //TODO need to check again!
     public List<AddMovieDTO> filterByGenre(int id) {
         Optional<Genre> genre = genreRepository.findById(id);
         if (genre.isPresent()) {
