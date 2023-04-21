@@ -18,6 +18,21 @@ CREATE SCHEMA IF NOT EXISTS `kino_arena` DEFAULT CHARACTER SET utf8mb4 COLLATE u
 USE `kino_arena` ;
 
 -- -----------------------------------------------------
+-- Table `kino_arena`.`categories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `kino_arena`.`categories` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `category` VARCHAR(3) NOT NULL,
+  `min_age` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `kino_arena`.`cities`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kino_arena`.`cities` (
@@ -27,33 +42,7 @@ CREATE TABLE IF NOT EXISTS `kino_arena`.`cities` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `city_id_UNIQUE` (`id` ASC) VISIBLE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `kino_arena`.`users`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `kino_arena`.`users` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `first_name` VARCHAR(45) NOT NULL,
-  `last_name` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
-  `password` VARCHAR(100) NOT NULL,
-  `birth_date` DATE NOT NULL,
-  `city_id` INT NOT NULL,
-  `gender` VARCHAR(10) NOT NULL,
-  `phone_number` VARCHAR(14) NOT NULL,
-  `role_name` VARCHAR(15) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `city_idx` (`city_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  CONSTRAINT `city`
-    FOREIGN KEY (`city_id`)
-    REFERENCES `kino_arena`.`cities` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
+AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -72,42 +61,11 @@ CREATE TABLE IF NOT EXISTS `kino_arena`.`cinemas` (
   INDEX `city_id_idx` (`city_id` ASC) VISIBLE,
   CONSTRAINT `city_id`
     FOREIGN KEY (`city_id`)
-    REFERENCES `kino_arena`.`cities` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `kino_arena`.`halls`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `kino_arena`.`halls` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `cinema_id` INT NOT NULL,
-  `type_id` INT NOT NULL,
-  `rows` INT NOT NULL,
-  `columns` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_halls_cinemas1_idx` (`cinema_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  CONSTRAINT `fk_halls_cinemas1`
-    FOREIGN KEY (`cinema_id`)
-    REFERENCES `kino_arena`.`cinemas` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `kino_arena`.`categories`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `kino_arena`.`categories` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `category` VARCHAR(3) NOT NULL,
-  `min_age` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
-ENGINE = InnoDB;
+    REFERENCES `kino_arena`.`cities` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 21
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -118,7 +76,31 @@ CREATE TABLE IF NOT EXISTS `kino_arena`.`genres` (
   `genre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 9
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `kino_arena`.`halls`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `kino_arena`.`halls` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `cinema_id` INT NOT NULL,
+  `type_id` INT NOT NULL,
+  `hall_rows` INT NOT NULL,
+  `hall_columns` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_halls_cinemas1_idx` (`cinema_id` ASC) VISIBLE,
+  CONSTRAINT `fk_halls_cinemas1`
+    FOREIGN KEY (`cinema_id`)
+    REFERENCES `kino_arena`.`cinemas` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 11
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -130,25 +112,24 @@ CREATE TABLE IF NOT EXISTS `kino_arena`.`movies` (
   `description` VARCHAR(1500) NOT NULL,
   `duration` INT NOT NULL,
   `premiere` DATE NOT NULL,
-  `director` VARCHAR(45) NULL,
-  `cast` VARCHAR(1500) NULL,
+  `director` VARCHAR(45) NULL DEFAULT NULL,
+  `cast` VARCHAR(1500) NULL DEFAULT NULL,
   `category_id` INT NOT NULL,
   `genre_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   INDEX `fk_movies_categories1_idx` (`category_id` ASC) VISIBLE,
-  PRIMARY KEY (`id`),
   INDEX `fk_movies_genres1_idx` (`genre_id` ASC) VISIBLE,
   CONSTRAINT `fk_movies_categories1`
     FOREIGN KEY (`category_id`)
-    REFERENCES `kino_arena`.`categories` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `kino_arena`.`categories` (`id`),
   CONSTRAINT `fk_movies_genres1`
     FOREIGN KEY (`genre_id`)
-    REFERENCES `kino_arena`.`genres` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    REFERENCES `kino_arena`.`genres` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 26
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -160,21 +141,51 @@ CREATE TABLE IF NOT EXISTS `kino_arena`.`projections` (
   `date` DATE NOT NULL,
   `hall_id` INT NOT NULL,
   `movie_id` INT NOT NULL,
+  `price` DOUBLE NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   INDEX `fk_projections_halls1_idx` (`hall_id` ASC) VISIBLE,
   INDEX `fk_projections_movies1_idx` (`movie_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   CONSTRAINT `fk_projections_halls1`
     FOREIGN KEY (`hall_id`)
-    REFERENCES `kino_arena`.`halls` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `kino_arena`.`halls` (`id`),
   CONSTRAINT `fk_projections_movies1`
     FOREIGN KEY (`movie_id`)
-    REFERENCES `kino_arena`.`movies` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    REFERENCES `kino_arena`.`movies` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 12
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `kino_arena`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `kino_arena`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(100) NOT NULL,
+  `birth_date` DATETIME NOT NULL,
+  `city_id` INT NOT NULL,
+  `gender` VARCHAR(10) NOT NULL,
+  `phone_number` VARCHAR(14) NOT NULL,
+  `role_name` VARCHAR(15) NOT NULL,
+  `profile_image_url` VARCHAR(300) NULL DEFAULT NULL,
+  `confirmatron_token` VARCHAR(300) NULL DEFAULT NULL,
+  `enable` TINYINT NULL DEFAULT '0',
+  `date_time_registration` DATE NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `city_idx` (`city_id` ASC) VISIBLE,
+  CONSTRAINT `city`
+    FOREIGN KEY (`city_id`)
+    REFERENCES `kino_arena`.`cities` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 69
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -183,37 +194,25 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `kino_arena`.`tickets` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
-  `is_regular` TINYINT NOT NULL DEFAULT 1,
   `projection_id` INT NOT NULL,
-  `row_number` INT NOT NULL,
-  `col_number` INT NOT NULL,
-  `price` DOUBLE NOT NULL,
-  `discount` DOUBLE NULL,
+  `r_number` INT NOT NULL,
+  `c_number` INT NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
   INDEX `projection_id_idx` (`projection_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  CONSTRAINT `user_id`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `kino_arena`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `projection_id`
     FOREIGN KEY (`projection_id`)
-    REFERENCES `kino_arena`.`projections` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    REFERENCES `kino_arena`.`projections` (`id`),
+  CONSTRAINT `user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `kino_arena`.`users` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
-ALTER TABLE `kino_arena`.`halls` 
-CHANGE COLUMN `rows` `hall_rows` INT NOT NULL ,
-CHANGE COLUMN `columns` `hall_columns` INT NOT NULL ;
-
-ALTER TABLE `kino_arena`.`users` 
-ADD COLUMN `profile_image_url` VARCHAR(300) NULL AFTER `role_name`;

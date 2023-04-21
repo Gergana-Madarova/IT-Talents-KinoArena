@@ -12,5 +12,5 @@ import lombok.Setter;
 public class MovieDTO {
     private int id;
     private String title;
-    private CategoryInfo category;
+    private CategoryInfoDTO category;
 }

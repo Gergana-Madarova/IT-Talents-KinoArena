@@ -89,7 +89,7 @@ public class HallService extends com.example.kinoarenaproject.service.Service {
             Hall h = opt.get();
             return mapper.map(h, HallDTO.class);
         } else {
-            throw new NotFoundException("Cinema not found");
+            throw new NotFoundException("Hall not found");
         }
     }
 

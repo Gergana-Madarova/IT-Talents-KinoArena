@@ -19,6 +19,6 @@ public class AddMovieDTO {
     private LocalDate premiere;
     private String director;
     private String cast;
-    private int categoryId;
-    private int genreId;
+    private int category;
+    private int genre;
 }

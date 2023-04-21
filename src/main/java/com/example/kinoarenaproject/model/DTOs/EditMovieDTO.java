@@ -15,7 +15,7 @@ public class EditMovieDTO {
     private int id;
     private String title;
     private String description;
-    private int duration;
+    private Integer duration;
     private LocalDate premiere;
     private String director;
     private String cast;

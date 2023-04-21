@@ -1,3 +1,5 @@
+USE kino_arena;
+
 -- -----------------------------------------------------
 -- Table `kino_arena`.`cities`
 -- -----------------------------------------------------
@@ -139,16 +141,16 @@ INSERT INTO cinemas (id, name, address, city_id, phone_number) VALUES (13, 'Ки
 -- -----------------------------------------------------
 -- Table `kino_arena`.`halls`
 -- -----------------------------------------------------
-INSERT INTO halls (id, cinema_id, type_id, `rows`, `columns`) VALUES (1, 1, 1, 10, 12);
-INSERT INTO halls (id, cinema_id, type_id, `rows`, `columns`) VALUES (2, 2, 2, 8, 10);
-INSERT INTO halls (id, cinema_id, type_id, `rows`, `columns`) VALUES (3, 3, 1, 12, 14);
-INSERT INTO halls (id, cinema_id, type_id, `rows`, `columns`) VALUES (4, 4, 3, 14, 16);
-INSERT INTO halls (id, cinema_id, type_id, `rows`, `columns`) VALUES (5, 5, 2, 10, 12);
-INSERT INTO halls (id, cinema_id, type_id, `rows`, `columns`) VALUES (6, 6, 1, 8, 10);
-INSERT INTO halls (id, cinema_id, type_id, `rows`, `columns`) VALUES (7, 7, 3, 12, 14);
-INSERT INTO halls (id, cinema_id, type_id, `rows`, `columns`) VALUES (8, 8, 2, 14, 16);
-INSERT INTO halls (id, cinema_id, type_id, `rows`, `columns`) VALUES (9, 9, 1, 10, 12);
-INSERT INTO halls (id, cinema_id, type_id, `rows`, `columns`) VALUES (10, 10, 2, 8, 10);
+INSERT INTO halls (id, cinema_id, type_id, hall_rows, hall_columns) VALUES (1, 1, 1, 10, 12);
+INSERT INTO halls (id, cinema_id, type_id, hall_rows, hall_columns) VALUES (2, 2, 2, 8, 10);
+INSERT INTO halls (id, cinema_id, type_id, hall_rows, hall_columns) VALUES (3, 3, 1, 12, 14);
+INSERT INTO halls (id, cinema_id, type_id, hall_rows, hall_columns) VALUES (4, 4, 3, 14, 16);
+INSERT INTO halls (id, cinema_id, type_id, hall_rows, hall_columns) VALUES (5, 5, 2, 10, 12);
+INSERT INTO halls (id, cinema_id, type_id, hall_rows, hall_columns) VALUES (6, 6, 1, 8, 10);
+INSERT INTO halls (id, cinema_id, type_id, hall_rows, hall_columns) VALUES (7, 7, 3, 12, 14);
+INSERT INTO halls (id, cinema_id, type_id, hall_rows, hall_columns) VALUES (8, 8, 2, 14, 16);
+INSERT INTO halls (id, cinema_id, type_id, hall_rows, hall_columns) VALUES (9, 9, 1, 10, 12);
+INSERT INTO halls (id, cinema_id, type_id, hall_rows, hall_columns) VALUES (10, 10, 2, 8, 10);
 
 -- -----------------------------------------------------
 -- Table `kino_arena`.`projections`
@@ -163,145 +165,3 @@ INSERT INTO projections (id, start_time, date, hall_id, movie_id) VALUES (7, '20
 INSERT INTO projections (id, start_time, date, hall_id, movie_id) VALUES (8, '21:00:00', '2023-04-21', 8, 8);
 INSERT INTO projections (id, start_time, date, hall_id, movie_id) VALUES (9, '19:30:00', '2023-04-22', 9, 9);
 INSERT INTO projections (id, start_time, date, hall_id, movie_id) VALUES (10, '20:45:00', '2023-04-23', 10, 10);
-
--- -----------------------------------------------------
--- Table `kino_arena`.`users`
--- -----------------------------------------------------
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (1, 'John', 'Doe', 'johndoe@example.com', 'mypassword1', '1990-01-01', 1, 'M', '1234567890', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (2, 'Jane', 'Doe', 'janedoe@example.com', 'mypassword2', '1995-02-02', 2, 'F', '9876543210', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (3, 'Mark', 'Smith', 'marksmith@example.com', 'mypassword3', '1985-03-03', 3, 'M', '4567890123', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (4, 'Emily', 'Johnson', 'emilyjohnson@example.com', 'mypassword4', '1992-04-04', 4, 'F', '8901234567', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (5, 'Michael', 'Brown', 'michaelbrown@example.com', 'mypassword5', '1988-05-05', 5, 'M', '5678901234', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (6, 'Sarah', 'Wilson', 'sarahwilson@example.com', 'mypassword6', '1991-06-06', 1, 'F', '1234567890', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (7, 'David', 'Taylor', 'davidtaylor@example.com', 'mypassword7', '1994-07-07', 2, 'M', '9876543210', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (8, 'Olivia', 'Miller', 'oliviamiller@example.com', 'mypassword8', '1986-08-08', 3, 'F', '4567890123', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (9, 'Daniel', 'Anderson', 'danielanderson@example.com', 'mypassword9', '1993-09-09', 4, 'M', '8901234567', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (10, 'Sophia', 'Brown', 'sophiabrown@example.com', 'mypassword10', '1987-10-10', 5, 'F', '5678901234', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (11, 'Benjamin', 'Johnson', 'benjaminjohnson@example.com', 'mypassword11', '1996-11-11', 1, 'M', '1234567890', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (12, 'Chloe', 'Smith', 'chloesmith@example.com', 'mypassword12', '1989-12-12', 2, 'F', '9876543210', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (13, 'Samuel', 'Wilson', 'samuelwilson@example.com', 'mypassword13', '1997-01-13', 3, 'M', '4567890123', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name)
-VALUES (14, 'Luke', 'Jones', 'lukejones@example.com', 'mypassword14', '1990-02-14', 4, 'M', '8901234567', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (15, 'Grace', 'Lee', 'gracelee@example.com', 'mypassword15', '1998-03-15', 5, 'F', '5678901234', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (16, 'Jacob', 'Nguyen', 'jacobnguyen@example.com', 'mypassword16', '1991-04-16', 1, 'M', '1234567890', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (17, 'Zoe', 'Wang', 'zoewang@example.com', 'mypassword17', '1994-05-17', 2, 'F', '9876543210', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (18, 'Ethan', 'Garcia', 'ethangarcia@example.com', 'mypassword18', '1986-06-18', 3, 'M', '4567890123', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (19, 'Nora', 'Martin', 'noramartin@example.com', 'mypassword19', '1993-07-19', 4, 'F', '8901234567', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (20, 'Jackson', 'Taylor', 'jacksontaylor@example.com', 'mypassword20', '1987-08-20', 5, 'M', '5678901234', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (21, 'Olivia', 'Smith', 'oliviasmith@example.com', 'mypassword21', '1992-09-21', 1, 'F', '1234567890', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (22, 'Henry', 'Anderson', 'henryanderson@example.com', 'mypassword22', '1985-10-22', 2, 'M', '9876543210', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (23, 'Emma', 'Johnson', 'emmajohnson@example.com', 'mypassword23', '1997-11-23', 3, 'F', '4567890123', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (24, 'William', 'Brown', 'williambrown@example.com', 'mypassword24', '1990-12-24', 4, 'M', '8901234567', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (25, 'Sophia', 'Taylor', 'sophiataylor@example.com', 'mypassword25', '1998-01-25', 5, 'F', '5678901234', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (26, 'Daniel', 'Miller', 'danielmiller@example.com', 'mypassword26', '1991-02-26', 1, 'M', '1234567890', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (27, 'Madeline', 'Anderson', 'madelineanderson@example.com', 'mypassword27', '1994-03-27', 2, 'F', '9876543210', 'customer');
-INSERT INTO users (id, first_name, last_name, email, password, birth_date, city_id, gender, phone_number, role_name) 
-VALUES (28, 'Oliver', 'Johnson', 'oliverjohnson@example.com', 'mypassword28', '1986-04-28', 3, 'M', '4567890123', 'customer');
-
--- -----------------------------------------------------
--- Table `kino_arena`.`tickets`
--- -----------------------------------------------------
--- Вмъкване на билет с идентификатор 1, отговарящ на първия потребител (user_id=1), за редовна прожекция (is_regular=1) на филм с идентификатор 1 (projection_id=1), на ред 1 и колона 1, с цена 10.50 лв.
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (1, 1, 1, 1, 1, 1, 10.50, NULL);
-
--- Вмъкване на билет с идентификатор 2, отговарящ на втория потребител (user_id=2), за специална прожекция (is_regular=0) на филм с идентификатор 2 (projection_id=2), на ред 2 и колона 3, с цена 15.00 лв. и отстъпка 5%
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (2, 2, 0, 2, 2, 3, 15.00, 0.05);
-
--- Вмъкване на билет с идентификатор 3, отговарящ на третия потребител (user_id=3), за редовна прожекция (is_regular=1) на филм с идентификатор 3 (projection_id=3), на ред 3 и колона 2, с цена 12.00 лв.
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (3, 3, 1, 3, 3, 2, 12.00, NULL);
-
--- Вмъкване на билет с идентификатор 4, отговарящ на четвъртия потребител (user_id=4), за специална прожекция (is_regular=0) на филм с идентификатор 4 (projection_id=4), на ред 4 и колона 5, с цена 20.00 лв. и отстъпка 10%
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (4, 4, 0, 4, 4, 5, 20.00, 0.10);
-
--- Вмъкване на билет с идентификатор 5, отговарящ на петия потребител (user_id=5), за редовна прожекция (is_regular=1) на филм с идентификатор 5 (projection_id=5), на ред 5 и колона 3, с цена 14.50 лв.
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (5, 5, 1, 5, 5, 3, 14.50, NULL);
-
--- Вмъкване на билет с идентификатор 6, отговарящ на шестия потребител (user_id=6), за специална прожекция (is_regular=0) на филм с идентификатор 6 (projection_id=6), на ред 6 и колона 1, с цена 18.00 лв. и отстъпка 7%
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (6, 6, 0, 6, 6, 1, 18.00, 0.07);
-
--- Вмъкване на билет с идентификатор 7, отговарящ на седмия потребител (user_id=7), за редовна прожекция (is_regular=1) на филм с идентификатор 7 (projection_id=7), на ред 7 и колона 4, с цена 13.75 лв.
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (7, 7, 1, 7, 7, 4, 13.75, NULL);
-
--- Вмъкване на билет с идентификатор 8, отговарящ на осмия потребител (user_id=8), за специална прожекция (is_regular=0) на филм с идентификатор 8 (projection_id=8), на ред 8 и колона 6, с цена 22.50 лв. и отстъпка 15%
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (8, 8, 0, 8, 8, 6, 22.50, 0.15);
-
--- Вмъкване на билет с идентификатор 9, отговарящ на деветия потребител (user_id=9), за редовна прожекция (is_regular=1) на филм с идентификатор 9 (projection_id=9), на ред 9 и колона 2, с цена 11.00 лв.
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (9, 9, 1, 9, 9, 2, 11.00, NULL);
-
--- Вмъкване на билет с идентификатор 10, отговарящ на десетия потребител (user_id=10), за специална прожекция (is_regular=0) на филм с идентификатор 10 (projection_id=10), на ред 10 и колона 5, с цена 19.75 лв. и отстъпка 12%
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (10, 10, 0, 10, 10, 5, 19.75, 0.12);
-
--- Вмъкване на билет с идентификатор 11, отговарящ на единадесетия потребител (user_id=11), за редовна прожекция (is_regular=1) на филм с идентификатор 11 (projection_id=11), на ред 11 и колона 3, с цена 12.50 лв.
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (11, 11, 1, 1, 11, 3, 12.50, NULL);
-
--- Вмъкване на билет с идентификатор 12, отговарящ на дванадесетия потребител (user_id=12), за специална прожекция (is_regular=0) на филм с идентификатор 12 (projection_id=12), на ред 12 и колона 6, с цена 25.00 лв. и отстъпка 10%
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (12, 12, 0, 2, 12, 6, 25.00, 0.10);
-
--- Вмъкване на билет с идентификатор 13, отговарящ на тринадесетия потребител (user_id=13), за редовна прожекция (is_regular=1) на филм с идентификатор 13 (projection_id=13), на ред 13 и колона 1, с цена 10.00 лв.
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (13, 13, 1, 3, 13, 1, 10.00, NULL);
-
--- Вмъкване на билет с идентификатор 14, отговарящ на четиринадесетия потребител (user_id=14), за специална прожекция (is_regular=0) на филм с идентификатор 14 (projection_id=14), на ред 14 и колона 4, с цена 18.50 лв. и отстъпка 8%
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (14, 14, 0, 4, 14, 4, 18.50, 0.08);
-
--- Вмъкване на билет с идентификатор 15, отговарящ на петнадесетия потребител (user_id=15), за редовна прожекция (is_regular=1) на филм с идентификатор 15 (projection_id=15), на ред 15 и
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount)
-VALUES (15, 15, 1, 5, 15, 2, 8.00, NULL);
-
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount)
-VALUES (16, 16, 0, 6, 16, 5, 22.00, 0.15);
-
--- Вмъкване на билет с идентификатор 17, отговарящ на седемнадесетия потребител (user_id=17), за обикновена прожекция (is_regular=1) на филм с идентификатор 17 (projection_id=17), на ред 17 и колона 3, с цена 12.50 лв. и отстъпка 0%
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (17, 17, 1, 7, 17, 3, 12.50, 0.00);
-
--- Вмъкване на билет с идентификатор 18, отговарящ на осемнадесетия потребител (user_id=18), за специална прожекция (is_regular=0) на филм с идентификатор 18 (projection_id=18), на ред 18 и колона 4, с цена 18.00 лв. и отстъпка 10%
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (18, 18, 0, 8, 18, 4, 18.00, 0.10);
-
--- Вмъкване на билет с идентификатор 19, отговарящ на деветнадесетия потребител (user_id=19), за обикновена прожекция (is_regular=1) на филм с идентификатор 19 (projection_id=19), на ред 19 и колона 5, с цена 9.99 лв. и отстъпка 0%
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (19, 19, 1, 9, 19, 5, 9.99, 0.00);
-
--- Вмъкване на билет с идентификатор 20, отговарящ на двадесетия потребител (user_id=20), за специална прожекция (is_regular=0) на филм с идентификатор 20 (projection_id=20), на ред 20 и колона 1, с цена 15.00 лв. и отстъпка 5%
-INSERT INTO tickets (id, user_id, is_regular, projection_id, `row_number`, col_number, price, discount) 
-VALUES (20, 20, 0, 1, 20, 1, 15.00, 0.05);

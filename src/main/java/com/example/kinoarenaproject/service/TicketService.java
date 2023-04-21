@@ -30,14 +30,12 @@ public class TicketService extends com.example.kinoarenaproject.service.Service 
     private ModelMapper mapper;
 
     public TicketInfoDTO book(TicketBookDTO bookTicket, int loggedId) {
-        User u = userById(loggedId);
-        //TODO да променя ролята на USER
-        if (!u.getRole_name().equals(Constants.ADMIN)) {
+        if (admin(loggedId)) {
             throw new UnauthorizedException("Unauthorized role");
         }
         Optional<Projection> opt = projectionRepository.findById(bookTicket.getProjectionId());
         if (!opt.isPresent()) {
-            throw new NotFoundException("Projection not found");
+            throw new NotFoundException("Projection not found!");
         }
         Projection projection = opt.get();
         int countExistTicket = ticketRepository.countByProjectionIdAndRowNumberAndColNumber(projection.getId(), bookTicket.getRowNumber(), bookTicket.getColNumber());
@@ -46,9 +44,9 @@ public class TicketService extends com.example.kinoarenaproject.service.Service 
         }
 
         Ticket ticket = new Ticket();
+        User u = userById(loggedId);
         ticket.setUser(u);
         ticket.setProjection(projection);
-
         ticket.setRowNumber(bookTicket.getRowNumber());
         ticket.setColNumber(bookTicket.getColNumber());
         ticketRepository.save(ticket);

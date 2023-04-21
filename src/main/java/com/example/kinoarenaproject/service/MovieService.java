@@ -1,14 +1,15 @@
 package com.example.kinoarenaproject.service;
 
-import com.example.kinoarenaproject.controller.Constants;
 import com.example.kinoarenaproject.model.DTOs.*;
 import com.example.kinoarenaproject.model.entities.*;
+import com.example.kinoarenaproject.model.exceptions.BadRequestException;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
 import com.example.kinoarenaproject.model.repositories.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,78 +33,63 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
     @Autowired
     private ModelMapper mapper;
 
-    public MovieInfoDTO add(AddMovieDTO addData, int id) {
-        Movie movie = null;
-        try {
-            User u = userById(id);
-            if (!u.getRole_name().equals(Constants.ADMIN)) {
-                throw new UnauthorizedException("Unauthorized role");
-            }
-            movie = mapper.map(addData, Movie.class);
-
-            Optional<Category> optCategory = categoryRepository.findById(addData.getCategoryId());
-            if (!optCategory.isPresent()) {
-                throw new NotFoundException("Category not found");
-            }
-            Category category = optCategory.get();
-            movie.setCategory(category);
-
-            Optional<Genre> optGenre = genreRepository.findById(addData.getGenreId());
-            if (!optGenre.isPresent()) {
-                throw new NotFoundException("Movie not found");
-            }
-            Genre genre = optGenre.get();
-            movie.setGenre(genre);
-
-            movieRepository.save(movie);
-        } catch (RuntimeException r) {
-            r.printStackTrace();
-            System.out.println(r.getMessage());
-        }
-        return mapper.map(movie, MovieInfoDTO.class);
-    }
-
-    public MovieInfoDTO edit(EditMovieDTO movieDTO, int id, int userId) {
-        User u = userById(userId);
-        if (!u.getRole_name().equals(Constants.ADMIN)) {
+    public MovieInfoDTO add(AddMovieDTO movieDTO, int userId) {
+        if (!admin(userId)) {
             throw new UnauthorizedException("Unauthorized role");
         }
-        Optional<Movie> opt = movieRepository.findById(id);
-        if (!opt.isPresent()) {
-            throw new UnauthorizedException("non-existent movie");
+        Category category = checkOptionalIsPresent(categoryRepository.findById(movieDTO.getCategory()), "non-existent category");
+        Genre genre = checkOptionalIsPresent(genreRepository.findById(movieDTO.getGenre()), "non-existent genre");
+
+        if (movieDTO.getTitle() == null ||
+                movieDTO.getDescription() == null ||
+                movieDTO.getDuration() == 0 ||
+                movieDTO.getPremiere() == null) {
+            throw new BadRequestException("Incomplete data!");
         }
-        Movie movie = opt.get();
-        movie.setTitle(movieDTO.getTitle());
-        movie.setDescription(movieDTO.getDescription());
-        movie.setDuration(movieDTO.getDuration());
-        movie.setPremiere(movieDTO.getPremiere());
-        movie.setDirector(movieDTO.getDirector());
-        movie.setCast(movieDTO.getCast());
 
-        Optional<Category> optionalCategory = categoryRepository.findById(movieDTO.getCategory());
-        Category category = optionalCategory.get();
+        Movie movie = mapper.map(movieDTO, Movie.class);
         movie.setCategory(category);
-
-        Optional<Genre> optionalGenre = genreRepository.findById(movieDTO.getGenre());
-        Genre genre = optionalGenre.get();
         movie.setGenre(genre);
 
         movieRepository.save(movie);
         return mapper.map(movie, MovieInfoDTO.class);
     }
 
-    public MovieInfoDTO remove(int id, int userId) {
-        User u = userById(userId);
-        if (!u.getRole_name().equals(Constants.ADMIN)) {
+    public MovieInfoDTO edit(EditMovieDTO movieDTO, int id, int userId) {
+        if (!admin(userId)) {
             throw new UnauthorizedException("Unauthorized role");
         }
-        Optional<Movie> opt = movieRepository.findById(id);
-        if (!opt.isPresent()) {
-            throw new NotFoundException("Movie not found");
+        Movie movie = checkOptionalIsPresent(movieRepository.findById(id), "non-existent movie");
+        Category category = checkOptionalIsPresent(categoryRepository.findById(movieDTO.getCategory()), "non-existent category");
+        Genre genre = checkOptionalIsPresent(genreRepository.findById(movieDTO.getGenre()), "non-existent genre");
+
+        setIfNotNull(movieDTO.getTitle(), title -> movie.setTitle(title));
+        setIfNotNull(movieDTO.getDescription(), description -> movie.setDescription(description));
+        setIfNotNull(movieDTO.getDuration(), duration -> movie.setDuration(duration));
+        setIfNotNull(movieDTO.getPremiere(), premiere -> movie.setPremiere(premiere));
+        setIfNotNull(movieDTO.getDirector(), director -> movie.setDirector(director));
+        setIfNotNull(movieDTO.getCast(), cast -> movie.setCast(cast));
+        setIfNotNull(category, category1 -> movie.setCategory(category1));
+        setIfNotNull(genre, genre1 -> movie.setGenre(genre1));
+
+        movieRepository.save(movie);
+        return mapper.map(movie, MovieInfoDTO.class);
+    }
+
+    @Transactional
+    public MovieInfoDTO remove(int id, int userId) {
+        if (!admin(userId)) {
+            throw new UnauthorizedException("Unauthorized role!");
         }
-        Movie movie = opt.get();
-        movieRepository.delete(movie);
+        Movie movie = checkOptionalIsPresent(movieRepository.findById(id), "non-existent movie");
+        List<Projection> projections = projectionRepository.findByMovie(Optional.of(movie));
+        for (Projection projection : projections) {
+            projectionRepository.delete(projection);
+        }
         MovieInfoDTO movieInfoDTO = mapper.map(movie, MovieInfoDTO.class);
+        movie.setGenre(null);
+        movie.setCategory(null);
+        movieRepository.delete(movie);
         return movieInfoDTO;
     }
 
@@ -134,18 +120,18 @@ public class MovieService extends com.example.kinoarenaproject.service.Service {
         }
     }
 
-    public List<AddMovieDTO> filterByGenre(int genreId) {
-        Optional<Genre> genre = genreRepository.findById(genreId);
+    //TODO need to check again!
+    public List<AddMovieDTO> filterByGenre(int id) {
+        Optional<Genre> genre = genreRepository.findById(id);
         if (genre.isPresent()) {
-            mapper.map(genre.get(), Genre.class);
             List<Movie> movies = new ArrayList<>();
-            movies.addAll(movieRepository.findByGenre(genre));
+            movies.addAll(movieRepository.findByGenre(id));
             return movies.stream()
                     .map(m -> mapper.map(m, AddMovieDTO.class))
-                    .peek(addMovieDTO -> addMovieDTO.setGenreId(genreId))
+                    .peek(addMovieDTO -> addMovieDTO.setGenre(id))
                     .collect(Collectors.toList());
         } else {
-            throw new NotFoundException("Not found genre");
+            throw new NotFoundException("Not found genre!");
         }
     }
 }
