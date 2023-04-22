@@ -13,14 +13,8 @@ public class TicketController extends AbstractController {
 
     @GetMapping("/tickets/{id}")
     public TicketInfoDTO getById(@PathVariable int id, HttpSession session) {
-     /*   boolean logged = (boolean) session.getAttribute(Constants.LOGGED);
-        if (!logged) {
-            throw new UnauthorizedException("You have to login");
-        } else {
-            //TODO да се виждат ли само билетите на този user?
-           // int idUser = loggedId(session); */
-        return ticketService.getTicketById(id);
-
+        int idUser = loggedId(session);
+        return ticketService.getTicketById(id, idUser);
     }
 
     @PostMapping("/tickets")

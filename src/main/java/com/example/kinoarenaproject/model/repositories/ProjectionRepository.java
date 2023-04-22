@@ -16,6 +16,12 @@ public interface ProjectionRepository extends JpaRepository<Projection, Integer>
 
     List<Projection> findByMovie(Optional<Movie> movie);
 
+    List<Projection> findByMovieId(int movie);
+
     @Query(value = "SELECT p.id, p.movie_id, p.hall_id, p.date, p.price, p.start_time FROM projections AS p JOIN halls AS h ON p.hall_id = h.id WHERE h.cinema_id = :cinemaId", nativeQuery = true)
     List<Projection> getProjectionsByCinema(@Param("cinemaId") int cinemaId);
+
+    @Query(value = "SELECT p.id, p.movie_id, p.hall_id, p.date, p.price, p.start_time FROM projections AS p JOIN halls AS h ON p.hall_id = h.id WHERE h.cinema_id = :cinemaId AND p.movie_id = :movieId", nativeQuery = true)
+    List<Projection> getProjectionsByCinemaAndMovie(@Param("cinemaId") int cinemaId, @Param("movieId") int movieId);
+
 }
