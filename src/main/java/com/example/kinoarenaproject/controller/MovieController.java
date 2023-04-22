@@ -3,6 +3,7 @@ package com.example.kinoarenaproject.controller;
 import com.example.kinoarenaproject.model.DTOs.*;
 import com.example.kinoarenaproject.service.MovieService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,9 @@ public class MovieController extends AbstractController {
     private MovieService movieService;
 
     @PostMapping("/movies")
-    public MovieInfoDTO add(@RequestBody AddMovieDTO addData, HttpSession session) {
-        int id = loggedId(session);
-        MovieInfoDTO movie = movieService.add(addData, id);
+    public MovieInfoDTO add(@RequestBody @Valid AddMovieDTO addData, HttpSession session) {
+        int userId = loggedId(session);
+        MovieInfoDTO movie = movieService.add(addData, userId);
         return movie;
     }
 
@@ -29,7 +30,7 @@ public class MovieController extends AbstractController {
     }
 
     @PutMapping("/movies/{id}")
-    public MovieInfoDTO edit(@RequestBody EditMovieDTO editData, @PathVariable int id, HttpSession session) {
+    public MovieInfoDTO edit(@RequestBody @Valid EditMovieDTO editData, @PathVariable int id, HttpSession session) {
         int userId = loggedId(session);
         MovieInfoDTO movie = movieService.edit(editData, id, userId);
         return movie;

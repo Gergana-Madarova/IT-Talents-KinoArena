@@ -70,7 +70,7 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
         }
         setIfNotNull(projectionDTO.getStartTime(), startTime -> projection.setStartTime(startTime));
         setIfNotNull(projectionDTO.getDate(), date -> projection.setDate(date));
-        setIfNotNull(projectionDTO.getDate(), price -> projection.setDate(price));
+        setIfNotNull(projectionDTO.getPrice(), price -> projection.setPrice(price));
 
         projectionRepository.save(projection);
         return mapper.map(projection, ProjectionDTO.class);

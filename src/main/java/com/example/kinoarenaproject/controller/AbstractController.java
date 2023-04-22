@@ -1,25 +1,20 @@
 package com.example.kinoarenaproject.controller;
 
 import com.example.kinoarenaproject.model.DTOs.ErrorDTO;
-import com.example.kinoarenaproject.model.entities.User;
 import com.example.kinoarenaproject.model.exceptions.BadRequestException;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
 import jakarta.servlet.http.HttpSession;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.validation.FieldError;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.logging.Logger;
 
 public abstract class AbstractController {
-
-
-
-
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDTO handleBadRequest(Exception e){
@@ -52,6 +47,7 @@ public abstract class AbstractController {
                 .status(s.value())
                 .build();
     }
+
     protected  int loggedId(HttpSession session){
         if(session.getAttribute(Constants.LOGGED_ID)==null){
             throw new UnauthorizedException("You have to login first");
@@ -60,5 +56,16 @@ public abstract class AbstractController {
         return (int) session.getAttribute(Constants.LOGGED_ID);
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDTO handleValidationException(MethodArgumentNotValidException e) {
+        BindingResult bindingResult = e.getBindingResult();
+        String errorMessage = bindingResult.getFieldErrors()
+                .stream()
+                .map(fieldError -> fieldError.getDefaultMessage())
+                .findFirst()
+                .orElse("Invalid data");
+        return generateErrorDTO(new BadRequestException(errorMessage), HttpStatus.BAD_REQUEST);
+    }
 
 }

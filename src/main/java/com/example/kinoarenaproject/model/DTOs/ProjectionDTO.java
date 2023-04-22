@@ -15,6 +15,7 @@ public class ProjectionDTO {
     private int id;
     private LocalTime startTime;
     private LocalDate date;
+    private double price;
     private HallDTO hall;
     private MovieInfoDTO movie;
 }

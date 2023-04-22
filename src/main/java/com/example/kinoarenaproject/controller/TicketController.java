@@ -3,6 +3,7 @@ package com.example.kinoarenaproject.controller;
 import com.example.kinoarenaproject.model.DTOs.*;
 import com.example.kinoarenaproject.service.TicketService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class TicketController extends AbstractController {
     }
 
     @PostMapping("/tickets")
-    public TicketInfoDTO book(@RequestBody TicketBookDTO dto, HttpSession session) {
+    public TicketInfoDTO book(@RequestBody @Valid TicketBookDTO dto, HttpSession session) {
         return ticketService.book(dto, loggedId(session));
     }
 }
