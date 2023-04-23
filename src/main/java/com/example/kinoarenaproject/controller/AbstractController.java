@@ -1,6 +1,7 @@
 package com.example.kinoarenaproject.controller;
 
 import com.example.kinoarenaproject.model.DTOs.ErrorDTO;
+import com.example.kinoarenaproject.model.entities.Hall;
 import com.example.kinoarenaproject.model.entities.User;
 import com.example.kinoarenaproject.model.exceptions.BadRequestException;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
@@ -56,8 +57,13 @@ public abstract class AbstractController {
         if(session.getAttribute(Constants.LOGGED_ID)==null){
             throw new UnauthorizedException("You have to login first");
         }
-        System.out.println(Constants.LOGGED_ID);
         return (int) session.getAttribute(Constants.LOGGED_ID);
+    }
+    protected boolean validSession(HttpSession session){
+        if(session.getAttribute(Constants.LOGGED)==null){
+            throw new UnauthorizedException("Invalid session. Login first.");
+        }
+        return true;
     }
 
 

@@ -10,7 +10,7 @@ public class EmailSenderCervice {
 
     @Autowired
     private org.springframework.mail.javamail.JavaMailSender mailSender;
-//    private JavaMailSender mailSender;
+
 
     public void sendEmail(String toEmail, String subject, String body){
         SimpleMailMessage message =new SimpleMailMessage();

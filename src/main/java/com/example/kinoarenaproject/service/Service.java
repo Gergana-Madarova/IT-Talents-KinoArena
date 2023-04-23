@@ -45,4 +45,5 @@ public abstract class Service {
             setter.accept(value);
         }
     }
+
 }

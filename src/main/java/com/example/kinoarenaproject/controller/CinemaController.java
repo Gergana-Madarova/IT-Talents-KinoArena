@@ -18,9 +18,7 @@ public class CinemaController extends AbstractController{
     @PostMapping("/cinemas")
     public CinemaDTO add(@RequestBody AddCinemaDTO addData, HttpSession session){
         int id=loggedId(session);
-       CinemaDTO cinema=cinemaService.add(addData,id);
-//        session.setAttribute(Constants.LOGGED,true);
-//        session.setAttribute(Constants.LOGGED_ID,u.getId());
+        CinemaDTO cinema = cinemaService.add(addData, id);
         return cinema;
     }
 
@@ -34,8 +32,8 @@ public class CinemaController extends AbstractController{
    @PutMapping("/cinemas/{id}")
    public CinemaDTO edit(@RequestBody CinemaDTO editData,@PathVariable int id, HttpSession session){
         int userId=loggedId(session);
-       CinemaDTO c=cinemaService.edit(editData,id,userId);
-       return c;
+        return cinemaService.edit(editData,id,userId);
+
    }
 
    @GetMapping("/cinemas/{id}")

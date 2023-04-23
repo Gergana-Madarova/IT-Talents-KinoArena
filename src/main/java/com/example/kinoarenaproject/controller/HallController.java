@@ -44,11 +44,6 @@ public class HallController extends AbstractController{
         return hallService.getById(id);
     }
 
-//    @GetMapping("/halls/seats")
-//    public List<HallDTO> getAvailableSeets(){
-//        return hallService.getSeets();
-//    }
-
     @DeleteMapping("/halls/{id}")
     public HallDTO remove(@PathVariable int id, HttpSession session){
         int userId=loggedId(session);

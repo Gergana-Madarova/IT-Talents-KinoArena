@@ -1,12 +1,8 @@
 package com.example.kinoarenaproject.service;
 
-import com.example.kinoarenaproject.controller.Constants;
-import com.example.kinoarenaproject.model.DTOs.AddCinemaDTO;
 import com.example.kinoarenaproject.model.DTOs.AddHallDTO;
-import com.example.kinoarenaproject.model.DTOs.CinemaDTO;
 import com.example.kinoarenaproject.model.DTOs.HallDTO;
 import com.example.kinoarenaproject.model.entities.Cinema;
-import com.example.kinoarenaproject.model.entities.City;
 import com.example.kinoarenaproject.model.entities.Hall;
 import com.example.kinoarenaproject.model.entities.User;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
@@ -17,7 +13,6 @@ import com.example.kinoarenaproject.model.repositories.HallRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +57,7 @@ public class HallService extends com.example.kinoarenaproject.service.Service {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
+
     public HallDTO edit(HallDTO editData, int id, int userId) {
 
         User u = userById(userId);
@@ -93,7 +88,7 @@ public class HallService extends com.example.kinoarenaproject.service.Service {
         }
     }
 
-    @Transactional
+
     public HallDTO remove(int id, int userId) {
 
         User u = userById(userId);
@@ -102,7 +97,7 @@ public class HallService extends com.example.kinoarenaproject.service.Service {
         }
         Optional <Hall>opt=hallRepository.findById(id);
         if(!opt.isPresent()){
-            throw new NotFoundException("Cinema not found");
+            throw new NotFoundException("Hall not found");
         }
         Hall h=opt.get();
         hallRepository.delete(h);

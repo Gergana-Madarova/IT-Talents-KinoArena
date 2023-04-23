@@ -21,7 +21,6 @@ public class UserWithoutPasswordDTO {
     private String gender;
     private String phone_number;
     private String role_name;
-
     private String profileImageUrl;
 
     }

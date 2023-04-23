@@ -17,13 +17,10 @@ public class EditProfileDTO {
     private  String first_name;
     private String last_name;
     private String email;
-    private String password;
-    private String newPassword;
-    private String confirmNewPassword;
     private LocalDate birth_date;
     private int city_id;
     private String gender;
     private String phone_number;
-    private String role_name;
+
 
 }

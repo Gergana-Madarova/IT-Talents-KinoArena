@@ -1,17 +1,13 @@
 package com.example.kinoarenaproject.service;
 
-import com.example.kinoarenaproject.controller.Constants;
 import com.example.kinoarenaproject.controller.ValidationUtils;
 import com.example.kinoarenaproject.model.DTOs.*;
-import com.example.kinoarenaproject.model.entities.Cinema;
-import com.example.kinoarenaproject.model.entities.City;
 import com.example.kinoarenaproject.model.entities.User;
 import com.example.kinoarenaproject.model.exceptions.BadRequestException;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
 import com.example.kinoarenaproject.model.repositories.CityRepository;
 import com.example.kinoarenaproject.model.repositories.UserRepository;
-import org.apache.naming.factory.SendMailFactory;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -48,14 +44,17 @@ public class UserService extends com.example.kinoarenaproject.service.Service {
             throw new UnauthorizedException("Wrong credentials");
         }
         User u = opt.get();
-        if (u.isEnable()) {
-            if (passwordEncoder.matches(loginData.getPassword(), u.getPassword())) {
-                return mapper.map(u, UserWithoutPasswordDTO.class);
-            }
-        } else {
+        if (! u.isEnable()) {
             throw new UnauthorizedException("Wrong credentials");
         }
-        return null;
+        if(passwordEncoder.matches(loginData.getPassword(), u.getPassword())){
+            System.out.println();
+            return mapper.map(u, UserWithoutPasswordDTO.class);
+        }
+        else {
+            throw new UnauthorizedException("Wrong credentials");
+            }
+
     }
 
 
@@ -63,14 +62,12 @@ public class UserService extends com.example.kinoarenaproject.service.Service {
         if (!registerData.getPassword().equals((registerData).getConfirmPassword())) {
             throw new BadRequestException("Password mismatched");
         }
-        if (ValidationUtils.isValidPassword(registerData.getPassword()) &&
-                ValidationUtils.isValidEmail(registerData.getEmail())) {
+        if(ValidationUtils.validRegisterData(registerData)){
             if (userRepository.existsByEmail(registerData.getEmail())) {
                 throw new BadRequestException("Email already exist");
             }
         } else {
-            throw new BadRequestException(("Inadequate input for password  " +
-                    "At least one upper case, one lower case,one digit,one special character minimum eight characters , max 20"));
+            throw new BadRequestException("Inadequate input for password");
         }
         User u = mapper.map(registerData, User.class);
         u.setDateTimeRegistration(LocalDateTime.now());
@@ -113,21 +110,39 @@ public class UserService extends com.example.kinoarenaproject.service.Service {
     }
 
     public UserWithoutPasswordDTO changePassword(ChangePassDTO changePassData, int id) {
+        if(! ValidationUtils.isValidPassword(changePassData.getNewPassword())) {
+            throw new UnauthorizedException("Week password");
+        }
         Optional<User> opt = userRepository.findById(id);
         if (!opt.isPresent()) {
             throw new UnauthorizedException("Wrong credentials");
         }
         User u = opt.get();
-        u.setPassword(passwordEncoder.encode(changePassData.getNewPassword()));
-        userRepository.save(u);
-        return mapper.map(u, UserWithoutPasswordDTO.class);
-    }
+
+            u.setPassword(passwordEncoder.encode(changePassData.getNewPassword()));
+            userRepository.save(u);
+
+            return mapper.map(u, UserWithoutPasswordDTO.class);
+        }
 
     public UserWithoutPasswordDTO editProfile(EditProfileDTO editProfileData, int id) {
+
+        if(!ValidationUtils.validEditProfilData(editProfileData)){
+            throw new BadRequestException("Wrong input data");
+        }
+        if (userRepository.existsByEmail(editProfileData.getEmail()) &&
+                userRepository.findByEmail(editProfileData.getEmail()).get().getId()!=id) {
+            throw new UnauthorizedException("Email already exist");
+        }
+
+        if(! ValidationUtils.validEditData(editProfileData)){
+            throw new UnauthorizedException("Input data not valid");
+        }
         Optional<User> opt = userRepository.findById(id);
         if (!opt.isPresent()) {
             throw new UnauthorizedException("Wrong credentials");
         }
+
         User u = opt.get();
         u.setPhone_number(editProfileData.getPhone_number());
         u.setEmail(editProfileData.getEmail());
@@ -135,13 +150,6 @@ public class UserService extends com.example.kinoarenaproject.service.Service {
         u.setFirst_name(editProfileData.getFirst_name());
         u.setLast_name(editProfileData.getLast_name());
         u.setGender(editProfileData.getGender());
-//
-//        Optional<City>city=cityRepository.findById(editProfileData.getCity_id());
-//        if(!city.isPresent()){
-//            throw new NotFoundException("City not found");
-//        }
-//        City c =city.get();
-//        u.setCity(c);
         u.setCity_id(editProfileData.getCity_id());
 
         userRepository.save(u);

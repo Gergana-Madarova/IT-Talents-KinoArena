@@ -1,18 +1,14 @@
 package com.example.kinoarenaproject.service;
 
-import com.example.kinoarenaproject.controller.Constants;
-import com.example.kinoarenaproject.model.DTOs.*;
 import com.example.kinoarenaproject.model.DTOs.AddCinemaDTO;
 import com.example.kinoarenaproject.model.DTOs.CinemaDTO;
 import com.example.kinoarenaproject.model.entities.Cinema;
 import com.example.kinoarenaproject.model.entities.City;
-import com.example.kinoarenaproject.model.entities.Hall;
 import com.example.kinoarenaproject.model.entities.User;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
 import com.example.kinoarenaproject.model.repositories.CinemaRepository;
 import com.example.kinoarenaproject.model.repositories.CityRepository;
-import com.example.kinoarenaproject.model.repositories.HallRepository;
 import com.example.kinoarenaproject.model.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,29 +34,24 @@ public class CinemaService extends com.example.kinoarenaproject.service.Service 
 
 
     public CinemaDTO add(AddCinemaDTO addCinema, int id) {
-        Cinema cin=null;
-        try {
-            User u = userById(id);
-            if (! admin(id)) {
-                throw new UnauthorizedException("Unauthorized role");
-            }
-             cin = mapper.map(addCinema, Cinema.class);
-
-            Optional<City>opt=cityRepository.findById(addCinema.getCity_id());
-            if(!opt.isPresent()){
-                throw new NotFoundException("City not found");
-            }
-           City city= opt.get();
-           cin.setCity(city);
-
-            cinemaRepository.save(cin);
-        }catch (RuntimeException r){
-            r.printStackTrace();
-            System.out.println(r.getMessage());
+        User u = userById(id);
+        if (! admin(id)) {
+            throw new UnauthorizedException("Unauthorized role");
         }
+        Cinema cin = mapper.map(addCinema, Cinema.class);
+
+        Optional<City>opt=cityRepository.findById(addCinema.getCity_id());
+        if(!opt.isPresent()){
+            throw new NotFoundException("Cinema not found");
+        }
+        City city= opt.get();
+        cin.setCity(city);
+        cinemaRepository.save(cin);
+
         return mapper.map(cin, CinemaDTO.class);
     }
-    @Transactional
+
+
     public CinemaDTO edit(CinemaDTO cinemaDto, int id,int userId) {
         User u = userById(userId);
         if (!admin(userId)) {
@@ -68,7 +59,6 @@ public class CinemaService extends com.example.kinoarenaproject.service.Service 
         }
         Optional<Cinema> opt = cinemaRepository.findById(id);
         if (!opt.isPresent()) {
-            System.out.println("_____________________________");
             throw new UnauthorizedException("Wrong credentials");
         }
         Cinema c = opt.get();
@@ -76,7 +66,6 @@ public class CinemaService extends com.example.kinoarenaproject.service.Service 
         c.setAddress(cinemaDto.getAddress());
         c.setPhone_number(cinemaDto.getPhone_number());
 
-//        c=mapper.map(cinemaDto,Cinema.class);
         cinemaRepository.save(c);
         return   mapper.map(c,CinemaDTO.class);
 

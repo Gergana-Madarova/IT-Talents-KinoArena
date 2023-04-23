@@ -13,5 +13,5 @@ import java.util.Optional;
 public interface HallRepository extends JpaRepository<Hall,Integer> {
     List<Hall> findByCinema(Cinema cinema);
     Optional<Hall> findByCinema(int cinemaId);
-//    List<Cinema> findByCity(int city);
+
 }
