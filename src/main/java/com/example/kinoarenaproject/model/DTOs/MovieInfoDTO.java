@@ -20,5 +20,5 @@ public class MovieInfoDTO {
     private String director;
     private String cast;
     private CategoryInfoDTO category;
-    private GenreInfo genre;
+    private GenreInfoDTO genre;
 }

@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GenreInfo {
+public class GenreInfoDTO {
     private String genre;
 }

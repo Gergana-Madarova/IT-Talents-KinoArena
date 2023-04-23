@@ -10,9 +10,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -73,7 +70,7 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
         }
         setIfNotNull(projectionDTO.getStartTime(), startTime -> projection.setStartTime(startTime));
         setIfNotNull(projectionDTO.getDate(), date -> projection.setDate(date));
-        setIfNotNull(projectionDTO.getDate(), price -> projection.setDate(price));
+        setIfNotNull(projectionDTO.getPrice(), price -> projection.setPrice(price));
 
         projectionRepository.save(projection);
         return mapper.map(projection, ProjectionDTO.class);
@@ -98,24 +95,23 @@ public class ProjectionService extends com.example.kinoarenaproject.service.Serv
         }
     }
 
-    public List<AddProjectionDTO> filterByMovie(int movieId) {
-        Optional<Movie> movie = movieRepository.findById(movieId);
-        if (movie.isPresent()) {
-            mapper.map(movie.get(), Movie.class);
-            List<Projection> projections = new ArrayList<>();
-            projections.addAll(projectionRepository.findByMovie(movie));
-            return projections.stream()
-                    .map(m -> mapper.map(m, AddProjectionDTO.class))
-                    .peek(addProjectionDTO -> addProjectionDTO.setMovieId(movieId))
-                    .collect(Collectors.toList());
-        } else {
-            throw new NotFoundException("Movie with this id is not found");
-        }
+    public List<FilterResponseDTO> filterByCinema(int cinemaId) {
+        return projectionRepository.getProjectionsByCinema(cinemaId).stream()
+                .map(p -> new FilterResponseDTO(p.getMovie().getTitle(),
+                        p.getHall().getCinema().getName(), p.getDate(), p.getStartTime()))
+                .collect(Collectors.toList());
     }
 
-    public List<ProjectionByCinemaDTO> filterByCinema(int cinemaId) {
-        return projectionRepository.getProjectionsByCinema(cinemaId).stream()
-                .map(p -> new ProjectionByCinemaDTO(p.getId(), p.getMovie().getTitle(),
+    public List<FilterResponseDTO> filterByMovie(int movieId) {
+        return projectionRepository.findByMovieId(movieId).stream()
+                .map(p -> new FilterResponseDTO(p.getMovie().getTitle(),
+                        p.getHall().getCinema().getName(), p.getDate(), p.getStartTime()))
+                .collect(Collectors.toList());
+    }
+
+    public List<FilterResponseDTO> filterByCinemaAndMovie(int cinemaId, int movieId) {
+        return projectionRepository.getProjectionsByCinemaAndMovie(cinemaId, movieId).stream()
+                .map(p -> new FilterResponseDTO(p.getMovie().getTitle(),
                         p.getHall().getCinema().getName(), p.getDate(), p.getStartTime()))
                 .collect(Collectors.toList());
     }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -11,11 +12,9 @@ import java.time.LocalTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectionDTO {
-    private int id;
+public class FilterResponseDTO {
+    private String movieTitle;
+    private String cinemaName;
+    private LocalDate startDate;
     private LocalTime startTime;
-    private LocalDate date;
-    private double price;
-    private HallDTO hall;
-    private MovieInfoDTO movie;
 }
