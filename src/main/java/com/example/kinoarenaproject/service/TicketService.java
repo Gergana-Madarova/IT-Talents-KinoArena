@@ -47,7 +47,7 @@ public class TicketService extends com.example.kinoarenaproject.service.Service 
 
     public TicketInfoDTO getTicketById(int id, int idUser) {
         Ticket ticket = checkOptionalIsPresent(ticketRepository.findById(id), "non-existent ticket");
-        if (!admin(idUser) || ticket.getUser().getId() != idUser) {
+        if (!(admin(idUser)) && ticket.getUser().getId() != idUser) {
             throw new UnauthorizedException("Unauthorized role!");
         }
         return mapper.map(ticket, TicketInfoDTO.class);
