@@ -2,10 +2,8 @@ package com.example.kinoarenaproject.service;
 
 import com.example.kinoarenaproject.model.DTOs.TicketBookDTO;
 import com.example.kinoarenaproject.model.DTOs.TicketInfoDTO;
-import com.example.kinoarenaproject.model.entities.Movie;
-import com.example.kinoarenaproject.model.entities.Projection;
-import com.example.kinoarenaproject.model.entities.Ticket;
-import com.example.kinoarenaproject.model.entities.User;
+import com.example.kinoarenaproject.model.entities.*;
+import com.example.kinoarenaproject.model.exceptions.BadRequestException;
 import com.example.kinoarenaproject.model.exceptions.NotFoundException;
 import com.example.kinoarenaproject.model.exceptions.UnauthorizedException;
 import com.example.kinoarenaproject.model.repositories.ProjectionRepository;
@@ -14,8 +12,6 @@ import com.example.kinoarenaproject.model.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class TicketService extends com.example.kinoarenaproject.service.Service {
@@ -33,6 +29,10 @@ public class TicketService extends com.example.kinoarenaproject.service.Service 
         int countExistTicket = ticketRepository.countByProjectionIdAndRowNumberAndColNumber(projection.getId(), bookTicket.getRowNumber(), bookTicket.getColNumber());
         if (countExistTicket != 0) {
             throw new NotFoundException("Choose a free seat! This seat is reserved.");
+        }
+        Hall hall = projection.getHall();
+        if (bookTicket.getRowNumber() > hall.getRows() || bookTicket.getColNumber() > hall.getColumns()) {
+            throw new BadRequestException("Invalid row or column number");
         }
 
         Ticket ticket = new Ticket();
